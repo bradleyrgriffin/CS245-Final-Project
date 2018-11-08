@@ -24,10 +24,14 @@ CONFIG += c++11
 
 SOURCES += \
         main.cpp \
-        mainwindow.cpp
+        mainwindow.cpp \
+    Password.cpp \
+    User.cpp
 
 HEADERS += \
-        mainwindow.h
+        mainwindow.h \
+    Password.h \
+    User.h
 
 FORMS += \
         mainwindow.ui
@@ -36,3 +40,6 @@ FORMS += \
 qnx: target.path = /tmp/$${TARGET}/bin
 else: unix:!android: target.path = /opt/$${TARGET}/bin
 !isEmpty(target.path): INSTALLS += target
+
+DISTFILES += \
+    properties.txt
