@@ -11,13 +11,17 @@ class DatabaseConnection
 {
 public:
     DatabaseConnection();
-    bool executeQuery(const string& sql, map<int,string> params);
+    ~DatabaseConnection();
+    bool executeQuery(const string& sql, map<int,string> params, const string& objectToMap);
 
 
 private:
     string connectionString;
     void fillConnectionDetails();
     QSqlDatabase db;
+    QString getQueryStringByName(const string & queryName);
+
+    vector<string> data;
 };
 
 #endif // DATABASECONNECTION_H

@@ -1,5 +1,6 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
+#include "databaseconnection.h"
 #include <QInputDialog>
 #include <QLineEdit>
 #include <iostream>
@@ -11,6 +12,8 @@
 #include "User.h"
 #include <string>
 #include <map>
+#include "commonutils.h"
+
 
 using namespace std;
 
@@ -64,53 +67,8 @@ bool loginAuthentication(MainWindow * thisPtr){
             }
 
 }
-map<string, string> dialogPrompt(MainWindow * thisPtr, vector<string> fieldNames){
-    //ReturnMap
-    map<string, string> returnMap;
-
-    QDialog dialog(thisPtr);
-
-    // Use a layout allowing to have a label next to each field
-    QFormLayout form(&dialog);
-
-    // Add some text above the fields
-    form.addRow(new QLabel("Enter Information:"));
-
-    // Add the lineEdits with their respective labels
-    QList<QLineEdit *> fields;
-    QLineEdit *lineEdit;
-    int argCntr = 0;
 
 
-    for(auto i : fieldNames){
-        lineEdit = new QLineEdit(&dialog);
-        QString label =  QString(QString::fromStdString(i + ":")).arg(argCntr);
-        form.addRow(label, lineEdit);
-        fields << lineEdit;
-
-        argCntr++;
-    }
-
-    // Add some standard buttons (Cancel/Ok) at the bottom of the dialog
-    QDialogButtonBox buttonBox(QDialogButtonBox::Ok | QDialogButtonBox::Cancel,
-                               Qt::Horizontal, &dialog);
-    form.addRow(&buttonBox);
-    QObject::connect(&buttonBox, SIGNAL(accepted()), &dialog, SLOT(accept()));
-    QObject::connect(&buttonBox, SIGNAL(rejected()), &dialog, SLOT(reject()));
-
-
-    // Show the dialog as modal
-    if (dialog.exec() == QDialog::Accepted) {
-        // If the user didn't dismiss the dialog, do something with the fields
-        size_t j = 0;
-        for(auto i : fields){
-            returnMap[fieldNames[j]] = i->text().toStdString();
-            j++;
-        }
-    }
-
-    return returnMap;
-}
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::MainWindow)
@@ -141,7 +99,9 @@ void MainWindow::on_addContactButton_clicked()
     addcontactinformation.push_back("Last Name");
 
     map<string, string> returnMap;
-    returnMap = dialogPrompt(this, addcontactinformation);
+
+    CommonUtils utils = CommonUtils();
+    returnMap = utils.dialogPrompt(this, addcontactinformation);
 
     for(auto i : returnMap){
         cout << i.first << " is: " << i.second << endl;
@@ -158,7 +118,9 @@ void MainWindow::on_addCategoryButton_clicked()
     addcategoryinformation.push_back("Category Name");
 
     map<string, string> returnMap;
-    returnMap = dialogPrompt(this, addcategoryinformation);
+
+    CommonUtils utils = CommonUtils();
+    returnMap = utils.dialogPrompt(this, addcategoryinformation);
 
     for(auto i : returnMap){
         cout << i.first << " is: " << i.second << endl;
@@ -173,12 +135,16 @@ void MainWindow::on_addGroupButton_clicked()
     addgroupinformation.push_back("Category Name");
 
     map<string, string> returnMap;
-    returnMap = dialogPrompt(this, addgroupinformation);
+
+    CommonUtils utils = CommonUtils();
+    returnMap = utils.dialogPrompt(this, addgroupinformation);
 
     for(auto i : returnMap){
         cout << i.first << " is: " << i.second << endl;
     }
 
+    DatabaseConnection session = DatabaseConnection();
+    cout << "im here" << endl;
     //Here is where we would add the query to add the Group to the DB
 }
 

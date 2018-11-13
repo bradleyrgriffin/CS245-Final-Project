@@ -28,7 +28,8 @@ SOURCES += \
     Password.cpp \
     User.cpp \
     properties.cpp \
-    databaseconnection.cpp
+    databaseconnection.cpp \
+    commonutils.cpp
 
 HEADERS += \
         mainwindow.h \
@@ -36,7 +37,8 @@ HEADERS += \
     User.h \
     searchcontact.h \
     properties.h \
-    databaseconnection.h
+    databaseconnection.h \
+    commonutils.h
 
 FORMS += \
         mainwindow.ui
