@@ -20,7 +20,6 @@ public:
 	void setPassword(const string & password);
 
 	bool verifyLogin();
-	vector<string> splitString(const string &text, char sep);
 
 	
 private:

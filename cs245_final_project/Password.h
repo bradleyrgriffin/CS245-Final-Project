@@ -17,7 +17,7 @@ public:
 	string getHashedPassword();
 
 private:
-	int hashedString;
+    string hashedString;
 };
 
 #endif

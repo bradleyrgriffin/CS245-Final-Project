@@ -1,5 +1,6 @@
 #include "Password.h"
-
+#include <QCryptographicHash>
+#include <QString>
 
 Password::Password()
 {
@@ -17,12 +18,14 @@ Password::~Password()
 
 void Password::encodePassword(const string & unEncodedPassword)
 {
-	hash<string> hasher;
 
-	this->hashedString = hasher(unEncodedPassword);
+    this->hashedString = QString(QCryptographicHash::hash((unEncodedPassword.c_str()),
+                                                          QCryptographicHash::Sha3_224).toHex()).toStdString();
+
+
 }
 
 string Password::getHashedPassword()
 {
-	return to_string(hashedString);
+    return hashedString;
 }

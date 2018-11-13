@@ -4,7 +4,7 @@
 #
 #-------------------------------------------------
 
-QT       += core gui widgets
+QT       += core gui widgets sql
 
 TARGET = cs245_final_project
 TEMPLATE = app
@@ -26,12 +26,17 @@ SOURCES += \
         main.cpp \
         mainwindow.cpp \
     Password.cpp \
-    User.cpp
+    User.cpp \
+    properties.cpp \
+    databaseconnection.cpp
 
 HEADERS += \
         mainwindow.h \
     Password.h \
-    User.h
+    User.h \
+    searchcontact.h \
+    properties.h \
+    databaseconnection.h
 
 FORMS += \
         mainwindow.ui

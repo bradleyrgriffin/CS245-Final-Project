@@ -9,19 +9,12 @@
 #include <QDialogButtonBox>
 #include <QtDebug>
 #include "User.h"
+#include <string>
+#include <map>
 
 using namespace std;
 
-//void loginAuthentication(const string & username, const string & password){
-
-//        User user = User(username, password);
-//        cout << (user.verifyLogin() ? "Successful Login":"Failed Login") << endl;
-//        if(!user.verifyLogin()){
-//            exit(1);
-//        }
-//}
-
-void loginAuthentication(MainWindow * thisPtr){
+bool loginAuthentication(MainWindow * thisPtr){
     QDialog dialog(thisPtr);
 
     // Use a layout allowing to have a label next to each field
@@ -65,21 +58,133 @@ void loginAuthentication(MainWindow * thisPtr){
     User user = User(username, password);
             cout << (user.verifyLogin() ? "Successful Login":"Failed Login") << endl;
             if(!user.verifyLogin()){
-                exit(1);
+                return true;
+            }else{
+                return false;
             }
 
 }
+map<string, string> dialogPrompt(MainWindow * thisPtr, vector<string> fieldNames){
+    //ReturnMap
+    map<string, string> returnMap;
 
+    QDialog dialog(thisPtr);
+
+    // Use a layout allowing to have a label next to each field
+    QFormLayout form(&dialog);
+
+    // Add some text above the fields
+    form.addRow(new QLabel("Enter Information:"));
+
+    // Add the lineEdits with their respective labels
+    QList<QLineEdit *> fields;
+    QLineEdit *lineEdit;
+    int argCntr = 0;
+
+
+    for(auto i : fieldNames){
+        lineEdit = new QLineEdit(&dialog);
+        QString label =  QString(QString::fromStdString(i + ":")).arg(argCntr);
+        form.addRow(label, lineEdit);
+        fields << lineEdit;
+
+        argCntr++;
+    }
+
+    // Add some standard buttons (Cancel/Ok) at the bottom of the dialog
+    QDialogButtonBox buttonBox(QDialogButtonBox::Ok | QDialogButtonBox::Cancel,
+                               Qt::Horizontal, &dialog);
+    form.addRow(&buttonBox);
+    QObject::connect(&buttonBox, SIGNAL(accepted()), &dialog, SLOT(accept()));
+    QObject::connect(&buttonBox, SIGNAL(rejected()), &dialog, SLOT(reject()));
+
+
+    // Show the dialog as modal
+    if (dialog.exec() == QDialog::Accepted) {
+        // If the user didn't dismiss the dialog, do something with the fields
+        size_t j = 0;
+        for(auto i : fields){
+            returnMap[fieldNames[j]] = i->text().toStdString();
+            j++;
+        }
+    }
+
+    return returnMap;
+}
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::MainWindow)
 {
+    //Initial Login Prompt, code is above.
+    //It uses a QtDialog box and get the username/password and compares the password
+    //hashes to confirm login, exits if incorrect login.
 
-    loginAuthentication(this);
+    while(loginAuthentication(this));
+
     ui->setupUi(this);
 }
 
 MainWindow::~MainWindow()
 {
     delete ui;
+}
+
+void MainWindow::on_actionExit_triggered()
+{
+    exit(1);
+}
+
+void MainWindow::on_addContactButton_clicked()
+{
+    vector<string> addcontactinformation;
+    addcontactinformation.push_back("First Name");
+    addcontactinformation.push_back("Last Name");
+
+    map<string, string> returnMap;
+    returnMap = dialogPrompt(this, addcontactinformation);
+
+    for(auto i : returnMap){
+        cout << i.first << " is: " << i.second << endl;
+    }
+
+    //This is where the contact information should be stored in the DB
+}
+
+
+
+void MainWindow::on_addCategoryButton_clicked()
+{
+    vector<string> addcategoryinformation;
+    addcategoryinformation.push_back("Category Name");
+
+    map<string, string> returnMap;
+    returnMap = dialogPrompt(this, addcategoryinformation);
+
+    for(auto i : returnMap){
+        cout << i.first << " is: " << i.second << endl;
+    }
+
+    //Here is where we would add the query to add the category to the DB
+}
+
+void MainWindow::on_addGroupButton_clicked()
+{
+    vector<string> addgroupinformation;
+    addgroupinformation.push_back("Category Name");
+
+    map<string, string> returnMap;
+    returnMap = dialogPrompt(this, addgroupinformation);
+
+    for(auto i : returnMap){
+        cout << i.first << " is: " << i.second << endl;
+    }
+
+    //Here is where we would add the query to add the Group to the DB
+}
+
+void MainWindow::on_searchButton_clicked()
+{
+    //This should strip the search term of special characters,and execute a query to Select from the view that joins
+    //all the data together, concatenating email, first name, last name, and address, and stripping special characters,
+    //And also uppercasing everything.
 }
