@@ -97,17 +97,24 @@ void MainWindow::on_addContactButton_clicked()
     vector<string> addcontactinformation;
     addcontactinformation.push_back("First Name");
     addcontactinformation.push_back("Last Name");
+    addcontactinformation.push_back("Photo ID");
+
 
     map<string, string> returnMap;
 
     CommonUtils utils = CommonUtils();
     returnMap = utils.dialogPrompt(this, addcontactinformation);
 
+    map<int, string> paramMap;
+    int increment = 0;
     for(auto i : returnMap){
         cout << i.first << " is: " << i.second << endl;
+        paramMap[increment] = i.second;
+        increment++;
     }
 
-    //This is where the contact information should be stored in the DB
+    DatabaseConnection session = DatabaseConnection();
+    session.executeQuery("INSERT_CONTACT", paramMap, "insert");
 }
 
 
@@ -122,11 +129,15 @@ void MainWindow::on_addCategoryButton_clicked()
     CommonUtils utils = CommonUtils();
     returnMap = utils.dialogPrompt(this, addcategoryinformation);
 
+    map<int, string> paramMap;
     for(auto i : returnMap){
         cout << i.first << " is: " << i.second << endl;
+        paramMap[0] = i.second;
     }
 
-    //Here is where we would add the query to add the category to the DB
+    DatabaseConnection session = DatabaseConnection();
+    session.executeQuery("INSERT_CATEGORY", paramMap, "insert");
+
 }
 
 void MainWindow::on_addGroupButton_clicked()
@@ -139,13 +150,15 @@ void MainWindow::on_addGroupButton_clicked()
     CommonUtils utils = CommonUtils();
     returnMap = utils.dialogPrompt(this, addgroupinformation);
 
+    map<int, string> paramMap;
+
     for(auto i : returnMap){
         cout << i.first << " is: " << i.second << endl;
+        paramMap[0] = i.second;
     }
 
     DatabaseConnection session = DatabaseConnection();
-    cout << "im here" << endl;
-    //Here is where we would add the query to add the Group to the DB
+    session.executeQuery("INSERT_GROUP", paramMap, "insert");
 }
 
 void MainWindow::on_searchButton_clicked()

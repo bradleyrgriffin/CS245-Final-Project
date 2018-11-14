@@ -20,22 +20,50 @@ DatabaseConnection::DatabaseConnection()
 }
 
 void DatabaseConnection::fillConnectionDetails(){
-    db = QSqlDatabase::addDatabase("QODBC");
+    this->db = QSqlDatabase::addDatabase("QODBC");
 
     Properties props = Properties();
     auto properties = props.getProperties();
 
-    db.setDatabaseName(QString::fromStdString(properties["connection"]));
+    QString driver = QString::fromStdString(properties["DRIVER"]);
+    QString server = QString::fromStdString(properties["Server"]);
+    QString database = QString::fromStdString(properties["Database"]);
+    QString username = QString::fromStdString(properties["Uid"]);
+    QString pass = QString::fromStdString(properties["Pwd"]);
+    QString port = QString::fromStdString(properties["Port"]);
+    QString encrypt = QString::fromStdString(properties["encrypt"]);
+    QString trustServerCertificate = QString::fromStdString(properties["trustServerCertificate"]);
+    QString hostName = QString::fromStdString(properties["hostNameInCertificate"]);
+    QString timeout = QString::fromStdString(properties["loginTimeout"]);
+
+    QString connectionString = "DRIVER=" + driver;
+    connectionString += "Server=" + server;
+    connectionString += "Database=" + database;
+    connectionString += "Uid=" + username;
+    connectionString += "Port=" + port;
+    connectionString += "Pwd=" + pass;
+    connectionString += "encrypt=" + encrypt;
+    connectionString += "trustEncyptionCertificate=" + trustServerCertificate;
+    connectionString += "hostNameInCertificate=" + hostName;
+    connectionString += "loginTimeout=" + timeout;
+
+    this->db.setDatabaseName(connectionString);
 }
 
 QString DatabaseConnection::getQueryStringByName(const string& queryName){
     string SELECT_ALL_CONTACTS = "SELECT * FROM CONTACT";
     string INSERT_GROUP = "INSERT INTO GROUPS(GROUP_NAME) VALUES(?)";
+    string INSERT_CATEGORY = "INSERT INTO CATEGORY(CATEGORY_NAME) VALUES (?)";
+    string INSERT_CONTACT = "INSERT INTO CONTACT(FIRST_NAME, LAST_NAME, PHOTO_LIBRARY_ID) VALUES (?, ?, ?)";
 
     if(queryName == "SELECT_ALL_CONTACTS"){
         return QString::fromStdString(SELECT_ALL_CONTACTS);
     }else if(queryName == "INSERT_GROUP"){
         return QString::fromStdString(INSERT_GROUP);
+    }else if(queryName == "INSERT_CATEGORY"){
+        return QString::fromStdString(INSERT_CATEGORY);
+    }else if(queryName == "INSERT_CONTACT"){
+        return QString::fromStdString(INSERT_CONTACT);
     }else{
         return QString::fromStdString("N");
     }
@@ -45,7 +73,7 @@ QString DatabaseConnection::getQueryStringByName(const string& queryName){
 //This Executes a query, binding the parameters.
 bool DatabaseConnection::executeQuery(const string& queryName, map<int, string> params, const string& objectToMap){
     // open the connection
-    bool ok = db.open();
+    bool ok = this->db.open();
 
         // if we connect successfully...
         if(ok)
@@ -92,6 +120,8 @@ bool DatabaseConnection::executeQuery(const string& queryName, map<int, string> 
 
 
 
+                    }else if(objectToMap == "insert"){
+                             cout << "Just an insert" << endl;
                     }else{
                         try{
                             data.push_back(query.value(1).toString().toStdString());
@@ -110,6 +140,7 @@ bool DatabaseConnection::executeQuery(const string& queryName, map<int, string> 
             }
 
         } else {
+            cout << "failed ok" << endl;
             return false;
         }
         return false;

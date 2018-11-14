@@ -1,3 +1,12 @@
 username=bradley
 password=ba46e77bc2406e447c47965ac51ef3b03322864057b394b38e5bb0ca
-connection=DRIVER={SQL Server};Server=cs245.database.windows.net;Database=ContactManager;Uid=app_login;Port=1433;Pwd=Q1w2e3r4;encrypt=true;trustServerCertificate=false;hostNameInCertificate=*.database.windows.net;loginTimeout=30;
+DRIVER={SQL Server};
+Server=cs245.database.windows.net;
+Database=ContactManagerDB;
+Uid=app_login;
+Port=1433;
+Pwd=Q1w2e3r4;
+encrypt=true;
+trustServerCertificate=false;
+hostNameInCertificate=*.database.windows.net;
+loginTimeout=30;
