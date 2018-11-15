@@ -6,7 +6,7 @@ Photo::Photo()
 }
 
 
-Photo:Photo(const std::string& pPath, const int& pId){
+Photo::Photo(const std::string& pPath, const int& pId){
     if(pPath != ""){
         this->photoPath = pPath;
     }

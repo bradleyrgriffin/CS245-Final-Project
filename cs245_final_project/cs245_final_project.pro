@@ -34,8 +34,6 @@ SOURCES += \
     email.cpp \
     address.cpp \
     phone.cpp \
-    group.cpp \
-    category.cpp \
     photo.cpp
 
 HEADERS += \
@@ -50,8 +48,6 @@ HEADERS += \
     email.h \
     address.h \
     phone.h \
-    group.h \
-    category.h \
     photo.h
 
 FORMS += \

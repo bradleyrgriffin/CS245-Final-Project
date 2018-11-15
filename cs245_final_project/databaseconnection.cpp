@@ -150,12 +150,6 @@ bool DatabaseConnection::executeQuery(const string& queryName, map<int, string> 
 
                     }else if(objectToMap == "insert"){
                              cout << "Just an insert" << endl;
-                    }else if(objectToMap == "category"){
-                            Category category = Category(query.value(2).toString().toStdString(), stoi(query.value(1).toString().toStdString()));
-                            this->categories.push_back(category);
-                    }else if(objectToMap == "group"){
-                            Group group = Group(query.value(2).toString().toStdString(), stoi(query.value(1).toString().toStdString()));
-                            this->groups.push_back(group);
                     }else{
                         try{
                             data.push_back(query.value(1).toString().toStdString());

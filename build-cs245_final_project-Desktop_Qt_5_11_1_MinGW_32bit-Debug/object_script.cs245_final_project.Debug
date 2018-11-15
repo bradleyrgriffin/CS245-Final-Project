@@ -10,7 +10,6 @@ INPUT(
 ./debug\email.o
 ./debug\address.o
 ./debug\phone.o
-./debug\group.o
-./debug\category.o
+./debug\photo.o
 ./debug\moc_mainwindow.o
 );

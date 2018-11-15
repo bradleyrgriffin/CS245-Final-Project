@@ -6,9 +6,8 @@
 //Objects
 #include "address.h"
 #include "phone.h"
-#include "group.h"
 #include "email.h"
-
+#include "photo.h"
 
 #include <vector>
 #include <string>
@@ -24,12 +23,13 @@ public:
     //Getters
 
     //Need to add code to get a contact's other data.
+    //should have code to get addresses, phones, emails, and a function to get the group ids (ideally, we'll have a separate vector for all the groups.)
 
 private:
     std::vector<Address> addresses;
     std::vector<Phone> phones;
-    std::vector<Group> groups;
     std::vector<Email> emails;
+    std::vector<int> groups; //Groups by ID
 
     std::string firstName;
     std::string lastName;

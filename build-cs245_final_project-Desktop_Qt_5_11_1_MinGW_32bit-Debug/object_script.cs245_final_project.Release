@@ -10,7 +10,6 @@ INPUT(
 ./release\email.o
 ./release\address.o
 ./release\phone.o
-./release\group.o
-./release\category.o
+./release\photo.o
 ./release\moc_mainwindow.o
 );
