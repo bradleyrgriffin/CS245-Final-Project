@@ -21,6 +21,7 @@ public:
     Contact(const std::string& fName, const std::string& lName, const int& cId, const int& pId);
 
     //Getters
+    int getContactId(){return this->contactId; }
 
     //Need to add code to get a contact's other data.
     //should have code to get addresses, phones, emails, and a function to get the group ids (ideally, we'll have a separate vector for all the groups.)

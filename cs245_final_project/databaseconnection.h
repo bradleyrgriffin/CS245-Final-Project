@@ -4,6 +4,7 @@
 #include <string>
 #include <QtSql/QSqlDatabase>
 #include <map>
+#include <contact.h>
 
 using namespace std;
 
@@ -14,6 +15,10 @@ public:
     ~DatabaseConnection();
     bool executeQuery(const string& sql, map<int,string> params, const string& objectToMap);
 
+    vector<Contact>& getContacts(){return this->contacts; }
+    Contact& getContactById(const int& cId);
+
+
 private:
     string connectionString;
     void fillConnectionDetails();
@@ -21,6 +26,7 @@ private:
     QString getQueryStringByName(const string & queryName);
 
     vector<string> data;
+    vector<Contact> contacts;
 };
 
 #endif // DATABASECONNECTION_H

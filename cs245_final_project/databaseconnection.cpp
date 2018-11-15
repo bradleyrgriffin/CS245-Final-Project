@@ -177,3 +177,8 @@ bool DatabaseConnection::executeQuery(const string& queryName, map<int, string> 
 DatabaseConnection::~DatabaseConnection(){
     this->db.close();
 }
+
+//The Individual Object Getters are here
+Contact& DatabaseConnection::getContactById(const int& cId){
+    //Should return a reference to a contact object in the contacts vector
+}
