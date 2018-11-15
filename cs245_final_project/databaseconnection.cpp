@@ -10,6 +10,9 @@
 #include <QSqlQuery>
 #include <QString>
 #include <QVariant>
+#include "address.h"
+#include "phone.h"
+#include "contact.h"
 
 using namespace std;
 
@@ -51,10 +54,24 @@ void DatabaseConnection::fillConnectionDetails(){
 }
 
 QString DatabaseConnection::getQueryStringByName(const string& queryName){
-    string SELECT_ALL_CONTACTS = "SELECT * FROM CONTACT";
+
+
+    //Insert
     string INSERT_GROUP = "INSERT INTO GROUPS(GROUP_NAME) VALUES(?)";
     string INSERT_CATEGORY = "INSERT INTO CATEGORY(CATEGORY_NAME) VALUES (?)";
     string INSERT_CONTACT = "INSERT INTO CONTACT(FIRST_NAME, LAST_NAME, PHOTO_LIBRARY_ID) VALUES (?, ?, ?)";
+
+    //Select
+    string GET_CATEGORY_BY_ID = "SELECT DISTINCT TOP(1) CATEGORY_ID, CATEGORY_NAME FROM CATEGORY WHERE CATEGORY_ID = ?";
+    string GET_CATEGORY_BY_NAME = "SELECT DISTINCT TOP(1) CATEGORY_ID, CATEGORY_NAME FROM CATEGORY WHERE CATEGORY_NAME = ?";
+    string GET_GROUP_BY_ID = "SELECT DISTINCT TOP(1) GROUP_ID, GROUP_NAME FROM GROUPS WHERE GROUP_ID = ?";
+    string GET_GROUP_BY_NAME = "SELECT DISTINCT TOP(1) GROUP_ID, GROUP_NAME FROM GROUPS WHERE GROUP_NAME = ?";
+    string SELECT_ALL_CONTACTS = "SELECT * FROM CONTACT";
+
+    //Update
+
+
+    //Delete
 
     if(queryName == "SELECT_ALL_CONTACTS"){
         return QString::fromStdString(SELECT_ALL_CONTACTS);
@@ -64,6 +81,14 @@ QString DatabaseConnection::getQueryStringByName(const string& queryName){
         return QString::fromStdString(INSERT_CATEGORY);
     }else if(queryName == "INSERT_CONTACT"){
         return QString::fromStdString(INSERT_CONTACT);
+    }else if(queryName == "GET_CATEGORY_BY_ID"){
+        return QString::fromStdString(GET_CATEGORY_BY_ID);
+    }else if(queryName == "GET_CATEGORY_BY_NAME"){
+       return QString::fromStdString(GET_CATEGORY_BY_NAME);
+    }else if(queryName == "GET_GROUP_BY_ID"){
+       return QString::fromStdString(GET_GROUP_BY_ID);
+    }else if(queryName == "GET_GROUP_BY_NAME"){
+       return QString::fromStdString(GET_GROUP_BY_NAME);
     }else{
         return QString::fromStdString("N");
     }
@@ -91,6 +116,9 @@ bool DatabaseConnection::executeQuery(const string& queryName, map<int, string> 
             for(auto i : params){
                query.bindValue(i.first, QString::fromStdString(i.second));
             }
+
+
+
 
             // execute the query
             if(query.exec())
@@ -122,6 +150,12 @@ bool DatabaseConnection::executeQuery(const string& queryName, map<int, string> 
 
                     }else if(objectToMap == "insert"){
                              cout << "Just an insert" << endl;
+                    }else if(objectToMap == "category"){
+                            Category category = Category(query.value(2).toString().toStdString(), stoi(query.value(1).toString().toStdString()));
+                            this->categories.push_back(category);
+                    }else if(objectToMap == "group"){
+                            Group group = Group(query.value(2).toString().toStdString(), stoi(query.value(1).toString().toStdString()));
+                            this->groups.push_back(group);
                     }else{
                         try{
                             data.push_back(query.value(1).toString().toStdString());

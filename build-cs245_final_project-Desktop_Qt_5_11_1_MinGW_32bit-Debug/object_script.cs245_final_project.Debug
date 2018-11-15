@@ -1,0 +1,16 @@
+INPUT(
+./debug\main.o
+./debug\mainwindow.o
+./debug\Password.o
+./debug\User.o
+./debug\properties.o
+./debug\databaseconnection.o
+./debug\commonutils.o
+./debug\contact.o
+./debug\email.o
+./debug\address.o
+./debug\phone.o
+./debug\group.o
+./debug\category.o
+./debug\moc_mainwindow.o
+);

@@ -29,7 +29,14 @@ SOURCES += \
     User.cpp \
     properties.cpp \
     databaseconnection.cpp \
-    commonutils.cpp
+    commonutils.cpp \
+    contact.cpp \
+    email.cpp \
+    address.cpp \
+    phone.cpp \
+    group.cpp \
+    category.cpp \
+    photo.cpp
 
 HEADERS += \
         mainwindow.h \
@@ -38,7 +45,14 @@ HEADERS += \
     searchcontact.h \
     properties.h \
     databaseconnection.h \
-    commonutils.h
+    commonutils.h \
+    contact.h \
+    email.h \
+    address.h \
+    phone.h \
+    group.h \
+    category.h \
+    photo.h
 
 FORMS += \
         mainwindow.ui

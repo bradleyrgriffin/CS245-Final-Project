@@ -143,7 +143,7 @@ void MainWindow::on_addCategoryButton_clicked()
 void MainWindow::on_addGroupButton_clicked()
 {
     vector<string> addgroupinformation;
-    addgroupinformation.push_back("Category Name");
+    addgroupinformation.push_back("Group Name");
 
     map<string, string> returnMap;
 

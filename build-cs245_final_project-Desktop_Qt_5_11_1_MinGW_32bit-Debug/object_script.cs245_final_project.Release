@@ -1,0 +1,16 @@
+INPUT(
+./release\main.o
+./release\mainwindow.o
+./release\Password.o
+./release\User.o
+./release\properties.o
+./release\databaseconnection.o
+./release\commonutils.o
+./release\contact.o
+./release\email.o
+./release\address.o
+./release\phone.o
+./release\group.o
+./release\category.o
+./release\moc_mainwindow.o
+);
