@@ -23,6 +23,7 @@ public:
 
     map<string, string> dialogPrompt(MainWindow * thisPtr,vector<string> fieldNames);
 
+
 private:
 
 

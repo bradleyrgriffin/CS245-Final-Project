@@ -10,9 +10,6 @@
 #include <QSqlQuery>
 #include <QString>
 #include <QVariant>
-#include "address.h"
-#include "phone.h"
-#include "contact.h"
 
 using namespace std;
 
@@ -62,33 +59,36 @@ QString DatabaseConnection::getQueryStringByName(const string& queryName){
     string INSERT_CONTACT = "INSERT INTO CONTACT(FIRST_NAME, LAST_NAME, PHOTO_LIBRARY_ID) VALUES (?, ?, ?)";
 
     //Select
-    string GET_CATEGORY_BY_ID = "SELECT DISTINCT TOP(1) CATEGORY_ID, CATEGORY_NAME FROM CATEGORY WHERE CATEGORY_ID = ?";
-    string GET_CATEGORY_BY_NAME = "SELECT DISTINCT TOP(1) CATEGORY_ID, CATEGORY_NAME FROM CATEGORY WHERE CATEGORY_NAME = ?";
-    string GET_GROUP_BY_ID = "SELECT DISTINCT TOP(1) GROUP_ID, GROUP_NAME FROM GROUPS WHERE GROUP_ID = ?";
-    string GET_GROUP_BY_NAME = "SELECT DISTINCT TOP(1) GROUP_ID, GROUP_NAME FROM GROUPS WHERE GROUP_NAME = ?";
-    string SELECT_ALL_CONTACTS = "SELECT * FROM CONTACT";
+    string GET_CATEGORIES = "SELECT CATEGORY_NAME, CATEGORY_ID FROM CATEGORY";
+    string GET_GROUPS = "SELECT GROUP_NAME, GROUP_ID FROM GROUPS";
+    string GET_CONTACTS = "SELECT FIRST_NAME, LAST_NAME, CONTACT_ID, PHOTO_LIBRARY_ID FROM CONTACT";
+    string GET_PHONE_NUMBERS_BY_CONTACT_ID = "SELECT PHONE_NUMBER, CONTACT_X_PHONE_X_CATEGORY_ID, CATEGORY_ID FROM CONTACT_X_PHONE_X_CATEGORY WHERE CONTACT_ID = ?";
+    string GET_EMAIL_BY_CONTACT_ID = "SELECT EMAIL_ADDRESS, CONTACT_X_EMAIL_X_CATEGORY_ID, CATEGORY_ID FROM CONTACT_X_EMAIL_X_CATEGORY WHERE CONTACT_ID = ?";
+    string GET_ADDRESS_BY_CONTACT_ID = "SELECT CITY, STATE, STREET_ADDRESS, ZIP_CODE, CONTACT_X_ADDRESS_X_CATEGORY_ID, CATEGORY_ID FROM CONTACT_X_ADDRESS_X_CATEGORY WHERE CONTACT_ID = ?";
 
     //Update
 
 
     //Delete
 
-    if(queryName == "SELECT_ALL_CONTACTS"){
-        return QString::fromStdString(SELECT_ALL_CONTACTS);
+    if(queryName == "GET_CONTACTS"){
+        return QString::fromStdString(GET_CONTACTS);
     }else if(queryName == "INSERT_GROUP"){
         return QString::fromStdString(INSERT_GROUP);
     }else if(queryName == "INSERT_CATEGORY"){
         return QString::fromStdString(INSERT_CATEGORY);
     }else if(queryName == "INSERT_CONTACT"){
         return QString::fromStdString(INSERT_CONTACT);
-    }else if(queryName == "GET_CATEGORY_BY_ID"){
-        return QString::fromStdString(GET_CATEGORY_BY_ID);
-    }else if(queryName == "GET_CATEGORY_BY_NAME"){
-       return QString::fromStdString(GET_CATEGORY_BY_NAME);
-    }else if(queryName == "GET_GROUP_BY_ID"){
-       return QString::fromStdString(GET_GROUP_BY_ID);
-    }else if(queryName == "GET_GROUP_BY_NAME"){
-       return QString::fromStdString(GET_GROUP_BY_NAME);
+    }else if(queryName == "GET_CATEGORIES"){
+        return QString::fromStdString(GET_CATEGORIES);
+    }else if(queryName == "GET_PHONE_NUMBERS_BY_CONTACT_ID"){
+        return QString::fromStdString(GET_PHONE_NUMBERS_BY_CONTACT_ID);
+    }else if(queryName == "GET_GROUPS"){
+       return QString::fromStdString(GET_GROUPS);
+    }else if(queryName == "GET_EMAIL_BY_CONTACT_ID"){
+        return QString::fromStdString(GET_EMAIL_BY_CONTACT_ID);
+    }else if(queryName == "GET_ADDRESS_BY_CONTACT_ID"){
+        return QString::fromStdString(GET_ADDRESS_BY_CONTACT_ID);
     }else{
         return QString::fromStdString("N");
     }
@@ -129,27 +129,68 @@ bool DatabaseConnection::executeQuery(const string& queryName, map<int, string> 
                 {
                     //Assign to The Object Needed...
                     if(objectToMap == "contact"){
-                        //Create new Contact Object and assign values:
-                        //E.G.
-                        /*
-                         * The value result set starts at 1, not 0:
-                         *
-                         * QString value1 = query.value(1).toString();
-                         * QString value2 = query.value(2).toString();
-                         *
-                         * Or, to convert to normal C++ string:
-                         *
-                         * string value1 = QString::fromStdString(query.value(1).toString());
-                        */
 
-                        //push the object to the list of objects located in the header file.
-                        //Should have get functions from the list of objects.
+                        Contact newContact = Contact(
+                                    query.value(0).toString().toStdString(),
+                                    query.value(1).toString().toStdString(),
+                                    stoi(query.value(2).toString().toStdString()),
+                                    stoi(query.value(3).toString().toStdString()));
 
-
+                        this->contacts.push_back(newContact);
 
 
                     }else if(objectToMap == "insert"){
                              cout << "Just an insert" << endl;
+                    }else if(objectToMap == "category"){
+                        Category newCategory = Category(query.value(0).toString().toStdString(),
+                                                        stoi(query.value(1).toString().toStdString()));
+                        this->categories.push_back(newCategory);
+
+                    }else if(objectToMap == "group"){
+                        Group newGroup = Group(query.value(0).toString().toStdString(),
+                                               stoi(query.value(1).toString().toStdString()));
+
+                        this->groups.push_back(newGroup);
+
+                    }else if(objectToMap == "email"){
+                        Email newEmail = Email(query.value(0).toString().toStdString(),
+                                               stoi(query.value(1).toString().toStdString()),
+                                               stoi(query.value(2).toString().toStdString()));
+
+                        //Attach to the Contact (should be ID of params[0])
+                        for(auto i : contacts){
+                            if(i.getContactId() == stoi(params[0])){
+                                i.setContactEmail(newEmail);
+                                break;
+                            }
+                        }
+                    }else if(objectToMap == "phone"){
+                        Phone newPhone = Phone(query.value(0).toString().toStdString(),
+                                               stoi(query.value(1).toString().toStdString()),
+                                               stoi(query.value(2).toString().toStdString()));
+
+                        //Attach to the Contact (should be ID of params[0])
+                        for(auto i : contacts){
+                            if(i.getContactId() == stoi(params[0])){
+                                i.setContactPhone(newPhone);
+                                break;
+                            }
+                        }
+                    }else if(objectToMap == "address"){
+                        Address newAddress = Address(query.value(0).toString().toStdString(),
+                                               query.value(1).toString().toStdString(),
+                                               query.value(2).toString().toStdString(),
+                                               query.value(3).toString().toStdString(),
+                                               stoi(query.value(4).toString().toStdString()),
+                                               stoi(query.value(5).toString().toStdString()));
+
+                        //Attach to the Contact (should be ID of params[0])
+                        for(auto i : contacts){
+                            if(i.getContactId() == stoi(params[0])){
+                                i.setContactAddress(newAddress);
+                                break;
+                            }
+                        }
                     }else{
                         try{
                             data.push_back(query.value(1).toString().toStdString());
@@ -163,22 +204,34 @@ bool DatabaseConnection::executeQuery(const string& queryName, map<int, string> 
                     }
                 }
 
-                db.close();
+                this->db.close();
                 return true;
             }
 
         } else {
             cout << "failed ok" << endl;
+            this->db.close();
             return false;
         }
+        this->db.close();
         return false;
+}
+
+void DatabaseConnection::populateContactData(){
+
+    map<int, string> paramMap;
+
+    for(auto i : contacts){
+        paramMap[0] = to_string(i.getContactId());
+
+
+        executeQuery("GET_EMAIL_BY_CONTACT_ID", paramMap, "email");
+        executeQuery("GET_PHONE_NUMBERS_BY_CONTACT_ID", paramMap, "phone");
+        executeQuery("GET_ADDRESS_BY_CONTACT_ID", paramMap, "address");
+    }
+
 }
 
 DatabaseConnection::~DatabaseConnection(){
     this->db.close();
-}
-
-//The Individual Object Getters are here
-Contact& DatabaseConnection::getContactById(const int& cId){
-    //Should return a reference to a contact object in the contacts vector
 }

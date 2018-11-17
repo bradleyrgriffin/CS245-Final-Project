@@ -34,7 +34,9 @@ SOURCES += \
     email.cpp \
     address.cpp \
     phone.cpp \
-    photo.cpp
+    photo.cpp \
+    group.cpp \
+    category.cpp
 
 HEADERS += \
         mainwindow.h \
@@ -48,7 +50,9 @@ HEADERS += \
     email.h \
     address.h \
     phone.h \
-    photo.h
+    photo.h \
+    group.h \
+    category.h
 
 FORMS += \
         mainwindow.ui

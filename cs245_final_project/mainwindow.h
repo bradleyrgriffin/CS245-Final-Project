@@ -2,6 +2,8 @@
 #define MAINWINDOW_H
 
 #include <QMainWindow>
+#include <databaseconnection.h>
+#include <string>
 
 namespace Ui {
 class MainWindow;
@@ -15,6 +17,10 @@ public:
     explicit MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
 
+    void loadData();
+    std::string GetCategoryNameById(int& id);
+    std::string GetGroupNameById(int& id);
+
 private slots:
     void on_actionExit_triggered();
 
@@ -26,8 +32,10 @@ private slots:
 
     void on_searchButton_clicked();
 
+
 private:
     Ui::MainWindow *ui;
+    DatabaseConnection data = DatabaseConnection();
 };
 
 #endif // MAINWINDOW_H

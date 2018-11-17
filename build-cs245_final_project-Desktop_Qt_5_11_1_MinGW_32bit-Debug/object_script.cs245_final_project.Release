@@ -11,5 +11,7 @@ INPUT(
 ./release\address.o
 ./release\phone.o
 ./release\photo.o
+./release\group.o
+./release\category.o
 ./release\moc_mainwindow.o
 );

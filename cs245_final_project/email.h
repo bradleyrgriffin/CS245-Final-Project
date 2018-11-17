@@ -8,13 +8,15 @@ class Email
 public:
     Email();
 
-    Email(const std::string& emailName, const int& emailId);
+    Email(const std::string& emailName, const int& emailId, const int& catId);
 
     int getEmailId(){return this->emailId; }
     std::string getEmailName(){ return this->emailName; }
+    int getCategoryId(){ return this->categoryId; }
 private:
     std::string emailName;
     int emailId;
+    int categoryId;
 };
 
 #endif // EMAIL_H

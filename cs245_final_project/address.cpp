@@ -6,7 +6,7 @@ Address::Address()
 }
 
 
-Address::Address(const std::string& c, const std::string& s, const std::string& a, const std::string& z, const int& aId){
+Address::Address(const std::string& c, const std::string& s, const std::string& a, const std::string& z, const int& aId, const int& catId){
     if(c != ""){
         this->city = c;
     }
@@ -25,6 +25,10 @@ Address::Address(const std::string& c, const std::string& s, const std::string& 
 
     if(aId > 0){
         this->addressId =aId;
+    }
+
+    if(catId > 0){
+        this->categoryId = catId;
     }
 
 }

@@ -11,5 +11,7 @@ INPUT(
 ./debug\address.o
 ./debug\phone.o
 ./debug\photo.o
+./debug\group.o
+./debug\category.o
 ./debug\moc_mainwindow.o
 );
