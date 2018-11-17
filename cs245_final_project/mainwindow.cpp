@@ -92,11 +92,13 @@ MainWindow::MainWindow(QWidget *parent) :
     //All the data we need is stored in this->data property.
     loadData();
 
+    //Lazy loading
+    this->data.populateContactData();
+
     //Loads User Interface
     ui->setupUi(this);
 
-    //Lazy loading
-    this->data.populateContactData();
+
 
 }
 
@@ -173,10 +175,10 @@ void MainWindow::on_searchButton_clicked()
     //And also uppercasing everything.
 
     for( auto i : this->data.getContacts()){
-        cout << "ID/Name: " << i.getContactId() << "/" << i.getFirstName() << " " << i.getLastName() << endl;// <<
-                //"Primary Email: " << i.getEmails()[0].getEmailName() << endl <<
-               // "Primary Phone: " << i.getPhoneNumbers()[0].getPhoneNumber() << endl <<
-               // "Primary Street Address: " << i.getAddresses()[0].getAddress() << endl;
+        cout << "ID/Name: " << i.getContactId() << "/" << i.getFirstName() << " " << i.getLastName() << endl <<
+               "Primary Email: " << (i.getEmails().size() > 0 ? i.getEmails()[0].getEmailName():"N/A") << endl <<
+               "Primary Phone: " << (i.getPhoneNumbers().size() > 0 ? i.getPhoneNumbers()[0].getPhoneNumber(): "N/A") << endl <<
+               "Primary Street Address: " << (i.getAddresses().size() > 0 ? i.getAddresses()[0].getAddress(): "N/A") << endl;
     }
 }
 MainWindow::~MainWindow()

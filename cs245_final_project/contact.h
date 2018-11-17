@@ -25,6 +25,7 @@ public:
     int getContactId(){return this->contactId; }
     std::string getFirstName(){return this->firstName; }
     std::string getLastName(){ return this->lastName; }
+
     std::vector<Address>& getAddresses(){ return this->addresses; }
     std::vector<Phone>& getPhoneNumbers(){ return this->phones; }
     std::vector<Email>& getEmails(){ return this->emails; }

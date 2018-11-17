@@ -158,7 +158,7 @@ bool DatabaseConnection::executeQuery(const string& queryName, map<int, string> 
                                                stoi(query.value(2).toString().toStdString()));
 
                         //Attach to the Contact (should be ID of params[0])
-                        for(auto i : contacts){
+                        for(auto& i : contacts){
                             if(i.getContactId() == stoi(params[0])){
                                 i.setContactEmail(newEmail);
                                 break;
@@ -170,13 +170,14 @@ bool DatabaseConnection::executeQuery(const string& queryName, map<int, string> 
                                                stoi(query.value(2).toString().toStdString()));
 
                         //Attach to the Contact (should be ID of params[0])
-                        for(auto i : contacts){
+                        for(auto& i : contacts){
                             if(i.getContactId() == stoi(params[0])){
                                 i.setContactPhone(newPhone);
                                 break;
                             }
                         }
                     }else if(objectToMap == "address"){
+                        string st = query.value(0).toString().toStdString();
                         Address newAddress = Address(query.value(0).toString().toStdString(),
                                                query.value(1).toString().toStdString(),
                                                query.value(2).toString().toStdString(),
@@ -185,7 +186,7 @@ bool DatabaseConnection::executeQuery(const string& queryName, map<int, string> 
                                                stoi(query.value(5).toString().toStdString()));
 
                         //Attach to the Contact (should be ID of params[0])
-                        for(auto i : contacts){
+                        for(auto& i : contacts){
                             if(i.getContactId() == stoi(params[0])){
                                 i.setContactAddress(newAddress);
                                 break;
@@ -221,7 +222,7 @@ void DatabaseConnection::populateContactData(){
 
     map<int, string> paramMap;
 
-    for(auto i : contacts){
+    for(auto i : this->contacts){
         paramMap[0] = to_string(i.getContactId());
 
 
