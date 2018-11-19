@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>708</width>
-    <height>501</height>
+    <width>1100</width>
+    <height>688</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -17,8 +17,8 @@
    <widget class="QPushButton" name="addCategoryButton">
     <property name="geometry">
      <rect>
-      <x>420</x>
-      <y>390</y>
+      <x>280</x>
+      <y>560</y>
       <width>93</width>
       <height>28</height>
      </rect>
@@ -30,8 +30,8 @@
    <widget class="QPushButton" name="addContactButton">
     <property name="geometry">
      <rect>
-      <x>310</x>
-      <y>390</y>
+      <x>10</x>
+      <y>560</y>
       <width>93</width>
       <height>28</height>
      </rect>
@@ -43,8 +43,8 @@
    <widget class="QPushButton" name="addGroupButton">
     <property name="geometry">
      <rect>
-      <x>530</x>
-      <y>390</y>
+      <x>570</x>
+      <y>560</y>
       <width>93</width>
       <height>28</height>
      </rect>
@@ -56,10 +56,10 @@
    <widget class="QTableView" name="searchContactTable">
     <property name="geometry">
      <rect>
-      <x>20</x>
-      <y>10</y>
+      <x>10</x>
+      <y>80</y>
       <width>661</width>
-      <height>291</height>
+      <height>461</height>
      </rect>
     </property>
    </widget>
@@ -67,7 +67,7 @@
     <property name="geometry">
      <rect>
       <x>20</x>
-      <y>320</y>
+      <y>20</y>
       <width>431</width>
       <height>22</height>
      </rect>
@@ -85,8 +85,8 @@
    <widget class="QPushButton" name="searchButton">
     <property name="geometry">
      <rect>
-      <x>530</x>
-      <y>320</y>
+      <x>560</x>
+      <y>20</y>
       <width>93</width>
       <height>28</height>
      </rect>
@@ -95,13 +95,307 @@
      <string>Search</string>
     </property>
    </widget>
+   <widget class="QLabel" name="firstNameLabel">
+    <property name="geometry">
+     <rect>
+      <x>720</x>
+      <y>10</y>
+      <width>71</width>
+      <height>16</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>First Name:</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="lastNameLabel">
+    <property name="geometry">
+     <rect>
+      <x>720</x>
+      <y>40</y>
+      <width>71</width>
+      <height>16</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Last Name:</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="contactIdLabel">
+    <property name="geometry">
+     <rect>
+      <x>930</x>
+      <y>10</y>
+      <width>21</width>
+      <height>16</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>ID:</string>
+    </property>
+   </widget>
+   <widget class="QLineEdit" name="firstName">
+    <property name="geometry">
+     <rect>
+      <x>810</x>
+      <y>10</y>
+      <width>113</width>
+      <height>22</height>
+     </rect>
+    </property>
+   </widget>
+   <widget class="QLineEdit" name="lastName">
+    <property name="geometry">
+     <rect>
+      <x>810</x>
+      <y>40</y>
+      <width>113</width>
+      <height>22</height>
+     </rect>
+    </property>
+   </widget>
+   <widget class="QLineEdit" name="contactId">
+    <property name="geometry">
+     <rect>
+      <x>950</x>
+      <y>10</y>
+      <width>113</width>
+      <height>22</height>
+     </rect>
+    </property>
+    <property name="readOnly">
+     <bool>true</bool>
+    </property>
+   </widget>
+   <widget class="QListView" name="addressList">
+    <property name="geometry">
+     <rect>
+      <x>810</x>
+      <y>70</y>
+      <width>256</width>
+      <height>91</height>
+     </rect>
+    </property>
+   </widget>
+   <widget class="QLabel" name="addressLabel">
+    <property name="geometry">
+     <rect>
+      <x>720</x>
+      <y>70</y>
+      <width>81</width>
+      <height>16</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Addresses:</string>
+    </property>
+   </widget>
+   <widget class="QListView" name="phoneList">
+    <property name="geometry">
+     <rect>
+      <x>810</x>
+      <y>180</y>
+      <width>256</width>
+      <height>101</height>
+     </rect>
+    </property>
+   </widget>
+   <widget class="QLabel" name="phoneLabel">
+    <property name="geometry">
+     <rect>
+      <x>720</x>
+      <y>180</y>
+      <width>55</width>
+      <height>16</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Phones:</string>
+    </property>
+   </widget>
+   <widget class="QListView" name="emailList">
+    <property name="geometry">
+     <rect>
+      <x>810</x>
+      <y>300</y>
+      <width>256</width>
+      <height>111</height>
+     </rect>
+    </property>
+   </widget>
+   <widget class="QLabel" name="emailLabel">
+    <property name="geometry">
+     <rect>
+      <x>720</x>
+      <y>300</y>
+      <width>55</width>
+      <height>16</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Emails:</string>
+    </property>
+   </widget>
+   <widget class="QListView" name="groupList">
+    <property name="geometry">
+     <rect>
+      <x>810</x>
+      <y>430</y>
+      <width>256</width>
+      <height>111</height>
+     </rect>
+    </property>
+   </widget>
+   <widget class="QLabel" name="groupLabel">
+    <property name="geometry">
+     <rect>
+      <x>720</x>
+      <y>440</y>
+      <width>55</width>
+      <height>16</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Groups:</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="updateContactButton">
+    <property name="geometry">
+     <rect>
+      <x>810</x>
+      <y>560</y>
+      <width>121</width>
+      <height>28</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Update Contact</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="deleteContactButton">
+    <property name="geometry">
+     <rect>
+      <x>952</x>
+      <y>560</y>
+      <width>111</width>
+      <height>28</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Delete Contact</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="addAddressButton">
+    <property name="geometry">
+     <rect>
+      <x>720</x>
+      <y>90</y>
+      <width>61</width>
+      <height>21</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Add</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="addPhoneButton">
+    <property name="geometry">
+     <rect>
+      <x>720</x>
+      <y>200</y>
+      <width>61</width>
+      <height>21</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Add</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="addEmailButton">
+    <property name="geometry">
+     <rect>
+      <x>720</x>
+      <y>320</y>
+      <width>61</width>
+      <height>21</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Add</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="addGroupButton_2">
+    <property name="geometry">
+     <rect>
+      <x>720</x>
+      <y>460</y>
+      <width>61</width>
+      <height>21</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Add</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="deleteAddressButton">
+    <property name="geometry">
+     <rect>
+      <x>720</x>
+      <y>120</y>
+      <width>61</width>
+      <height>21</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Delete</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="deletePhoneButton">
+    <property name="geometry">
+     <rect>
+      <x>720</x>
+      <y>230</y>
+      <width>61</width>
+      <height>21</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Delete</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="deleteEmailButton">
+    <property name="geometry">
+     <rect>
+      <x>720</x>
+      <y>350</y>
+      <width>61</width>
+      <height>21</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Delete</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="deleteGroupButton">
+    <property name="geometry">
+     <rect>
+      <x>720</x>
+      <y>490</y>
+      <width>61</width>
+      <height>21</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Delete</string>
+    </property>
+   </widget>
   </widget>
   <widget class="QMenuBar" name="menuBar">
    <property name="geometry">
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>708</width>
+     <width>1100</width>
      <height>26</height>
     </rect>
    </property>
