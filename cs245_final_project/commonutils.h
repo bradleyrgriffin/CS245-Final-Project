@@ -23,6 +23,19 @@ public:
 
     map<string, string> dialogPrompt(MainWindow * thisPtr,vector<string> fieldNames);
 
+    bool validateFields(map<string, string>& data, MainWindow* thing);
+
+    //Just pass in a the button to disable/enable
+    void disableBtn(QPushButton* btn);
+    void enableBtn(QPushButton* btn);
+
+
+    //Disable/Enable buttons related to ContactID Field
+    //Pass in the window so we can alter the buttons
+    void toggleContactIdButtons(MainWindow * thing);
+
+    //Loads User Data to the Update Panel
+    void displayData(MainWindow* thing);
 
 private:
 

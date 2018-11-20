@@ -61,6 +61,12 @@ public:
         this->groups.clear();
     }
 
+    void setGroup(const int& id){
+        this->groups.push_back(id);
+    }
+
+    std::vector<int>& getGroupIds(){return this->groups; }
+
     void setFName(const std::string& fName){ this-> firstName = fName; }
     void setLName(const std::string& lName){ this->lastName = lName; }
 private:

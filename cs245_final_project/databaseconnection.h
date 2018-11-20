@@ -25,6 +25,7 @@ public:
     vector<Contact>& getContacts(){ return this->contacts; }
     vector<Category>& getCategories(){ return this->categories; }
     vector<Group>& getGroups(){ return this->groups; }
+    vector<Photo>& getPhotos(){ return this->photos; }
 
     bool deleteContact(int& id);
 
@@ -34,6 +35,10 @@ public:
     void addGroup(map<int, string>& data);
 
 
+    //Gets for Groups, Categories, Photos
+    Group& getGroupById(int& id);
+    Category& getCategoryById(int& id);
+    Photo& getPhotoById(int& id);
 
 
     void populateContactData();
@@ -53,7 +58,7 @@ private:
     vector<Contact> contacts;
     vector<Group> groups;
     vector<Category> categories;
-        
+    vector<Photo> photos;
 };
 
 #endif // DATABASECONNECTION_H

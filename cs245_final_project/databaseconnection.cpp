@@ -58,26 +58,27 @@ QString DatabaseConnection::getQueryStringByName(const string& queryName){
     string INSERT_CATEGORY = "INSERT INTO CATEGORY(CATEGORY_NAME) VALUES (?)";
     string INSERT_CONTACT = "INSERT INTO CONTACT(FIRST_NAME, LAST_NAME, PHOTO_LIBRARY_ID) VALUES (?, ?, ?)";
 
-    string INSERT_CONTACT_GROUP = "INSERT INTO CONTACT_X_GROUP(CONTACT_ID, GROUP_ID) VALUES(?, ?)";
+    string INSERT_CONTACT_GROUP = "INSERT INTO GROUP_X_CONTACT(CONTACT_ID, GROUP_ID) VALUES(?, ?)";
     string INSERT_CONTACT_EMAIL = "INSERT INTO CONTACT_X_EMAIL_X_CATEGORY(CONTACT_ID, EMAIL_ADDRESS, CATEGORY_ID) VALUES (?, ?, ?)";
     string INSERT_CONTACT_PHONE = "INSERT INTO CONTACT_X_PHONE_X_CATEGORY(PHONE_NUMBER, CONTACT_ID, CATEGORY_ID) VALUES (?, ?, ?)";
     string INSERT_CONTACT_ADDRESS = "INSERT INTO CONTACT_X_ADDRESS_X_CATEGORY(STREET_ADDRESS, CITY, STATE, ZIP_CODE, CONTACT_ID, CATEGORY_ID) VALUES(?, ?, ?, ?, ?, ?)";
 
-    //Select
+    //Select All
+    string GET_PHOTOS = "SELECT PHOTO_LIBRARY_ID, PHOTO_PATH FROM PHOTO_LIBRARY";
     string GET_CATEGORIES = "SELECT CATEGORY_NAME, CATEGORY_ID FROM CATEGORY";
     string GET_GROUPS = "SELECT GROUP_NAME, GROUP_ID FROM GROUPS";
     string GET_CONTACTS = "SELECT FIRST_NAME, LAST_NAME, CONTACT_ID, PHOTO_LIBRARY_ID FROM CONTACT";
     string GET_PHONE_NUMBERS_BY_CONTACT_ID = "SELECT PHONE_NUMBER, CONTACT_X_PHONE_X_CATEGORY_ID, CATEGORY_ID FROM CONTACT_X_PHONE_X_CATEGORY WHERE CONTACT_ID = ?";
     string GET_EMAIL_BY_CONTACT_ID = "SELECT EMAIL_ADDRESS, CONTACT_X_EMAIL_X_CATEGORY_ID, CATEGORY_ID FROM CONTACT_X_EMAIL_X_CATEGORY WHERE CONTACT_ID = ?";
     string GET_ADDRESS_BY_CONTACT_ID = "SELECT CITY, STATE, STREET_ADDRESS, ZIP_CODE, CONTACT_X_ADDRESS_X_CATEGORY_ID, CATEGORY_ID FROM CONTACT_X_ADDRESS_X_CATEGORY WHERE CONTACT_ID = ?";
+    string GET_GROUPS_BY_CONTACT_ID = "SELECT GROUP_ID FROM GROUP_X_CONTACT WHERE CONTACT_ID = ?";
 
-    string GET_CONTACT_EMAIL_ID_BY_EMAIL = "SELECT TOP(1) EMAIL_ADDRESS, CONTACT_X_EMAIL_X_CATEGORY_ID, CATEGORY_ID FROM CONTACT_X_EMAIL_X_CATEGORY WHERE CONTACT_ID = ? AND EMAIL_ADDRESS = ? AND CATEGORY_ID = ?";
-    string GET_CONTACT_PHONE_ID_BY_PHONE = "SELECT TOP(1) PHONE_NUMBER, CONTACT_X_PHONE_X_CATEGORY_ID, CATEGORY_ID FROM CONTACT_X_PHONE_X_CATEGORY WHERE CONTACT_ID = ? AND PHONE_NUMBER = ? AND CATEGORY_ID = ?";
-    string GET_CONTACT_ADDRESS_ID_BY_ADDRESS = "SELECT TOP(1) CITY, STATE, STREET_ADDRESS, ZIP_CODE, CONTACT_X_ADDRESS_X_CATEGORY_ID, CATEGORY_ID FROM CONTACT_X_ADDRESS_X_CATEGORY WHERE CONTACT_ID = ? AND STREET_ADDRESS = ? AND CITY = ? AND STATE = ? AND CATEGORY_ID = ?";
-
-//    string GET_GROUP_BY_NAME = "SELECT TOP(1) GROUP_ID FROM GROUPS WHERE GROUP_NAME = ?";
-//    string GET_CATEGORY_BY_NAME = "SELECT TOP(1) CATEGORY_ID FROM CATEGORY WHERE CATEGORY_NAME = ?";
-    string GET_CONTACT_ID_BY_FIRST_LAST_NAME = "SELECT TOP(1) FIRST_NAME, LAST_NAME, CONTACT_ID, PHOTO_LIBRARY_ID FROM CONTACT WHERE FIRST_NAME = ? AND LAST_NAME = ?";
+    //Select Unique
+    string GET_CONTACT_EMAIL_ID_BY_EMAIL = "SELECT TOP(1) EMAIL_ADDRESS, CONTACT_X_EMAIL_X_CATEGORY_ID, CATEGORY_ID FROM CONTACT_X_EMAIL_X_CATEGORY WHERE CONTACT_ID = ? AND EMAIL_ADDRESS = ? AND CATEGORY_ID = ? ORDER BY CONTACT_X_EMAIL_X_CATEGORY_ID DESC";
+    string GET_CONTACT_PHONE_ID_BY_PHONE = "SELECT TOP(1) PHONE_NUMBER, CONTACT_X_PHONE_X_CATEGORY_ID, CATEGORY_ID FROM CONTACT_X_PHONE_X_CATEGORY WHERE CONTACT_ID = ? AND PHONE_NUMBER = ? AND CATEGORY_ID = ? ORDER BY CONTACT_X_PHONE_X_CATEGORY_ID DESC";
+    string GET_CONTACT_ADDRESS_ID_BY_ADDRESS = "SELECT TOP(1) CITY, STATE, STREET_ADDRESS, ZIP_CODE, CONTACT_X_ADDRESS_X_CATEGORY_ID, CATEGORY_ID FROM CONTACT_X_ADDRESS_X_CATEGORY WHERE CONTACT_ID = ? AND STREET_ADDRESS = ? AND CITY = ? AND STATE = ? AND CATEGORY_ID = ? ORDER BY CONTACT_X_ADDRESS_X_CATEGORY_ID DESC";
+    string GET_GROUP_BY_ID = "SELECT TOP(1) GROUP_ID FROM GROUP_X_CONTACT WHERE CONTACT_ID = ? AND GROUP_ID = ? ORDER BY GROUP_ID DESC";
+    string GET_CONTACT_ID_BY_FIRST_LAST_NAME = "SELECT TOP(1) FIRST_NAME, LAST_NAME, CONTACT_ID, PHOTO_LIBRARY_ID FROM CONTACT WHERE FIRST_NAME = ? AND LAST_NAME = ? ORDER BY CONTACT_ID DESC";
 
     //Update
     string UPDATE_CONTACT = "UPDATE CONTACT SET FIRST_NAME = ?, LAST_NAME  = ? WHERE CONTACT_ID = ?";
@@ -98,6 +99,12 @@ QString DatabaseConnection::getQueryStringByName(const string& queryName){
 
     if(queryName == "GET_CONTACTS"){
         return QString::fromStdString(GET_CONTACTS);
+    }else if(queryName == "GET_GROUPS_BY_CONTACT_ID"){
+        return QString::fromStdString(GET_GROUPS_BY_CONTACT_ID);
+    }else if(queryName == "INSERT_CONTACT_GROUP"){
+        return QString::fromStdString(INSERT_CONTACT_GROUP);
+    }else if(queryName == "GET_PHOTOS"){
+        return QString::fromStdString(GET_PHOTOS);
     }else if(queryName == "GET_CONTACT_ADDRESS_ID_BY_ADDRESS"){
         return QString::fromStdString(GET_CONTACT_ADDRESS_ID_BY_ADDRESS);
     }else if(queryName == "GET_CONTACT_EMAIL_ID_BY_EMAIL"){
@@ -106,10 +113,8 @@ QString DatabaseConnection::getQueryStringByName(const string& queryName){
         return QString::fromStdString(GET_CONTACT_PHONE_ID_BY_PHONE);
     }else if(queryName == "DELETE_ALL_CONTACT_GROUPS"){
         return QString::fromStdString(DELETE_ALL_CONTACT_GROUPS);
-//    }else if(queryName == "GET_CATEGORY_BY_NAME"){
-//        return QString::fromStdString(GET_CATEGORY_BY_NAME);
-//    }else if(queryName == "GET_GROUP_BY_NAME"){
-//        return QString::fromStdString(GET_GROUP_BY_NAME);
+    }else if(queryName == "GET_GROUP_BY_ID"){
+        return QString::fromStdString(GET_GROUP_BY_ID);
     }else if(queryName == "GET_CONTACT_ID_BY_FIRST_LAST_NAME"){
         return QString::fromStdString(GET_CONTACT_ID_BY_FIRST_LAST_NAME);
     }else if(queryName == "INSERT_CONTACT_ADDRESS"){
@@ -168,9 +173,12 @@ bool DatabaseConnection::executeQuery(const string& queryName, map<int, string>&
             //Grabs the SQL Query from the query function.
             QString s = getQueryStringByName(queryName);
 
+            //Escape if we could not find the query
             if(s == "N"){
+                cout << "Query not found" << endl;
                 return false;
             }
+
             // prepare the query
             QSqlQuery query;
             query.setForwardOnly(true);
@@ -218,6 +226,13 @@ bool DatabaseConnection::executeQuery(const string& queryName, map<int, string>&
                                                         stoi(query.value(1).toString().toStdString()));
                         this->categories.push_back(newCategory);
                         cout << "Getting Categories" << endl;
+
+                    }else if(objectToMap == "photo"){
+                        Photo newPhoto = Photo(query.value(0).toString().toStdString(),
+                                               stoi(query.value(0).toString().toStdString()));
+                        this->photos.push_back(newPhoto);
+                        cout << "Getting Photos" << endl;
+
                     }else if(objectToMap == "group"){
 
                         Group newGroup = Group(query.value(0).toString().toStdString(),
@@ -225,7 +240,16 @@ bool DatabaseConnection::executeQuery(const string& queryName, map<int, string>&
 
                         this->groups.push_back(newGroup);
                         cout << "Getting Groups" << endl;
+
                     }else if(objectToMap == "contactGroups"){
+                        //Attach to the Contact (should be ID of params[0])
+                        for(auto& i : contacts){
+                            if(i.getContactId() == stoi(params[0])){
+                                i.setGroup(stoi(query.value(0).toString().toStdString()));
+                                break;
+                            }
+                        }
+                        cout <<"Getting Contact Groups" << endl;
 
                     }else if(objectToMap == "email"){
                         Email newEmail = Email(query.value(0).toString().toStdString(),
@@ -314,10 +338,12 @@ void DatabaseConnection::populateContactData(){
         executeQuery("GET_EMAIL_BY_CONTACT_ID", paramMap, "email");
         executeQuery("GET_PHONE_NUMBERS_BY_CONTACT_ID", paramMap, "phone");
         executeQuery("GET_ADDRESS_BY_CONTACT_ID", paramMap, "address");
+        executeQuery("GET_GROUPS_BY_CONTACT_ID", paramMap, "contactGroups");
     }
 
 }
 
+//This isn't used, but will refresh all the data from the database.
 void DatabaseConnection::refreshData(const string& data){
     map<int, string> paramMap;
     if(data == "contacts"){
@@ -325,11 +351,14 @@ void DatabaseConnection::refreshData(const string& data){
         executeQuery("GET_CONTACTS", paramMap, "contact");
         populateContactData();
     }else if(data == "categories"){
+        this->categories.clear();
         executeQuery("GET_CATEGORIES", paramMap, "category");
     }else if(data == "groups"){
+        this->groups.clear();
         executeQuery("GET_GROUPS", paramMap, "groups");
     }
 
+    populateContactData();
 
 }
 
@@ -362,6 +391,30 @@ void DatabaseConnection::addGroup(map<int, string>& data){
     map<int, string> paramMap;
     paramMap[0] = data[0];
     executeQuery("GET_GROUP_BY_NAME", paramMap, "group");
+}
+
+Group& DatabaseConnection::getGroupById(int& id){
+    for(auto& i : this->groups){
+        if(i.getGroupId() == id){
+            return i;
+        }
+    }
+}
+
+Category& DatabaseConnection::getCategoryById(int& id){
+    for(auto& i : this->categories){
+        if(i.getCategoryId() == id){
+            return i;
+        }
+    }
+}
+
+Photo& DatabaseConnection::getPhotoById(int& id){
+    for(auto& i : this->photos){
+        if(i.getPhotoId() == id){
+            return i;
+        }
+    }
 }
 
 DatabaseConnection::~DatabaseConnection(){

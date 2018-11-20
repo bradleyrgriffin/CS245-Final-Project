@@ -18,10 +18,8 @@ public:
     ~MainWindow();
 
     void loadData();
-    std::string GetCategoryNameById(int& id);
-    std::string GetGroupNameById(int& id);
 
-private slots:
+public slots:
     void on_actionExit_triggered();
 
     void on_addContactButton_clicked();
@@ -53,7 +51,7 @@ private slots:
 
     void on_addGroupButton_2_clicked();
 
-private:
+public:
     Ui::MainWindow *ui;
     DatabaseConnection data = DatabaseConnection();
 };

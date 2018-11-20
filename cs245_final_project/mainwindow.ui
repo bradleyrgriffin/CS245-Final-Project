@@ -79,7 +79,7 @@
      <string/>
     </property>
     <property name="text">
-     <string>Enter Your Search text Here...</string>
+     <string>Enter a Contact ID Here to Load data over there -&gt;...</string>
     </property>
    </widget>
    <widget class="QPushButton" name="searchButton">
@@ -135,6 +135,9 @@
     </property>
    </widget>
    <widget class="QLineEdit" name="firstName">
+    <property name="enabled">
+     <bool>true</bool>
+    </property>
     <property name="geometry">
      <rect>
       <x>810</x>
@@ -145,6 +148,9 @@
     </property>
    </widget>
    <widget class="QLineEdit" name="lastName">
+    <property name="enabled">
+     <bool>true</bool>
+    </property>
     <property name="geometry">
      <rect>
       <x>810</x>
@@ -164,10 +170,13 @@
      </rect>
     </property>
     <property name="readOnly">
-     <bool>false</bool>
+     <bool>true</bool>
     </property>
    </widget>
    <widget class="QListView" name="addressList">
+    <property name="enabled">
+     <bool>false</bool>
+    </property>
     <property name="geometry">
      <rect>
       <x>810</x>
@@ -175,6 +184,9 @@
       <width>256</width>
       <height>91</height>
      </rect>
+    </property>
+    <property name="isWrapping" stdset="0">
+     <bool>false</bool>
     </property>
    </widget>
    <widget class="QLabel" name="addressLabel">
@@ -191,6 +203,9 @@
     </property>
    </widget>
    <widget class="QListView" name="phoneList">
+    <property name="enabled">
+     <bool>false</bool>
+    </property>
     <property name="geometry">
      <rect>
       <x>810</x>
@@ -214,6 +229,9 @@
     </property>
    </widget>
    <widget class="QListView" name="emailList">
+    <property name="enabled">
+     <bool>false</bool>
+    </property>
     <property name="geometry">
      <rect>
       <x>810</x>
@@ -237,6 +255,9 @@
     </property>
    </widget>
    <widget class="QListView" name="groupList">
+    <property name="enabled">
+     <bool>false</bool>
+    </property>
     <property name="geometry">
      <rect>
       <x>810</x>
@@ -260,23 +281,29 @@
     </property>
    </widget>
    <widget class="QPushButton" name="updateContactButton">
+    <property name="enabled">
+     <bool>false</bool>
+    </property>
     <property name="geometry">
      <rect>
-      <x>810</x>
-      <y>560</y>
-      <width>121</width>
+      <x>860</x>
+      <y>550</y>
+      <width>161</width>
       <height>28</height>
      </rect>
     </property>
     <property name="text">
-     <string>Update Contact</string>
+     <string>Update First/Last Name</string>
     </property>
    </widget>
    <widget class="QPushButton" name="deleteContactButton">
+    <property name="enabled">
+     <bool>false</bool>
+    </property>
     <property name="geometry">
      <rect>
-      <x>952</x>
-      <y>560</y>
+      <x>890</x>
+      <y>580</y>
       <width>111</width>
       <height>28</height>
      </rect>
@@ -286,6 +313,9 @@
     </property>
    </widget>
    <widget class="QPushButton" name="addAddressButton">
+    <property name="enabled">
+     <bool>false</bool>
+    </property>
     <property name="geometry">
      <rect>
       <x>720</x>
@@ -299,6 +329,9 @@
     </property>
    </widget>
    <widget class="QPushButton" name="addPhoneButton">
+    <property name="enabled">
+     <bool>false</bool>
+    </property>
     <property name="geometry">
      <rect>
       <x>720</x>
@@ -312,6 +345,9 @@
     </property>
    </widget>
    <widget class="QPushButton" name="addEmailButton">
+    <property name="enabled">
+     <bool>false</bool>
+    </property>
     <property name="geometry">
      <rect>
       <x>720</x>
@@ -325,6 +361,9 @@
     </property>
    </widget>
    <widget class="QPushButton" name="addGroupButton_2">
+    <property name="enabled">
+     <bool>false</bool>
+    </property>
     <property name="geometry">
      <rect>
       <x>720</x>
@@ -338,6 +377,9 @@
     </property>
    </widget>
    <widget class="QPushButton" name="deleteAddressButton">
+    <property name="enabled">
+     <bool>false</bool>
+    </property>
     <property name="geometry">
      <rect>
       <x>720</x>
@@ -351,6 +393,9 @@
     </property>
    </widget>
    <widget class="QPushButton" name="deletePhoneButton">
+    <property name="enabled">
+     <bool>false</bool>
+    </property>
     <property name="geometry">
      <rect>
       <x>720</x>
@@ -364,6 +409,9 @@
     </property>
    </widget>
    <widget class="QPushButton" name="deleteEmailButton">
+    <property name="enabled">
+     <bool>false</bool>
+    </property>
     <property name="geometry">
      <rect>
       <x>720</x>
@@ -377,6 +425,9 @@
     </property>
    </widget>
    <widget class="QPushButton" name="deleteGroupButton">
+    <property name="enabled">
+     <bool>false</bool>
+    </property>
     <property name="geometry">
      <rect>
       <x>720</x>

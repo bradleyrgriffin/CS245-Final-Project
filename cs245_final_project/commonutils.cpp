@@ -5,7 +5,129 @@ CommonUtils::CommonUtils()
 
 }
 
+void CommonUtils::displayData(MainWindow* thing){
+    int id = stoi(thing->ui->contactId->text().toStdString());
+    for(auto& i : thing->data.getContacts()){
+        if(i.getContactId() == id){
+            thing->ui->firstName->setText(QString::fromStdString(i.getFirstName()));
+            thing->ui->lastName->setText(QString::fromStdString(i.getLastName()));
+            //Should figure out how to update the QTListView objects with this user's(i) data
+            //TODO:
 
+        }
+    }
+}
+
+void CommonUtils::toggleContactIdButtons(MainWindow* thing){
+    bool toggle = false;
+
+    try {
+        int id = stoi(thing->ui->contactId->text().toStdString());
+        for(auto& i : thing->data.getContacts()){
+            if(i.getContactId() == id){
+                toggle = true;
+                break;
+            }
+        }
+    } catch (exception& e) {
+        toggle = false;
+    }
+
+    if(toggle){
+        cout << "Enabling Contact Buttons" << endl;
+        enableBtn(thing->ui->updateContactButton);
+        enableBtn(thing->ui->addGroupButton_2);
+        enableBtn(thing->ui->addAddressButton);
+        enableBtn(thing->ui->addEmailButton);
+        enableBtn(thing->ui->addPhoneButton);
+        enableBtn(thing->ui->deleteContactButton);
+        enableBtn(thing->ui->deleteAddressButton);
+        enableBtn(thing->ui->deleteEmailButton);
+        enableBtn(thing->ui->deleteGroupButton);
+        enableBtn(thing->ui->deletePhoneButton);
+        displayData(thing);
+    }else{
+        thing->ui->contactId->setText("");
+
+        cout << "Disabling Contact Buttons" << endl;
+        disableBtn(thing->ui->updateContactButton);
+        disableBtn(thing->ui->addGroupButton_2);
+        disableBtn(thing->ui->addAddressButton);
+        disableBtn(thing->ui->addEmailButton);
+        disableBtn(thing->ui->addPhoneButton);
+        disableBtn(thing->ui->deleteContactButton);
+        disableBtn(thing->ui->deleteAddressButton);
+        disableBtn(thing->ui->deleteEmailButton);
+        disableBtn(thing->ui->deleteGroupButton);
+        disableBtn(thing->ui->deletePhoneButton);
+    }
+}
+void CommonUtils::disableBtn(QPushButton* btn){
+    btn->setEnabled(false);
+}
+
+
+void CommonUtils::enableBtn(QPushButton* btn){
+    btn->setEnabled(true);
+}
+
+bool CommonUtils::validateFields(map<string, string>& data, MainWindow* thing){
+    bool toggle = true;
+    for(auto& i : data){
+        if(i.second == ""){
+            cout << "Invalid Data in Fields" << endl;
+            return false;
+        }else if(i.first == "Group"){
+            try {
+                int id = stoi(i.second);
+                for(auto& g : thing->data.getGroups()){
+                    if(g.getGroupId() == id){
+                        toggle = true;
+                        break;
+                    }else{
+                        toggle = false;
+                    }
+                }
+
+            } catch (exception& e) {
+                cout << "Invalid Data in Fields" << endl;
+                return false;
+            }
+        }else if(i.first == "Category"){
+            try {
+                int id = stoi(i.second);
+                for(auto& c : thing->data.getCategories()){
+                    if(c.getCategoryId() == id){
+                        toggle = true;
+                        break;
+                    }else{
+                        toggle = false;
+                    }
+                }
+            } catch (exception& e) {
+                cout << "Invalid Data in Fields" << endl;
+                return false;
+            }
+        }else if (i.first == "Photo"){
+            try {
+                int id = stoi(i.second);
+                for(auto& p : thing->data.getPhotos()){
+                    if(p.getPhotoId() == id){
+                        toggle = true;
+                        break;
+                    }else{
+                        toggle = false;
+                    }
+                }
+            } catch (exception& e) {
+                cout << "Invalid Data in Fields" << endl;
+                return false;
+            }
+        }
+    }
+
+    return true;
+}
 
 //This function should take in "this" window, and a vector of labels. This will generate a dialog box, with line-edits,
 //and the attached labels, and will return a map of the labels passed in, and the values retrieved.

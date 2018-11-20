@@ -34,8 +34,7 @@ bool loginAuthentication(MainWindow * thisPtr){
     form.addRow(label, lineEdit);
     fields << lineEdit;
     // Add some standard buttons (Cancel/Ok) at the bottom of the dialog
-    QDialogButtonBox buttonBox(QDialogButtonBox::Ok | QDialogButtonBox::Cancel,
-                               Qt::Horizontal, &dialog);
+    QDialogButtonBox buttonBox(QDialogButtonBox::Ok | QDialogButtonBox::Cancel, Qt::Horizontal, &dialog);
     form.addRow(&buttonBox);
     QObject::connect(&buttonBox, SIGNAL(accepted()), &dialog, SLOT(accept()));
     QObject::connect(&buttonBox, SIGNAL(rejected()), &dialog, SLOT(reject()));
@@ -45,15 +44,10 @@ bool loginAuthentication(MainWindow * thisPtr){
     if (dialog.exec() == QDialog::Accepted) {
         // If the user didn't dismiss the dialog, do something with the fields
         username = fields[0]->text().toStdString();
-        password = fields[1]->text().toStdString();
-    }
+        password = fields[1]->text().toStdString();}
     User user = User(username, password);
-            cout << (user.verifyLogin() ? "Successful Login":"Failed Login") << endl;
-            if(!user.verifyLogin()){
-                return true;
-            }else{
-                return false;
-            }
+    cout << (user.verifyLogin() ? "Successful Login":"Failed Login") << endl;
+    return (user.verifyLogin() ? false : true);
 }
 /*-------------------DATA MANAGEMENT--------------------*/
 void MainWindow::loadData(){
@@ -61,22 +55,7 @@ void MainWindow::loadData(){
     this->data.executeQuery("GET_CONTACTS", paramMap, "contact");
     this->data.executeQuery("GET_GROUPS", paramMap, "group");
     this->data.executeQuery("GET_CATEGORIES", paramMap, "category");
-}
-string MainWindow::GetCategoryNameById(int& id){
-    for(auto i : this->data.getCategories()){
-        if(i.getCategoryId() == id){
-            return i.getCategoryName();
-        }
-    }
-    return "N/A";
-}
-string MainWindow::GetGroupNameById(int& id){
-    for(auto i : this->data.getGroups()){
-        if(i.getGroupId() == id){
-            return i.getGroupName();
-        }
-    }
-    return "N/A";
+    this->data.executeQuery("GET_PHOTOS", paramMap, "photo");
 }
 
 /*-------------------MAIN PROGRAM-------------------*/
@@ -93,8 +72,6 @@ MainWindow::MainWindow(QWidget *parent) :
         cout << "Error Logging In " << e.what() << endl;
         exit(1);
     }
-
-
     //This gets all the data from the database, and maps it to C++ objects.
     //All the data we need is stored in this->data property.
     try {
@@ -102,20 +79,13 @@ MainWindow::MainWindow(QWidget *parent) :
     } catch (exception& e) {
          cout << "Error loading data " << e.what() << endl;
     }
-
-
-    //Lazy loading
     try{
         this->data.populateContactData();
     } catch (exception& e) {
-         cout << "Error loading data " << e.what() << endl;
+         cout << "Error populating contact data " << e.what() << endl;
     }
-
     //Loads User Interface
     ui->setupUi(this);
-
-
-
 }
 
 
@@ -127,6 +97,7 @@ void MainWindow::on_actionExit_triggered()
 /*------------------------------BUTTONS----------------------------------*/
 void MainWindow::on_addContactButton_clicked()
 {
+
     vector<string> addcontactinformation;
     addcontactinformation.push_back("First Name");
     addcontactinformation.push_back("Last Name");
@@ -137,17 +108,21 @@ void MainWindow::on_addContactButton_clicked()
 
     CommonUtils utils = CommonUtils();
     returnMap = utils.dialogPrompt(this, addcontactinformation);
+    utils.toggleContactIdButtons(this);
 
-    map<int, string> paramMap;
-    int increment = 0;
-    for(auto i : returnMap){
-        cout << i.first << " is: " << i.second << endl;
-        paramMap[increment] = i.second;
-        increment++;
+    if(utils.validateFields(returnMap, this)){
+        map<int, string> paramMap;
+        int increment = 0;
+        for(auto i : returnMap){
+            cout << i.first << " is: " << i.second << endl;
+            paramMap[increment] = i.second;
+            increment++;
+        }
+
+        this->data.executeQuery("INSERT_CONTACT", paramMap, "insert");
+        this->data.addContact(paramMap);
     }
 
-    this->data.executeQuery("INSERT_CONTACT", paramMap, "insert");
-    this->data.addContact(paramMap);
 }
 void MainWindow::on_addCategoryButton_clicked()
 {
@@ -158,15 +133,18 @@ void MainWindow::on_addCategoryButton_clicked()
 
     CommonUtils utils = CommonUtils();
     returnMap = utils.dialogPrompt(this, addcategoryinformation);
+    utils.toggleContactIdButtons(this);
 
-    map<int, string> paramMap;
-    for(auto i : returnMap){
-        cout << i.first << " is: " << i.second << endl;
-        paramMap[0] = i.second;
+    if(utils.validateFields(returnMap, this)){
+        map<int, string> paramMap;
+        for(auto i : returnMap){
+            cout << i.first << " is: " << i.second << endl;
+            paramMap[0] = i.second;
+        }
+
+        this->data.executeQuery("INSERT_CATEGORY", paramMap, "insert");
+        this->data.addCategory(paramMap);
     }
-
-    this->data.executeQuery("INSERT_CATEGORY", paramMap, "insert");
-    this->data.addCategory(paramMap);
 
 }
 void MainWindow::on_addGroupButton_clicked()
@@ -178,15 +156,18 @@ void MainWindow::on_addGroupButton_clicked()
 
     CommonUtils utils = CommonUtils();
     returnMap = utils.dialogPrompt(this, addgroupinformation);
+    utils.toggleContactIdButtons(this);
 
-    map<int, string> paramMap;
+    if(utils.validateFields(returnMap, this)){
+        map<int, string> paramMap;
 
-    for(auto i : returnMap){
-        cout << i.first << " is: " << i.second << endl;
-        paramMap[0] = i.second;
+        for(auto i : returnMap){
+            cout << i.first << " is: " << i.second << endl;
+            paramMap[0] = i.second;
+        }
+        this->data.executeQuery("INSERT_GROUP", paramMap, "insert");
+        this->data.addGroup(paramMap);
     }
-    this->data.executeQuery("INSERT_GROUP", paramMap, "insert");
-    this->data.addGroup(paramMap);
 }
 void MainWindow::on_searchButton_clicked()
 {
@@ -200,8 +181,13 @@ void MainWindow::on_searchButton_clicked()
         cout << "ID/Name: " << i.getContactId() << "/" << i.getFirstName() << " " << i.getLastName() << endl <<
                "Primary Email: " << (i.getEmails().size() > 0 ? i.getEmails()[0].getEmailName():"N/A") << endl <<
                "Primary Phone: " << (i.getPhoneNumbers().size() > 0 ? i.getPhoneNumbers()[0].getPhoneNumber(): "N/A") << endl <<
-               "Primary Street Address: " << (i.getAddresses().size() > 0 ? i.getAddresses()[0].getAddress(): "N/A") << endl;
+               "Primary Street Address: " << (i.getAddresses().size() > 0 ? i.getAddresses()[0].getAddress(): "N/A") << endl <<
+                "Group:" << (i.getGroupIds().size() > 0 ? to_string(i.getGroupIds()[0]) : "N/A") << endl;
     }
+
+    this->ui->contactId->setText(this->ui->searchBar->text());
+    CommonUtils utils;
+    utils.toggleContactIdButtons(this);
 }
 MainWindow::~MainWindow()
 {
@@ -217,33 +203,48 @@ void MainWindow::on_deleteContactButton_clicked()
     map<string, string> returnMap;
     CommonUtils utils = CommonUtils();
     returnMap = utils.dialogPrompt(this, {"Are you Sure? Enter \"Yes\" To Confirm"});
+    utils.toggleContactIdButtons(this);
 
-    if(returnMap["Are you Sure? Enter \"Yes\" To Confirm"] == "Yes"){
-        this->data.executeQuery("DELETE_CONTACT", paramMap, "delete");
-        this->data.deleteContact(contactId);
+    if(utils.validateFields(returnMap, this)){
+        if(returnMap["Are you Sure? Enter \"Yes\" To Confirm"] == "Yes"){
+            this->data.executeQuery("DELETE_CONTACT", paramMap, "delete");
+            this->data.deleteContact(contactId);
+        }
     }
 
 }
 
 void MainWindow::on_updateContactButton_clicked()
 {
+
     int contactId = stoi(ui->contactId->text().toStdString());
     string fName = ui->firstName->text().toStdString();
     string lName = ui->lastName->text().toStdString();
-    map<int, string> paramMap;
-    paramMap[0] = fName;
-    paramMap[1] = lName;
-    paramMap[2] = to_string(contactId);
+    map<string, string> checkMap;
+    checkMap["first"] = fName;
+    checkMap["last"] = lName;
 
-    this->data.executeQuery("UPDATE_CONTACT", paramMap, "update");
+    CommonUtils utils;
+    utils.toggleContactIdButtons(this);
 
-    for(auto& i : this->data.getContacts()){
-        if(i.getContactId() == contactId){
-            i.setFName(fName);
-            i.setLName(lName);
-            break;
+    if(utils.validateFields(checkMap, this)){
+
+        map<int, string> paramMap;
+        paramMap[0] = fName;
+        paramMap[1] = lName;
+        paramMap[2] = to_string(contactId);
+
+        this->data.executeQuery("UPDATE_CONTACT", paramMap, "update");
+
+        for(auto& i : this->data.getContacts()){
+            if(i.getContactId() == contactId){
+                i.setFName(fName);
+                i.setLName(lName);
+                break;
+            }
         }
     }
+    utils.toggleContactIdButtons(this);
 }
 
 void MainWindow::on_addAddressButton_clicked()
@@ -260,25 +261,28 @@ void MainWindow::on_addAddressButton_clicked()
 
     CommonUtils utils = CommonUtils();
     returnMap = utils.dialogPrompt(this, addContactAddress);
+    utils.toggleContactIdButtons(this);
 
-    map<int, string> paramMap;
-    paramMap[0] = returnMap["Street"];
-    paramMap[1] = returnMap["City"];
-    paramMap[2] = returnMap["State"];
-    paramMap[3] = returnMap["ZIP"];
-    paramMap[4] = to_string(contactId);
-    paramMap[5] = returnMap["Category"];
+    if(utils.validateFields(returnMap, this)){
+        map<int, string> paramMap;
+        paramMap[0] = returnMap["Street"];
+        paramMap[1] = returnMap["City"];
+        paramMap[2] = returnMap["State"];
+        paramMap[3] = returnMap["ZIP"];
+        paramMap[4] = to_string(contactId);
+        paramMap[5] = returnMap["Category"];
 
-    this->data.executeQuery("INSERT_CONTACT_ADDRESS", paramMap, "insert");
+        this->data.executeQuery("INSERT_CONTACT_ADDRESS", paramMap, "insert");
 
-    paramMap.clear(); //Empty Out previous Values
+        paramMap.clear(); //Empty Out previous Values
 
-    paramMap[0] = to_string(contactId); //Contact Id
-    paramMap[1] = returnMap["Street"];
-    paramMap[2] = returnMap["City"];
-    paramMap[3] = returnMap["State"];
-    paramMap[4] = returnMap["Category"];
-    this->data.executeQuery("GET_CONTACT_ADDRESS_ID_BY_ADDRESS", paramMap, "address");
+        paramMap[0] = to_string(contactId); //Contact Id
+        paramMap[1] = returnMap["Street"];
+        paramMap[2] = returnMap["City"];
+        paramMap[3] = returnMap["State"];
+        paramMap[4] = returnMap["Category"];
+        this->data.executeQuery("GET_CONTACT_ADDRESS_ID_BY_ADDRESS", paramMap, "address");
+    }
 }
 
 void MainWindow::on_deleteAddressButton_clicked()
@@ -352,16 +356,19 @@ void MainWindow::on_addPhoneButton_clicked()
 
     CommonUtils utils = CommonUtils();
     returnMap = utils.dialogPrompt(this, addContactAddress);
+    utils.toggleContactIdButtons(this);
 
-    map<int, string> paramMap;
-    paramMap[0] = returnMap["Phone"];
-    paramMap[1] = to_string(contactId);
-    paramMap[2] = returnMap["Category"];
+    if(utils.validateFields(returnMap, this)){
+        map<int, string> paramMap;
+        paramMap[0] = returnMap["Phone"];
+        paramMap[1] = to_string(contactId);
+        paramMap[2] = returnMap["Category"];
 
-    this->data.executeQuery("INSERT_CONTACT_PHONE", paramMap, "insert");
-    paramMap[0] = paramMap[1];
-    paramMap[1] = returnMap["Phone"];
-    this->data.executeQuery("GET_CONTACT_PHONE_ID_BY_PHONE", paramMap, "phone");
+        this->data.executeQuery("INSERT_CONTACT_PHONE", paramMap, "insert");
+        paramMap[0] = paramMap[1];
+        paramMap[1] = returnMap["Phone"];
+        this->data.executeQuery("GET_CONTACT_PHONE_ID_BY_PHONE", paramMap, "phone");
+    }
 }
 
 void MainWindow::on_addEmailButton_clicked()
@@ -375,14 +382,17 @@ void MainWindow::on_addEmailButton_clicked()
 
     CommonUtils utils = CommonUtils();
     returnMap = utils.dialogPrompt(this, addContactAddress);
+    utils.toggleContactIdButtons(this);
 
-    map<int, string> paramMap;
-    paramMap[0] = to_string(contactId);
-    paramMap[1] = returnMap["Email"];
-    paramMap[2] = returnMap["Category"];
+    if(utils.validateFields(returnMap, this)){
+        map<int, string> paramMap;
+        paramMap[0] = to_string(contactId);
+        paramMap[1] = returnMap["Email"];
+        paramMap[2] = returnMap["Category"];
 
-    this->data.executeQuery("INSERT_CONTACT_EMAIL", paramMap, "insert");
-    this->data.executeQuery("GET_CONTACT_EMAIL_ID_BY_EMAIL", paramMap, "email");
+        this->data.executeQuery("INSERT_CONTACT_EMAIL", paramMap, "insert");
+        this->data.executeQuery("GET_CONTACT_EMAIL_ID_BY_EMAIL", paramMap, "email");
+    }
 }
 
 void MainWindow::on_addGroupButton_2_clicked()
@@ -395,10 +405,14 @@ void MainWindow::on_addGroupButton_2_clicked()
 
     CommonUtils utils = CommonUtils();
     returnMap = utils.dialogPrompt(this, addContactAddress);
+    utils.toggleContactIdButtons(this);
 
-    map<int, string> paramMap;
-    paramMap[0] = to_string(contactId);
-    paramMap[1] = returnMap["Group"];
+    if(utils.validateFields(returnMap, this)){
+        map<int, string> paramMap;
+        paramMap[0] = to_string(contactId); //Contact Id
+        paramMap[1] = returnMap["Group"]; //Group Id
 
-    this->data.executeQuery("INSERT_CONTACT_GROUP", paramMap, "insert");
+        this->data.executeQuery("INSERT_CONTACT_GROUP", paramMap, "insert");
+        this->data.executeQuery("GET_GROUP_BY_ID", paramMap, "contactGroups");
+    }
 }
