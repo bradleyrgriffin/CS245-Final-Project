@@ -10,6 +10,7 @@
 #include <QDialogButtonBox>
 #include <QtDebug>
 #include "User.h"
+#include <contact.h>
 #include <string>
 #include <map>
 #include "commonutils.h"
@@ -58,8 +59,8 @@ bool loginAuthentication(MainWindow * thisPtr){
 void MainWindow::loadData(){
     map<int, string> paramMap;
     this->data.executeQuery("GET_CONTACTS", paramMap, "contact");
-    //this->data.executeQuery("GET_GROUPS", paramMap, "contact");
-    //this->data.executeQuery("GET_CATEGORIES", paramMap, "contact");
+    this->data.executeQuery("GET_GROUPS", paramMap, "group");
+    this->data.executeQuery("GET_CATEGORIES", paramMap, "category");
 }
 string MainWindow::GetCategoryNameById(int& id){
     for(auto i : this->data.getCategories()){
@@ -86,14 +87,29 @@ MainWindow::MainWindow(QWidget *parent) :
     //Initial Login Prompt, code is above.
     //It uses a QtDialog box and get the username/password and compares the password
     //hashes to confirm login, exits if incorrect login.
-    while(loginAuthentication(this));
+    try{
+        while(loginAuthentication(this));
+    }catch (exception& e){
+        cout << "Error Logging In " << e.what() << endl;
+        exit(1);
+    }
+
 
     //This gets all the data from the database, and maps it to C++ objects.
     //All the data we need is stored in this->data property.
-    loadData();
+    try {
+        loadData();
+    } catch (exception& e) {
+         cout << "Error loading data " << e.what() << endl;
+    }
+
 
     //Lazy loading
-    this->data.populateContactData();
+    try{
+        this->data.populateContactData();
+    } catch (exception& e) {
+         cout << "Error loading data " << e.what() << endl;
+    }
 
     //Loads User Interface
     ui->setupUi(this);
@@ -129,7 +145,9 @@ void MainWindow::on_addContactButton_clicked()
         paramMap[increment] = i.second;
         increment++;
     }
+
     this->data.executeQuery("INSERT_CONTACT", paramMap, "insert");
+    this->data.addContact(paramMap);
 }
 void MainWindow::on_addCategoryButton_clicked()
 {
@@ -148,6 +166,7 @@ void MainWindow::on_addCategoryButton_clicked()
     }
 
     this->data.executeQuery("INSERT_CATEGORY", paramMap, "insert");
+    this->data.addCategory(paramMap);
 
 }
 void MainWindow::on_addGroupButton_clicked()
@@ -167,6 +186,7 @@ void MainWindow::on_addGroupButton_clicked()
         paramMap[0] = i.second;
     }
     this->data.executeQuery("INSERT_GROUP", paramMap, "insert");
+    this->data.addGroup(paramMap);
 }
 void MainWindow::on_searchButton_clicked()
 {
@@ -174,7 +194,9 @@ void MainWindow::on_searchButton_clicked()
     //all the data together, concatenating email, first name, last name, and address, and stripping special characters,
     //And also uppercasing everything.
 
-    for( auto i : this->data.getContacts()){
+    //this->data.refreshData("contacts");
+
+    for(auto& i : this->data.getContacts()){
         cout << "ID/Name: " << i.getContactId() << "/" << i.getFirstName() << " " << i.getLastName() << endl <<
                "Primary Email: " << (i.getEmails().size() > 0 ? i.getEmails()[0].getEmailName():"N/A") << endl <<
                "Primary Phone: " << (i.getPhoneNumbers().size() > 0 ? i.getPhoneNumbers()[0].getPhoneNumber(): "N/A") << endl <<
@@ -184,4 +206,21 @@ void MainWindow::on_searchButton_clicked()
 MainWindow::~MainWindow()
 {
     delete ui;
+}
+
+void MainWindow::on_deleteContactButton_clicked()
+{
+
+    int contactId = stoi(ui->contactId->text().toStdString());
+    map<int, string> paramMap;
+    paramMap[0] = to_string(contactId);
+    map<string, string> returnMap;
+    CommonUtils utils = CommonUtils();
+    returnMap = utils.dialogPrompt(this, {"Are you Sure? Enter Yes To Confirm"});
+
+    if(returnMap["Are you Sure? Enter Yes To Confirm"] == "Yes"){
+        this->data.executeQuery("DELETE_CONTACT", paramMap, "delete");
+        this->data.deleteContact(contactId);
+    }
+
 }

@@ -20,13 +20,23 @@ class DatabaseConnection
 public:
     DatabaseConnection();
     ~DatabaseConnection();
-    bool executeQuery(const string& sql, map<int,string> params, const string& objectToMap);
+    bool executeQuery(const string& sql, map<int,string>& params, const string& objectToMap);
 
     vector<Contact>& getContacts(){ return this->contacts; }
     vector<Category>& getCategories(){ return this->categories; }
     vector<Group>& getGroups(){ return this->groups; }
 
+    bool deleteContact(int& id);
+
+    //Add Contact
+    void addContact(map<int, string>& data);
+    void addCategory(map<int, string>& data);
+    void addGroup(map<int, string>& data);
+
+
     void populateContactData();
+
+    void refreshData(const string& dataToRefresh);
 
 private:
     string connectionString;

@@ -33,6 +33,8 @@ private slots:
     void on_searchButton_clicked();
 
 
+    void on_deleteContactButton_clicked();
+
 private:
     Ui::MainWindow *ui;
     DatabaseConnection data = DatabaseConnection();

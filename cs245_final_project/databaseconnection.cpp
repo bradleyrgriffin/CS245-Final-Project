@@ -57,6 +57,7 @@ QString DatabaseConnection::getQueryStringByName(const string& queryName){
     string INSERT_GROUP = "INSERT INTO GROUPS(GROUP_NAME) VALUES(?)";
     string INSERT_CATEGORY = "INSERT INTO CATEGORY(CATEGORY_NAME) VALUES (?)";
     string INSERT_CONTACT = "INSERT INTO CONTACT(FIRST_NAME, LAST_NAME, PHOTO_LIBRARY_ID) VALUES (?, ?, ?)";
+
     string INSERT_CONTACT_GROUP = "INSERT INTO CONTACT_X_GROUP(CONTACT_ID, GROUP_ID) VALUES(?, ?)";
     string INSERT_CONTACT_EMAIL = "INSERT INTO CONTACT_X_EMAIL_X_CATEGORY(CONTACT_ID, EMAIL_ADDRESS, CATEGORY_ID) VALUES (?, ?, ?)";
     string INSERT_CONTACT_PHONE = "INSERT INTO CONTACT_X_PHONE_X_CATEGORY(PHONE_NUMBER, CONTACT_ID, CATEGORY_ID) VALUES (?, ?, ?)";
@@ -70,6 +71,9 @@ QString DatabaseConnection::getQueryStringByName(const string& queryName){
     string GET_EMAIL_BY_CONTACT_ID = "SELECT EMAIL_ADDRESS, CONTACT_X_EMAIL_X_CATEGORY_ID, CATEGORY_ID FROM CONTACT_X_EMAIL_X_CATEGORY WHERE CONTACT_ID = ?";
     string GET_ADDRESS_BY_CONTACT_ID = "SELECT CITY, STATE, STREET_ADDRESS, ZIP_CODE, CONTACT_X_ADDRESS_X_CATEGORY_ID, CATEGORY_ID FROM CONTACT_X_ADDRESS_X_CATEGORY WHERE CONTACT_ID = ?";
 
+    string GET_GROUP_BY_NAME = "SELECT TOP(1) GROUP_NAME, GROUP_ID FROM GROUPS WHERE GROUP_NAME = ?";
+    string GET_CATEGORY_BY_NAME = "SELECT TOP(1) CATEGORY_NAME, CATEGORY_ID FROM CATEGORY WHERE CATEGORY_NAME = ?";
+    string GET_CONTACT_ID_BY_FIRST_LAST_NAME = "SELECT TOP(1) FIRST_NAME, LAST_NAME, CONTACT_ID, PHOTO_LIBRARY_ID FROM CONTACT WHERE FIRST_NAME = ? AND LAST_NAME = ?";
     //Update
     string UPDATE_CONTACT = "UPDATE CONTACT SET FIRST_NAME = ?, LAST_NAME  = ?";
 
@@ -88,6 +92,34 @@ QString DatabaseConnection::getQueryStringByName(const string& queryName){
 
     if(queryName == "GET_CONTACTS"){
         return QString::fromStdString(GET_CONTACTS);
+    }else if(queryName == "GET_CATEGORY_BY_NAME"){
+        return QString::fromStdString(GET_CATEGORY_BY_NAME);
+    }else if(queryName == "GET_GROUP_BY_NAME"){
+        return QString::fromStdString(GET_GROUP_BY_NAME);
+    }else if(queryName == "GET_CONTACT_ID_BY_FIRST_LAST_NAME"){
+        return QString::fromStdString(GET_CONTACT_ID_BY_FIRST_LAST_NAME);
+    }else if(queryName == "INSERT_CONTACT_ADDRESS"){
+        return QString::fromStdString(INSERT_CONTACT_ADDRESS);
+    }else if(queryName == "INSERT_CONTACT_PHONE"){
+            return QString::fromStdString(INSERT_CONTACT_PHONE);
+    }else if(queryName == "INSERT_CONTACT_EMAIL"){
+        return QString::fromStdString(INSERT_CONTACT_EMAIL);
+    }else if(queryName == "UPDATE_CONTACT"){
+        return QString::fromStdString(UPDATE_CONTACT);
+    }else if(queryName == "DELETE_CONTACT"){
+        return QString::fromStdString(DELETE_CONTACT);
+    }else if(queryName == "DELETE_ALL_CONTACT_EMAILS"){
+        return QString::fromStdString(DELETE_ALL_CONTACT_EMAILS);
+    }else if(queryName == "DELETE_ALL_CONTACT_PHONE"){
+        return QString::fromStdString(DELETE_ALL_CONTACT_PHONE);
+    }else if(queryName == "DELETE_ALL_CONTACT_ADDRESS"){
+        return QString::fromStdString(DELETE_ALL_CONTACT_ADDRESS);
+    }else if(queryName == "DELETE_SINGLE_EMAIL"){
+        return QString::fromStdString(DELETE_SINGLE_EMAIL);
+    }else if(queryName == "DELETE_SINGLE_PHONE"){
+        return QString::fromStdString(DELETE_SINGLE_PHONE);
+    }else if(queryName == "DELETE_SINGLE_ADDRESS"){
+        return QString::fromStdString(DELETE_SINGLE_ADDRESS);
     }else if(queryName == "INSERT_GROUP"){
         return QString::fromStdString(INSERT_GROUP);
     }else if(queryName == "INSERT_CATEGORY"){
@@ -111,7 +143,7 @@ QString DatabaseConnection::getQueryStringByName(const string& queryName){
 
 
 //This Executes a query, binding the parameters.
-bool DatabaseConnection::executeQuery(const string& queryName, map<int, string> params, const string& objectToMap){
+bool DatabaseConnection::executeQuery(const string& queryName, map<int, string>& params, const string& objectToMap){
     // open the connection
     bool ok = this->db.open();
 
@@ -122,6 +154,9 @@ bool DatabaseConnection::executeQuery(const string& queryName, map<int, string> 
             //Grabs the SQL Query from the query function.
             QString s = getQueryStringByName(queryName);
 
+            if(s == "N"){
+                return false;
+            }
             // prepare the query
             QSqlQuery query;
             query.setForwardOnly(true);
@@ -135,6 +170,7 @@ bool DatabaseConnection::executeQuery(const string& queryName, map<int, string> 
 
 
 
+            try{
             // execute the query
             if(query.exec())
             {
@@ -142,6 +178,7 @@ bool DatabaseConnection::executeQuery(const string& queryName, map<int, string> 
                 //Result Set
                 while (query.next())
                 {
+                try{
                     //Assign to The Object Needed...
                     if(objectToMap == "contact"){
 
@@ -152,20 +189,23 @@ bool DatabaseConnection::executeQuery(const string& queryName, map<int, string> 
                                     stoi(query.value(3).toString().toStdString()));
 
                         this->contacts.push_back(newContact);
-
+                        cout << "Getting Contacts" << endl;
 
                     }else if(objectToMap == "insert"){
                              cout << "Just an insert" << endl;
                     }else if(objectToMap == "category"){
+
                         Category newCategory = Category(query.value(0).toString().toStdString(),
                                                         stoi(query.value(1).toString().toStdString()));
                         this->categories.push_back(newCategory);
-
+                        cout << "Getting Categories" << endl;
                     }else if(objectToMap == "group"){
+
                         Group newGroup = Group(query.value(0).toString().toStdString(),
                                                stoi(query.value(1).toString().toStdString()));
 
                         this->groups.push_back(newGroup);
+                        cout << "Getting Groups" << endl;
 
                     }else if(objectToMap == "email"){
                         Email newEmail = Email(query.value(0).toString().toStdString(),
@@ -179,6 +219,8 @@ bool DatabaseConnection::executeQuery(const string& queryName, map<int, string> 
                                 break;
                             }
                         }
+
+                        cout << "Getting Emails" << endl;
                     }else if(objectToMap == "phone"){
                         Phone newPhone = Phone(query.value(0).toString().toStdString(),
                                                stoi(query.value(1).toString().toStdString()),
@@ -191,6 +233,8 @@ bool DatabaseConnection::executeQuery(const string& queryName, map<int, string> 
                                 break;
                             }
                         }
+
+                        cout << "Getting Phone Numbers" << endl;
                     }else if(objectToMap == "address"){
                         string st = query.value(0).toString().toStdString();
                         Address newAddress = Address(query.value(0).toString().toStdString(),
@@ -207,6 +251,8 @@ bool DatabaseConnection::executeQuery(const string& queryName, map<int, string> 
                                 break;
                             }
                         }
+
+                        cout << "Getting Addresses" << endl;
                     }else{
                         try{
                             data.push_back(query.value(1).toString().toStdString());
@@ -218,16 +264,20 @@ bool DatabaseConnection::executeQuery(const string& queryName, map<int, string> 
                             cout << "Error When Retrieving Result Set: " << e.what() << endl;
                         }
                     }
+                    }catch(exception& e){
+                        cout << "Failed the mapping " << e.what() << endl;
+                    }
                 }
 
                 this->db.close();
                 return true;
             }
 
-        } else {
-            cout << "failed ok" << endl;
+        } catch(exception& e){
+            cout << "Failed To Execute Query " << e.what() << endl;
             this->db.close();
             return false;
+        }
         }
         this->db.close();
         return false;
@@ -246,6 +296,52 @@ void DatabaseConnection::populateContactData(){
         executeQuery("GET_ADDRESS_BY_CONTACT_ID", paramMap, "address");
     }
 
+}
+
+void DatabaseConnection::refreshData(const string& data){
+    map<int, string> paramMap;
+    if(data == "contacts"){
+        this->contacts.clear();
+        executeQuery("GET_CONTACTS", paramMap, "contact");
+        populateContactData();
+    }else if(data == "categories"){
+        executeQuery("GET_CATEGORIES", paramMap, "category");
+    }else if(data == "groups"){
+        executeQuery("GET_GROUPS", paramMap, "groups");
+    }
+
+
+}
+
+bool DatabaseConnection::deleteContact(int& id){
+
+    for(std::vector<Contact>::iterator it = this->contacts.begin(); it != this->contacts.end(); ++it) {
+        if((*it).getContactId() == id){
+            this->contacts.erase(it);
+            return true;
+        }
+    }
+
+    return false;
+}
+
+void DatabaseConnection::addContact(map<int, string>& data){
+    map<int, string> paramMap;
+    paramMap[0] = data[0];
+    paramMap[1] = data[1];
+    executeQuery("GET_CONTACT_ID_BY_FIRST_LAST_NAME", paramMap, "contact");
+}
+
+void DatabaseConnection::addCategory(map<int, string>& data){
+    map<int, string> paramMap;
+    paramMap[0] = data[0];
+    executeQuery("GET_CATEGORY_BY_NAME", paramMap, "category");
+}
+
+void DatabaseConnection::addGroup(map<int, string>& data){
+    map<int, string> paramMap;
+    paramMap[0] = data[0];
+    executeQuery("GET_GROUP_BY_NAME", paramMap, "group");
 }
 
 DatabaseConnection::~DatabaseConnection(){

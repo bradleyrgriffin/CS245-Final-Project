@@ -112,7 +112,7 @@ public:
         contactId = new QLineEdit(centralWidget);
         contactId->setObjectName(QStringLiteral("contactId"));
         contactId->setGeometry(QRect(950, 10, 113, 22));
-        contactId->setReadOnly(true);
+        contactId->setReadOnly(false);
         addressList = new QListView(centralWidget);
         addressList->setObjectName(QStringLiteral("addressList"));
         addressList->setGeometry(QRect(810, 70, 256, 91));
