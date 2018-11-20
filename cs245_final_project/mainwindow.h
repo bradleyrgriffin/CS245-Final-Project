@@ -35,6 +35,24 @@ private slots:
 
     void on_deleteContactButton_clicked();
 
+    void on_updateContactButton_clicked();
+
+    void on_addAddressButton_clicked();
+
+    void on_deleteAddressButton_clicked();
+
+    void on_deletePhoneButton_clicked();
+
+    void on_deleteEmailButton_clicked();
+
+    void on_deleteGroupButton_clicked();
+
+    void on_addPhoneButton_clicked();
+
+    void on_addEmailButton_clicked();
+
+    void on_addGroupButton_2_clicked();
+
 private:
     Ui::MainWindow *ui;
     DatabaseConnection data = DatabaseConnection();

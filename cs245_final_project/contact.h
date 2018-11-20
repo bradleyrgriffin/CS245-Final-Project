@@ -44,6 +44,25 @@ public:
     void setContactAddress(Address address){
         this->addresses.push_back(address);
     }
+
+    void clearAddresses(){
+        this->addresses.clear();
+    }
+
+    void clearPhones(){
+        this->phones.clear();
+    }
+
+    void clearEmails(){
+        this->emails.clear();
+    }
+
+    void clearGroups(){
+        this->groups.clear();
+    }
+
+    void setFName(const std::string& fName){ this-> firstName = fName; }
+    void setLName(const std::string& lName){ this->lastName = lName; }
 private:
     std::vector<Address> addresses;
     std::vector<Phone> phones;

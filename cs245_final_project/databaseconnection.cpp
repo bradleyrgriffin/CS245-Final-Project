@@ -71,11 +71,16 @@ QString DatabaseConnection::getQueryStringByName(const string& queryName){
     string GET_EMAIL_BY_CONTACT_ID = "SELECT EMAIL_ADDRESS, CONTACT_X_EMAIL_X_CATEGORY_ID, CATEGORY_ID FROM CONTACT_X_EMAIL_X_CATEGORY WHERE CONTACT_ID = ?";
     string GET_ADDRESS_BY_CONTACT_ID = "SELECT CITY, STATE, STREET_ADDRESS, ZIP_CODE, CONTACT_X_ADDRESS_X_CATEGORY_ID, CATEGORY_ID FROM CONTACT_X_ADDRESS_X_CATEGORY WHERE CONTACT_ID = ?";
 
-    string GET_GROUP_BY_NAME = "SELECT TOP(1) GROUP_NAME, GROUP_ID FROM GROUPS WHERE GROUP_NAME = ?";
-    string GET_CATEGORY_BY_NAME = "SELECT TOP(1) CATEGORY_NAME, CATEGORY_ID FROM CATEGORY WHERE CATEGORY_NAME = ?";
+    string GET_CONTACT_EMAIL_ID_BY_EMAIL = "SELECT TOP(1) EMAIL_ADDRESS, CONTACT_X_EMAIL_X_CATEGORY_ID, CATEGORY_ID FROM CONTACT_X_EMAIL_X_CATEGORY WHERE CONTACT_ID = ? AND EMAIL_ADDRESS = ? AND CATEGORY_ID = ?";
+    string GET_CONTACT_PHONE_ID_BY_PHONE = "SELECT TOP(1) PHONE_NUMBER, CONTACT_X_PHONE_X_CATEGORY_ID, CATEGORY_ID FROM CONTACT_X_PHONE_X_CATEGORY WHERE CONTACT_ID = ? AND PHONE_NUMBER = ? AND CATEGORY_ID = ?";
+    string GET_CONTACT_ADDRESS_ID_BY_ADDRESS = "SELECT TOP(1) CITY, STATE, STREET_ADDRESS, ZIP_CODE, CONTACT_X_ADDRESS_X_CATEGORY_ID, CATEGORY_ID FROM CONTACT_X_ADDRESS_X_CATEGORY WHERE CONTACT_ID = ? AND STREET_ADDRESS = ? AND CITY = ? AND STATE = ? AND CATEGORY_ID = ?";
+
+//    string GET_GROUP_BY_NAME = "SELECT TOP(1) GROUP_ID FROM GROUPS WHERE GROUP_NAME = ?";
+//    string GET_CATEGORY_BY_NAME = "SELECT TOP(1) CATEGORY_ID FROM CATEGORY WHERE CATEGORY_NAME = ?";
     string GET_CONTACT_ID_BY_FIRST_LAST_NAME = "SELECT TOP(1) FIRST_NAME, LAST_NAME, CONTACT_ID, PHOTO_LIBRARY_ID FROM CONTACT WHERE FIRST_NAME = ? AND LAST_NAME = ?";
+
     //Update
-    string UPDATE_CONTACT = "UPDATE CONTACT SET FIRST_NAME = ?, LAST_NAME  = ?";
+    string UPDATE_CONTACT = "UPDATE CONTACT SET FIRST_NAME = ?, LAST_NAME  = ? WHERE CONTACT_ID = ?";
 
     //Delete
 
@@ -83,7 +88,8 @@ QString DatabaseConnection::getQueryStringByName(const string& queryName){
         string DELETE_ALL_CONTACT_EMAILS = "DELETE FROM CONTACT_X_EMAIL_X_CATEGORY WHERE CONTACT_ID = ?"; //1
         string DELETE_ALL_CONTACT_PHONE = "DELETE FROM CONTACT_X_PHONE_X_CATEGORY WHERE CONTACT_ID = ?"; //2
         string DELETE_ALL_CONTACT_ADDRESS = "DELETE FROM CONTACT_X_ADDRESS_X_CATEGORY WHERE CONTACT_ID = ?"; //3
-        string DELETE_CONTACT = "DELETE FROM CONTACT WHERE CONTACT_ID = ?"; //4
+        string DELETE_ALL_CONTACT_GROUPS = "DELETE FROM GROUP_X_CONTACT WHERE CONTACT_ID = ?";
+        string DELETE_CONTACT = "DELETE FROM CONTACT WHERE CONTACT_ID = ?"; //5
 
     //Remove Individual records
     string DELETE_SINGLE_EMAIL = "DELETE FROM CONTACT_X_EMAIL_X_CATEGORY WHERE CONTACT_X_EMAIL_X_CATEGORY_ID = ?";
@@ -92,10 +98,18 @@ QString DatabaseConnection::getQueryStringByName(const string& queryName){
 
     if(queryName == "GET_CONTACTS"){
         return QString::fromStdString(GET_CONTACTS);
-    }else if(queryName == "GET_CATEGORY_BY_NAME"){
-        return QString::fromStdString(GET_CATEGORY_BY_NAME);
-    }else if(queryName == "GET_GROUP_BY_NAME"){
-        return QString::fromStdString(GET_GROUP_BY_NAME);
+    }else if(queryName == "GET_CONTACT_ADDRESS_ID_BY_ADDRESS"){
+        return QString::fromStdString(GET_CONTACT_ADDRESS_ID_BY_ADDRESS);
+    }else if(queryName == "GET_CONTACT_EMAIL_ID_BY_EMAIL"){
+        return QString::fromStdString(GET_CONTACT_EMAIL_ID_BY_EMAIL);
+    }else if(queryName == "GET_CONTACT_PHONE_ID_BY_PHONE"){
+        return QString::fromStdString(GET_CONTACT_PHONE_ID_BY_PHONE);
+    }else if(queryName == "DELETE_ALL_CONTACT_GROUPS"){
+        return QString::fromStdString(DELETE_ALL_CONTACT_GROUPS);
+//    }else if(queryName == "GET_CATEGORY_BY_NAME"){
+//        return QString::fromStdString(GET_CATEGORY_BY_NAME);
+//    }else if(queryName == "GET_GROUP_BY_NAME"){
+//        return QString::fromStdString(GET_GROUP_BY_NAME);
     }else if(queryName == "GET_CONTACT_ID_BY_FIRST_LAST_NAME"){
         return QString::fromStdString(GET_CONTACT_ID_BY_FIRST_LAST_NAME);
     }else if(queryName == "INSERT_CONTACT_ADDRESS"){
@@ -174,6 +188,13 @@ bool DatabaseConnection::executeQuery(const string& queryName, map<int, string>&
             // execute the query
             if(query.exec())
             {
+                if(objectToMap == "delete"){
+                    cout << "Deleting Object" << endl;
+                }else if(objectToMap == "insert"){
+                    cout << "Inserting Object" << endl;
+                }else if(objectToMap == "update"){
+                    cout << "Updating Object" << endl;
+                }
 
                 //Result Set
                 while (query.next())
@@ -191,8 +212,6 @@ bool DatabaseConnection::executeQuery(const string& queryName, map<int, string>&
                         this->contacts.push_back(newContact);
                         cout << "Getting Contacts" << endl;
 
-                    }else if(objectToMap == "insert"){
-                             cout << "Just an insert" << endl;
                     }else if(objectToMap == "category"){
 
                         Category newCategory = Category(query.value(0).toString().toStdString(),
@@ -206,6 +225,7 @@ bool DatabaseConnection::executeQuery(const string& queryName, map<int, string>&
 
                         this->groups.push_back(newGroup);
                         cout << "Getting Groups" << endl;
+                    }else if(objectToMap == "contactGroups"){
 
                     }else if(objectToMap == "email"){
                         Email newEmail = Email(query.value(0).toString().toStdString(),
