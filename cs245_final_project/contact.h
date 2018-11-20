@@ -65,6 +65,8 @@ public:
         this->groups.push_back(id);
     }
 
+    int& getPhotoId(){return this->photoId; }
+
     std::vector<int>& getGroupIds(){return this->groups; }
 
     void setFName(const std::string& fName){ this-> firstName = fName; }

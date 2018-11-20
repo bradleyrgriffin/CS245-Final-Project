@@ -75,7 +75,8 @@ OBJECTS       = debug/main.o \
 		debug/category.o \
 		debug/moc_mainwindow.o
 
-DIST          = properties.txt ..\cs245_final_project\mainwindow.h \
+DIST          = properties.txt \
+		photos/photo1.jpg ..\cs245_final_project\mainwindow.h \
 		..\cs245_final_project\Password.h \
 		..\cs245_final_project\User.h \
 		searchcontact.h \
@@ -571,12 +572,16 @@ debug/mainwindow.o: ../cs245_final_project/mainwindow.cpp ../cs245_final_project
 		C:/Qt/5.11.1/mingw53_32/include/QtWidgets/qstyle.h \
 		C:/Qt/5.11.1/mingw53_32/include/QtWidgets/qtabbar.h \
 		C:/Qt/5.11.1/mingw53_32/include/QtWidgets/qrubberband.h \
+		C:/Qt/5.11.1/mingw53_32/include/QtWidgets/QLabel \
+		C:/Qt/5.11.1/mingw53_32/include/QtWidgets/qlabel.h \
 		C:/Qt/5.11.1/mingw53_32/include/QtWidgets/QLineEdit \
 		C:/Qt/5.11.1/mingw53_32/include/QtWidgets/qlineedit.h \
 		C:/Qt/5.11.1/mingw53_32/include/QtGui/qtextcursor.h \
 		C:/Qt/5.11.1/mingw53_32/include/QtGui/qtextformat.h \
 		C:/Qt/5.11.1/mingw53_32/include/QtGui/qpen.h \
 		C:/Qt/5.11.1/mingw53_32/include/QtGui/qtextoption.h \
+		C:/Qt/5.11.1/mingw53_32/include/QtWidgets/QListView \
+		C:/Qt/5.11.1/mingw53_32/include/QtWidgets/qlistview.h \
 		C:/Qt/5.11.1/mingw53_32/include/QtWidgets/QMenu \
 		C:/Qt/5.11.1/mingw53_32/include/QtWidgets/qmenu.h \
 		C:/Qt/5.11.1/mingw53_32/include/QtWidgets/QMenuBar \
@@ -604,8 +609,6 @@ debug/mainwindow.o: ../cs245_final_project/mainwindow.cpp ../cs245_final_project
 		C:/Qt/5.11.1/mingw53_32/include/QtWidgets/qlayoutitem.h \
 		C:/Qt/5.11.1/mingw53_32/include/QtWidgets/qboxlayout.h \
 		C:/Qt/5.11.1/mingw53_32/include/QtWidgets/qgridlayout.h \
-		C:/Qt/5.11.1/mingw53_32/include/QtWidgets/QLabel \
-		C:/Qt/5.11.1/mingw53_32/include/QtWidgets/qlabel.h \
 		C:/Qt/5.11.1/mingw53_32/include/QtWidgets/QDialogButtonBox \
 		C:/Qt/5.11.1/mingw53_32/include/QtWidgets/qdialogbuttonbox.h \
 		C:/Qt/5.11.1/mingw53_32/include/QtCore/QtDebug \
@@ -916,6 +919,8 @@ debug/commonutils.o: ../cs245_final_project/commonutils.cpp ../cs245_final_proje
 		C:/Qt/5.11.1/mingw53_32/include/QtWidgets/qstyle.h \
 		C:/Qt/5.11.1/mingw53_32/include/QtWidgets/qtabbar.h \
 		C:/Qt/5.11.1/mingw53_32/include/QtWidgets/qrubberband.h \
+		C:/Qt/5.11.1/mingw53_32/include/QtWidgets/QListView \
+		C:/Qt/5.11.1/mingw53_32/include/QtWidgets/qlistview.h \
 		C:/Qt/5.11.1/mingw53_32/include/QtWidgets/QMenu \
 		C:/Qt/5.11.1/mingw53_32/include/QtWidgets/qmenu.h \
 		C:/Qt/5.11.1/mingw53_32/include/QtWidgets/QMenuBar \
@@ -936,44 +941,7 @@ debug/contact.o: ../cs245_final_project/contact.cpp ../cs245_final_project/conta
 		../cs245_final_project/address.h \
 		../cs245_final_project/phone.h \
 		../cs245_final_project/email.h \
-		../cs245_final_project/photo.h \
-		../cs245_final_project/databaseconnection.h \
-		C:/Qt/5.11.1/mingw53_32/include/QtSql/QSqlDatabase \
-		C:/Qt/5.11.1/mingw53_32/include/QtSql/qsqldatabase.h \
-		C:/Qt/5.11.1/mingw53_32/include/QtSql/qtsqlglobal.h \
-		C:/Qt/5.11.1/mingw53_32/include/QtCore/qglobal.h \
-		C:/Qt/5.11.1/mingw53_32/include/QtCore/qconfig-bootstrapped.h \
-		C:/Qt/5.11.1/mingw53_32/include/QtCore/qconfig.h \
-		C:/Qt/5.11.1/mingw53_32/include/QtCore/qtcore-config.h \
-		C:/Qt/5.11.1/mingw53_32/include/QtCore/qsystemdetection.h \
-		C:/Qt/5.11.1/mingw53_32/include/QtCore/qprocessordetection.h \
-		C:/Qt/5.11.1/mingw53_32/include/QtCore/qcompilerdetection.h \
-		C:/Qt/5.11.1/mingw53_32/include/QtCore/qtypeinfo.h \
-		C:/Qt/5.11.1/mingw53_32/include/QtCore/qsysinfo.h \
-		C:/Qt/5.11.1/mingw53_32/include/QtCore/qlogging.h \
-		C:/Qt/5.11.1/mingw53_32/include/QtCore/qflags.h \
-		C:/Qt/5.11.1/mingw53_32/include/QtCore/qatomic.h \
-		C:/Qt/5.11.1/mingw53_32/include/QtCore/qbasicatomic.h \
-		C:/Qt/5.11.1/mingw53_32/include/QtCore/qatomic_bootstrap.h \
-		C:/Qt/5.11.1/mingw53_32/include/QtCore/qgenericatomic.h \
-		C:/Qt/5.11.1/mingw53_32/include/QtCore/qatomic_cxx11.h \
-		C:/Qt/5.11.1/mingw53_32/include/QtCore/qatomic_msvc.h \
-		C:/Qt/5.11.1/mingw53_32/include/QtCore/qglobalstatic.h \
-		C:/Qt/5.11.1/mingw53_32/include/QtCore/qmutex.h \
-		C:/Qt/5.11.1/mingw53_32/include/QtCore/qnumeric.h \
-		C:/Qt/5.11.1/mingw53_32/include/QtCore/qversiontagging.h \
-		C:/Qt/5.11.1/mingw53_32/include/QtCore/qstring.h \
-		C:/Qt/5.11.1/mingw53_32/include/QtCore/qchar.h \
-		C:/Qt/5.11.1/mingw53_32/include/QtCore/qbytearray.h \
-		C:/Qt/5.11.1/mingw53_32/include/QtCore/qrefcount.h \
-		C:/Qt/5.11.1/mingw53_32/include/QtCore/qnamespace.h \
-		C:/Qt/5.11.1/mingw53_32/include/QtCore/qarraydata.h \
-		C:/Qt/5.11.1/mingw53_32/include/QtCore/qstringliteral.h \
-		C:/Qt/5.11.1/mingw53_32/include/QtCore/qstringalgorithms.h \
-		C:/Qt/5.11.1/mingw53_32/include/QtCore/qstringview.h \
-		C:/Qt/5.11.1/mingw53_32/include/QtCore/qstringbuilder.h \
-		../cs245_final_project/category.h \
-		../cs245_final_project/group.h
+		../cs245_final_project/photo.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o debug\contact.o ..\cs245_final_project\contact.cpp
 
 debug/email.o: ../cs245_final_project/email.cpp ../cs245_final_project/email.h

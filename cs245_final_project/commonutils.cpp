@@ -5,12 +5,23 @@ CommonUtils::CommonUtils()
 
 }
 
+void CommonUtils::displayProfilePicture(MainWindow* thing, const string& photo){
+
+
+    string path = "..\\cs245_final_project\\photos\\" + photo;
+    QPixmap pix(QString::fromStdString(path));
+    thing->ui->profilePicture->setPixmap(pix);
+
+}
+
 void CommonUtils::displayData(MainWindow* thing){
     int id = stoi(thing->ui->contactId->text().toStdString());
     for(auto& i : thing->data.getContacts()){
         if(i.getContactId() == id){
             thing->ui->firstName->setText(QString::fromStdString(i.getFirstName()));
             thing->ui->lastName->setText(QString::fromStdString(i.getLastName()));
+            displayProfilePicture(thing, thing->data.getPhotoById(i.getPhotoId()).getPhotoPath());
+
             //Should figure out how to update the QTListView objects with this user's(i) data
             //TODO:
 

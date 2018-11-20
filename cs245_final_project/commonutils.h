@@ -15,6 +15,7 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 #include <QPushButton>
+#include "contact.h"
 
 class CommonUtils
 {
@@ -36,6 +37,9 @@ public:
 
     //Loads User Data to the Update Panel
     void displayData(MainWindow* thing);
+
+    //Displays the User's profile picture
+    void displayProfilePicture(MainWindow* thing, const string& path);
 
 private:
 

@@ -228,7 +228,7 @@ bool DatabaseConnection::executeQuery(const string& queryName, map<int, string>&
                         cout << "Getting Categories" << endl;
 
                     }else if(objectToMap == "photo"){
-                        Photo newPhoto = Photo(query.value(0).toString().toStdString(),
+                        Photo newPhoto = Photo(query.value(1).toString().toStdString(),
                                                stoi(query.value(0).toString().toStdString()));
                         this->photos.push_back(newPhoto);
                         cout << "Getting Photos" << endl;

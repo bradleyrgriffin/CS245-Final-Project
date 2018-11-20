@@ -62,6 +62,7 @@ public:
     QPushButton *deletePhoneButton;
     QPushButton *deleteEmailButton;
     QPushButton *deleteGroupButton;
+    QLabel *profilePicture;
     QMenuBar *menuBar;
     QMenu *menuSearch_Contacts;
     QToolBar *mainToolBar;
@@ -71,7 +72,7 @@ public:
     {
         if (MainWindow->objectName().isEmpty())
             MainWindow->setObjectName(QStringLiteral("MainWindow"));
-        MainWindow->resize(1100, 688);
+        MainWindow->resize(1399, 688);
         actionExit = new QAction(MainWindow);
         actionExit->setObjectName(QStringLiteral("actionExit"));
         centralWidget = new QWidget(MainWindow);
@@ -184,10 +185,13 @@ public:
         deleteGroupButton->setObjectName(QStringLiteral("deleteGroupButton"));
         deleteGroupButton->setEnabled(false);
         deleteGroupButton->setGeometry(QRect(720, 490, 61, 21));
+        profilePicture = new QLabel(centralWidget);
+        profilePicture->setObjectName(QStringLiteral("profilePicture"));
+        profilePicture->setGeometry(QRect(1130, 30, 241, 181));
         MainWindow->setCentralWidget(centralWidget);
         menuBar = new QMenuBar(MainWindow);
         menuBar->setObjectName(QStringLiteral("menuBar"));
-        menuBar->setGeometry(QRect(0, 0, 1100, 26));
+        menuBar->setGeometry(QRect(0, 0, 1399, 26));
         menuSearch_Contacts = new QMenu(menuBar);
         menuSearch_Contacts->setObjectName(QStringLiteral("menuSearch_Contacts"));
         MainWindow->setMenuBar(menuBar);
@@ -241,6 +245,7 @@ public:
         deletePhoneButton->setText(QApplication::translate("MainWindow", "Delete", nullptr));
         deleteEmailButton->setText(QApplication::translate("MainWindow", "Delete", nullptr));
         deleteGroupButton->setText(QApplication::translate("MainWindow", "Delete", nullptr));
+        profilePicture->setText(QString());
         menuSearch_Contacts->setTitle(QApplication::translate("MainWindow", "Menu", nullptr));
     } // retranslateUi
 
