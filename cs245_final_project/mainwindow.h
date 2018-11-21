@@ -4,6 +4,7 @@
 #include <QMainWindow>
 #include <databaseconnection.h>
 #include <string>
+#include "contacttablemodel.h"
 
 namespace Ui {
 class MainWindow;
@@ -53,7 +54,10 @@ public slots:
 
 public:
     Ui::MainWindow *ui;
+    ContactTableModel *model;
     DatabaseConnection data = DatabaseConnection();
+private slots:
+    void on_searchContactTable_pressed(const QModelIndex &index);
 };
 
 #endif // MAINWINDOW_H

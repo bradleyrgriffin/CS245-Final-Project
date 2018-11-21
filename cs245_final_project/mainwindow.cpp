@@ -86,6 +86,20 @@ MainWindow::MainWindow(QWidget *parent) :
     }
     //Loads User Interface
     ui->setupUi(this);
+
+    // Create new user model & apply it to the table view
+    model = new ContactTableModel(this);
+    model->updateContacts(this->data.getContacts());
+    ui->searchContactTable->setModel(model);
+
+    // Set the table view to allow the columns to expand
+    ui->searchContactTable->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
+
+    // Stretch the columns headers to fit the width of the table view
+    ui->searchContactTable->horizontalHeader()->setSectionResizeMode(QHeaderView::Stretch);
+
+    // Resize the columns
+    ui->searchContactTable->resizeColumnsToContents();
 }
 
 
@@ -191,7 +205,9 @@ void MainWindow::on_searchButton_clicked()
 }
 MainWindow::~MainWindow()
 {
+    delete model;
     delete ui;
+
 }
 
 void MainWindow::on_deleteContactButton_clicked()
@@ -415,4 +431,14 @@ void MainWindow::on_addGroupButton_2_clicked()
         this->data.executeQuery("INSERT_CONTACT_GROUP", paramMap, "insert");
         this->data.executeQuery("GET_GROUP_BY_ID", paramMap, "contactGroups");
     }
+}
+
+void MainWindow::on_searchContactTable_pressed(const QModelIndex &index)
+{
+    int id = this->model->getContactIdByIndex(index);
+    this->ui->contactId->setText(QString::fromStdString((to_string(id) == "-1" ? "" : to_string(id))));
+
+    CommonUtils utils = CommonUtils();
+    utils.toggleContactIdButtons(this);
+
 }

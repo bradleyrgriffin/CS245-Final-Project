@@ -71,7 +71,7 @@ public:
 
     void setFName(const std::string& fName){ this-> firstName = fName; }
     void setLName(const std::string& lName){ this->lastName = lName; }
-private:
+public:
     std::vector<Address> addresses;
     std::vector<Phone> phones;
     std::vector<Email> emails;

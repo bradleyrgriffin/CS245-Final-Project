@@ -13,5 +13,7 @@ INPUT(
 ./release\photo.o
 ./release\group.o
 ./release\category.o
+./release\contacttablemodel.o
 ./release\moc_mainwindow.o
+./release\moc_contacttablemodel.o
 );

@@ -13,5 +13,7 @@ INPUT(
 ./debug\photo.o
 ./debug\group.o
 ./debug\category.o
+./debug\contacttablemodel.o
 ./debug\moc_mainwindow.o
+./debug\moc_contacttablemodel.o
 );

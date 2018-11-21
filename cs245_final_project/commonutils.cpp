@@ -83,7 +83,6 @@ void CommonUtils::enableBtn(QPushButton* btn){
 }
 
 bool CommonUtils::validateFields(map<string, string>& data, MainWindow* thing){
-    bool toggle = true;
     for(auto& i : data){
         if(i.second == ""){
             cout << "Invalid Data in Fields" << endl;
@@ -91,14 +90,6 @@ bool CommonUtils::validateFields(map<string, string>& data, MainWindow* thing){
         }else if(i.first == "Group"){
             try {
                 int id = stoi(i.second);
-                for(auto& g : thing->data.getGroups()){
-                    if(g.getGroupId() == id){
-                        toggle = true;
-                        break;
-                    }else{
-                        toggle = false;
-                    }
-                }
 
             } catch (exception& e) {
                 cout << "Invalid Data in Fields" << endl;
@@ -107,14 +98,6 @@ bool CommonUtils::validateFields(map<string, string>& data, MainWindow* thing){
         }else if(i.first == "Category"){
             try {
                 int id = stoi(i.second);
-                for(auto& c : thing->data.getCategories()){
-                    if(c.getCategoryId() == id){
-                        toggle = true;
-                        break;
-                    }else{
-                        toggle = false;
-                    }
-                }
             } catch (exception& e) {
                 cout << "Invalid Data in Fields" << endl;
                 return false;
@@ -122,14 +105,6 @@ bool CommonUtils::validateFields(map<string, string>& data, MainWindow* thing){
         }else if (i.first == "Photo"){
             try {
                 int id = stoi(i.second);
-                for(auto& p : thing->data.getPhotos()){
-                    if(p.getPhotoId() == id){
-                        toggle = true;
-                        break;
-                    }else{
-                        toggle = false;
-                    }
-                }
             } catch (exception& e) {
                 cout << "Invalid Data in Fields" << endl;
                 return false;
