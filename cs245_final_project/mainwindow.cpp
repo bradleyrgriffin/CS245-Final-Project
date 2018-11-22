@@ -210,21 +210,8 @@ void MainWindow::on_addGroupButton_clicked()
 }
 void MainWindow::on_searchButton_clicked()
 {
-    //This should strip the search term of special characters,and execute a query to Select from the view that joins
-    //all the data together, concatenating email, first name, last name, and address, and stripping special characters,
-    //And also uppercasing everything.
+    //This should search through the table view
 
-    //this->data.refreshData("contacts");
-
-    for(auto& i : this->data.getContacts()){
-        cout << "ID/Name: " << i.getContactId() << "/" << i.getFirstName() << " " << i.getLastName() << endl <<
-               "Primary Email: " << (i.getEmails().size() > 0 ? i.getEmails()[0].getEmailName():"N/A") << endl <<
-               "Primary Phone: " << (i.getPhoneNumbers().size() > 0 ? i.getPhoneNumbers()[0].getPhoneNumber(): "N/A") << endl <<
-               "Primary Street Address: " << (i.getAddresses().size() > 0 ? i.getAddresses()[0].getAddress(): "N/A") << endl <<
-                "Group:" << (i.getGroupIds().size() > 0 ? to_string(i.getGroupIds()[0]) : "N/A") << endl;
-    }
-
-    this->ui->contactId->setText(this->ui->searchBar->text());
     CommonUtils utils;
     utils.toggleContactIdButtons(this);
 }

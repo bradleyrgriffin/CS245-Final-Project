@@ -79,7 +79,7 @@
      <string/>
     </property>
     <property name="text">
-     <string>Enter a Contact ID Here to Load data over there -&gt;...</string>
+     <string/>
     </property>
    </widget>
    <widget class="QPushButton" name="searchButton">

@@ -354,12 +354,6 @@ release/moc_contacttablemodel.cpp: C:/Qt/5.11.1/mingw53_32/include/QtCore/QAbstr
 		../cs245_final_project/phone.h \
 		../cs245_final_project/email.h \
 		../cs245_final_project/photo.h \
-		../cs245_final_project/databaseconnection.h \
-		C:/Qt/5.11.1/mingw53_32/include/QtSql/QSqlDatabase \
-		C:/Qt/5.11.1/mingw53_32/include/QtSql/qsqldatabase.h \
-		C:/Qt/5.11.1/mingw53_32/include/QtSql/qtsqlglobal.h \
-		../cs245_final_project/category.h \
-		../cs245_final_project/group.h \
 		../cs245_final_project/contacttablemodel.h \
 		release/moc_predefs.h \
 		C:/Qt/5.11.1/mingw53_32/bin/moc.exe
@@ -640,60 +634,16 @@ release/mainwindow.o: ../cs245_final_project/mainwindow.cpp ../cs245_final_proje
 		C:/Qt/5.11.1/mingw53_32/include/QtCore/QAbstractTableModel \
 		C:/Qt/5.11.1/mingw53_32/include/QtCore/qabstractitemmodel.h \
 		ui_mainwindow.h \
-		C:/Qt/5.11.1/mingw53_32/include/QtCore/QVariant \
-		C:/Qt/5.11.1/mingw53_32/include/QtWidgets/QAction \
-		C:/Qt/5.11.1/mingw53_32/include/QtWidgets/qaction.h \
-		C:/Qt/5.11.1/mingw53_32/include/QtWidgets/qactiongroup.h \
-		C:/Qt/5.11.1/mingw53_32/include/QtWidgets/QApplication \
-		C:/Qt/5.11.1/mingw53_32/include/QtWidgets/qapplication.h \
-		C:/Qt/5.11.1/mingw53_32/include/QtCore/qcoreapplication.h \
-		C:/Qt/5.11.1/mingw53_32/include/QtCore/qeventloop.h \
-		C:/Qt/5.11.1/mingw53_32/include/QtWidgets/qdesktopwidget.h \
-		C:/Qt/5.11.1/mingw53_32/include/QtGui/qguiapplication.h \
-		C:/Qt/5.11.1/mingw53_32/include/QtGui/qinputmethod.h \
-		C:/Qt/5.11.1/mingw53_32/include/QtWidgets/QHeaderView \
-		C:/Qt/5.11.1/mingw53_32/include/QtWidgets/qheaderview.h \
-		C:/Qt/5.11.1/mingw53_32/include/QtWidgets/qabstractitemview.h \
-		C:/Qt/5.11.1/mingw53_32/include/QtWidgets/qabstractscrollarea.h \
-		C:/Qt/5.11.1/mingw53_32/include/QtWidgets/qframe.h \
-		C:/Qt/5.11.1/mingw53_32/include/QtCore/qitemselectionmodel.h \
-		C:/Qt/5.11.1/mingw53_32/include/QtWidgets/qabstractitemdelegate.h \
-		C:/Qt/5.11.1/mingw53_32/include/QtWidgets/qstyleoption.h \
-		C:/Qt/5.11.1/mingw53_32/include/QtWidgets/qabstractspinbox.h \
-		C:/Qt/5.11.1/mingw53_32/include/QtGui/qvalidator.h \
-		C:/Qt/5.11.1/mingw53_32/include/QtCore/qregularexpression.h \
-		C:/Qt/5.11.1/mingw53_32/include/QtWidgets/qslider.h \
-		C:/Qt/5.11.1/mingw53_32/include/QtWidgets/qabstractslider.h \
-		C:/Qt/5.11.1/mingw53_32/include/QtWidgets/qstyle.h \
-		C:/Qt/5.11.1/mingw53_32/include/QtWidgets/qtabbar.h \
-		C:/Qt/5.11.1/mingw53_32/include/QtWidgets/qrubberband.h \
-		C:/Qt/5.11.1/mingw53_32/include/QtWidgets/QLabel \
-		C:/Qt/5.11.1/mingw53_32/include/QtWidgets/qlabel.h \
-		C:/Qt/5.11.1/mingw53_32/include/QtWidgets/QLineEdit \
+		C:/Qt/5.11.1/mingw53_32/include/QtWidgets/QInputDialog \
+		C:/Qt/5.11.1/mingw53_32/include/QtWidgets/qinputdialog.h \
 		C:/Qt/5.11.1/mingw53_32/include/QtWidgets/qlineedit.h \
+		C:/Qt/5.11.1/mingw53_32/include/QtWidgets/qframe.h \
 		C:/Qt/5.11.1/mingw53_32/include/QtGui/qtextcursor.h \
 		C:/Qt/5.11.1/mingw53_32/include/QtGui/qtextformat.h \
 		C:/Qt/5.11.1/mingw53_32/include/QtGui/qpen.h \
 		C:/Qt/5.11.1/mingw53_32/include/QtGui/qtextoption.h \
-		C:/Qt/5.11.1/mingw53_32/include/QtWidgets/QListView \
-		C:/Qt/5.11.1/mingw53_32/include/QtWidgets/qlistview.h \
-		C:/Qt/5.11.1/mingw53_32/include/QtWidgets/QMenu \
-		C:/Qt/5.11.1/mingw53_32/include/QtWidgets/qmenu.h \
-		C:/Qt/5.11.1/mingw53_32/include/QtWidgets/QMenuBar \
-		C:/Qt/5.11.1/mingw53_32/include/QtWidgets/qmenubar.h \
-		C:/Qt/5.11.1/mingw53_32/include/QtWidgets/QPushButton \
-		C:/Qt/5.11.1/mingw53_32/include/QtWidgets/qpushbutton.h \
-		C:/Qt/5.11.1/mingw53_32/include/QtWidgets/qabstractbutton.h \
-		C:/Qt/5.11.1/mingw53_32/include/QtWidgets/QStatusBar \
-		C:/Qt/5.11.1/mingw53_32/include/QtWidgets/qstatusbar.h \
-		C:/Qt/5.11.1/mingw53_32/include/QtWidgets/QTableView \
-		C:/Qt/5.11.1/mingw53_32/include/QtWidgets/qtableview.h \
-		C:/Qt/5.11.1/mingw53_32/include/QtWidgets/QToolBar \
-		C:/Qt/5.11.1/mingw53_32/include/QtWidgets/qtoolbar.h \
-		C:/Qt/5.11.1/mingw53_32/include/QtWidgets/QWidget \
-		C:/Qt/5.11.1/mingw53_32/include/QtWidgets/QInputDialog \
-		C:/Qt/5.11.1/mingw53_32/include/QtWidgets/qinputdialog.h \
 		C:/Qt/5.11.1/mingw53_32/include/QtWidgets/qdialog.h \
+		C:/Qt/5.11.1/mingw53_32/include/QtWidgets/QLineEdit \
 		C:/Qt/5.11.1/mingw53_32/include/QtCore/QDir \
 		C:/Qt/5.11.1/mingw53_32/include/QtCore/qdir.h \
 		C:/Qt/5.11.1/mingw53_32/include/QtCore/qfileinfo.h \
@@ -704,12 +654,17 @@ release/mainwindow.o: ../cs245_final_project/mainwindow.cpp ../cs245_final_proje
 		C:/Qt/5.11.1/mingw53_32/include/QtWidgets/qlayoutitem.h \
 		C:/Qt/5.11.1/mingw53_32/include/QtWidgets/qboxlayout.h \
 		C:/Qt/5.11.1/mingw53_32/include/QtWidgets/qgridlayout.h \
+		C:/Qt/5.11.1/mingw53_32/include/QtWidgets/QLabel \
+		C:/Qt/5.11.1/mingw53_32/include/QtWidgets/qlabel.h \
 		C:/Qt/5.11.1/mingw53_32/include/QtWidgets/QDialogButtonBox \
 		C:/Qt/5.11.1/mingw53_32/include/QtWidgets/qdialogbuttonbox.h \
 		C:/Qt/5.11.1/mingw53_32/include/QtCore/QtDebug \
 		../cs245_final_project/User.h \
 		../cs245_final_project/Password.h \
-		../cs245_final_project/commonutils.h
+		../cs245_final_project/commonutils.h \
+		C:/Qt/5.11.1/mingw53_32/include/QtWidgets/QPushButton \
+		C:/Qt/5.11.1/mingw53_32/include/QtWidgets/qpushbutton.h \
+		C:/Qt/5.11.1/mingw53_32/include/QtWidgets/qabstractbutton.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o release\mainwindow.o ..\cs245_final_project\mainwindow.cpp
 
 release/Password.o: ../cs245_final_project/Password.cpp ../cs245_final_project/Password.h \
@@ -990,48 +945,9 @@ release/commonutils.o: ../cs245_final_project/commonutils.cpp ../cs245_final_pro
 		C:/Qt/5.11.1/mingw53_32/include/QtCore/QAbstractTableModel \
 		C:/Qt/5.11.1/mingw53_32/include/QtCore/qabstractitemmodel.h \
 		ui_mainwindow.h \
-		C:/Qt/5.11.1/mingw53_32/include/QtCore/QVariant \
-		C:/Qt/5.11.1/mingw53_32/include/QtWidgets/QAction \
-		C:/Qt/5.11.1/mingw53_32/include/QtWidgets/qaction.h \
-		C:/Qt/5.11.1/mingw53_32/include/QtWidgets/qactiongroup.h \
-		C:/Qt/5.11.1/mingw53_32/include/QtWidgets/QApplication \
-		C:/Qt/5.11.1/mingw53_32/include/QtWidgets/qapplication.h \
-		C:/Qt/5.11.1/mingw53_32/include/QtCore/qcoreapplication.h \
-		C:/Qt/5.11.1/mingw53_32/include/QtCore/qeventloop.h \
-		C:/Qt/5.11.1/mingw53_32/include/QtWidgets/qdesktopwidget.h \
-		C:/Qt/5.11.1/mingw53_32/include/QtGui/qguiapplication.h \
-		C:/Qt/5.11.1/mingw53_32/include/QtGui/qinputmethod.h \
-		C:/Qt/5.11.1/mingw53_32/include/QtWidgets/QHeaderView \
-		C:/Qt/5.11.1/mingw53_32/include/QtWidgets/qheaderview.h \
-		C:/Qt/5.11.1/mingw53_32/include/QtWidgets/qabstractitemview.h \
-		C:/Qt/5.11.1/mingw53_32/include/QtWidgets/qabstractscrollarea.h \
-		C:/Qt/5.11.1/mingw53_32/include/QtCore/qitemselectionmodel.h \
-		C:/Qt/5.11.1/mingw53_32/include/QtWidgets/qabstractitemdelegate.h \
-		C:/Qt/5.11.1/mingw53_32/include/QtWidgets/qstyleoption.h \
-		C:/Qt/5.11.1/mingw53_32/include/QtWidgets/qabstractspinbox.h \
-		C:/Qt/5.11.1/mingw53_32/include/QtGui/qvalidator.h \
-		C:/Qt/5.11.1/mingw53_32/include/QtCore/qregularexpression.h \
-		C:/Qt/5.11.1/mingw53_32/include/QtWidgets/qslider.h \
-		C:/Qt/5.11.1/mingw53_32/include/QtWidgets/qabstractslider.h \
-		C:/Qt/5.11.1/mingw53_32/include/QtWidgets/qstyle.h \
-		C:/Qt/5.11.1/mingw53_32/include/QtWidgets/qtabbar.h \
-		C:/Qt/5.11.1/mingw53_32/include/QtWidgets/qrubberband.h \
-		C:/Qt/5.11.1/mingw53_32/include/QtWidgets/QListView \
-		C:/Qt/5.11.1/mingw53_32/include/QtWidgets/qlistview.h \
-		C:/Qt/5.11.1/mingw53_32/include/QtWidgets/QMenu \
-		C:/Qt/5.11.1/mingw53_32/include/QtWidgets/qmenu.h \
-		C:/Qt/5.11.1/mingw53_32/include/QtWidgets/QMenuBar \
-		C:/Qt/5.11.1/mingw53_32/include/QtWidgets/qmenubar.h \
 		C:/Qt/5.11.1/mingw53_32/include/QtWidgets/QPushButton \
 		C:/Qt/5.11.1/mingw53_32/include/QtWidgets/qpushbutton.h \
-		C:/Qt/5.11.1/mingw53_32/include/QtWidgets/qabstractbutton.h \
-		C:/Qt/5.11.1/mingw53_32/include/QtWidgets/QStatusBar \
-		C:/Qt/5.11.1/mingw53_32/include/QtWidgets/qstatusbar.h \
-		C:/Qt/5.11.1/mingw53_32/include/QtWidgets/QTableView \
-		C:/Qt/5.11.1/mingw53_32/include/QtWidgets/qtableview.h \
-		C:/Qt/5.11.1/mingw53_32/include/QtWidgets/QToolBar \
-		C:/Qt/5.11.1/mingw53_32/include/QtWidgets/qtoolbar.h \
-		C:/Qt/5.11.1/mingw53_32/include/QtWidgets/QWidget
+		C:/Qt/5.11.1/mingw53_32/include/QtWidgets/qabstractbutton.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o release\commonutils.o ..\cs245_final_project\commonutils.cpp
 
 release/contact.o: ../cs245_final_project/contact.cpp ../cs245_final_project/contact.h \
@@ -1141,7 +1057,7 @@ release/contacttablemodel.o: ../cs245_final_project/contacttablemodel.cpp C:/Qt/
 		C:/Qt/5.11.1/mingw53_32/include/QtGui/QColor \
 		C:/Qt/5.11.1/mingw53_32/include/QtGui/QFont \
 		C:/Qt/5.11.1/mingw53_32/include/QtGui/qfont.h \
-		../cs245_final_project/ContactTableModel.h \
+		../cs245_final_project/contacttablemodel.h \
 		C:/Qt/5.11.1/mingw53_32/include/QtCore/QAbstractTableModel \
 		C:/Qt/5.11.1/mingw53_32/include/QtCore/qabstractitemmodel.h \
 		C:/Qt/5.11.1/mingw53_32/include/QtCore/qvariant.h \
@@ -1155,13 +1071,7 @@ release/contacttablemodel.o: ../cs245_final_project/contacttablemodel.cpp C:/Qt/
 		../cs245_final_project/address.h \
 		../cs245_final_project/phone.h \
 		../cs245_final_project/email.h \
-		../cs245_final_project/photo.h \
-		../cs245_final_project/databaseconnection.h \
-		C:/Qt/5.11.1/mingw53_32/include/QtSql/QSqlDatabase \
-		C:/Qt/5.11.1/mingw53_32/include/QtSql/qsqldatabase.h \
-		C:/Qt/5.11.1/mingw53_32/include/QtSql/qtsqlglobal.h \
-		../cs245_final_project/category.h \
-		../cs245_final_project/group.h
+		../cs245_final_project/photo.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o release\contacttablemodel.o ..\cs245_final_project\contacttablemodel.cpp
 
 release/moc_mainwindow.o: release/moc_mainwindow.cpp 
