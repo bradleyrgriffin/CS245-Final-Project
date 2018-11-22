@@ -5,6 +5,8 @@
 #include <databaseconnection.h>
 #include <string>
 #include "contacttablemodel.h"
+#include "phonenumberlistview.h"
+#include "phone.h"
 
 namespace Ui {
 class MainWindow;
@@ -56,6 +58,9 @@ public:
     Ui::MainWindow *ui;
     ContactTableModel *model;
     DatabaseConnection data = DatabaseConnection();
+
+    PhoneNumberListView* phoneListModel;
+
 private slots:
     void on_searchContactTable_pressed(const QModelIndex &index);
 };

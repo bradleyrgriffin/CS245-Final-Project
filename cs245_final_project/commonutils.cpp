@@ -21,6 +21,12 @@ void CommonUtils::displayData(MainWindow* thing){
             thing->ui->firstName->setText(QString::fromStdString(i.getFirstName()));
             thing->ui->lastName->setText(QString::fromStdString(i.getLastName()));
             displayProfilePicture(thing, thing->data.getPhotoById(i.getPhotoId()).getPhotoPath());
+            for(auto& j : i.getPhoneNumbers()){
+                int catId = j.getCategoryID();
+                j.displayName = j.getPhoneNumber() + "/ " + thing->data.getCategoryById(catId).getCategoryName();
+            }
+
+            thing->phoneListModel->loadPhoneNumbers(i.getPhoneNumbers());
 
             //Should figure out how to update the QTListView objects with this user's(i) data
             //TODO:

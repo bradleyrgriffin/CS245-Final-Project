@@ -14,10 +14,11 @@ public:
     std::string getPhoneNumber(){return this->phoneNumber; }
     int getCategoryID(){return this->categoryId;}
 
-private:
+
     int phoneNumberId;
     std::string phoneNumber;
     int categoryId;
+    std::string displayName;
 
 
 };

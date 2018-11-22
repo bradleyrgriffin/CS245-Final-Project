@@ -226,7 +226,7 @@ public:
 #ifndef QT_NO_WHATSTHIS
         searchBar->setWhatsThis(QString());
 #endif // QT_NO_WHATSTHIS
-        searchBar->setText(QApplication::translate("MainWindow", "Enter a Contact ID Here to Load data over there ->...", nullptr));
+        searchBar->setText(QString());
         searchButton->setText(QApplication::translate("MainWindow", "Search", nullptr));
         firstNameLabel->setText(QApplication::translate("MainWindow", "First Name:", nullptr));
         lastNameLabel->setText(QApplication::translate("MainWindow", "Last Name:", nullptr));

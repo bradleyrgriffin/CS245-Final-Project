@@ -100,19 +100,21 @@ MainWindow::MainWindow(QWidget *parent) :
     try {
 
         ui->setupUi(this);
-        // Create new user model & apply it to the table view
+
+        // Set Up Table View
         model = new ContactTableModel(this);
         model->updateContacts(this->data.getContacts());
         ui->searchContactTable->setModel(model);
-
-        // Set the table view to allow the columns to expand
         ui->searchContactTable->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
-
-        // Stretch the columns headers to fit the width of the table view
         ui->searchContactTable->horizontalHeader()->setSectionResizeMode(QHeaderView::Stretch);
-
-        // Resize the columns
         ui->searchContactTable->resizeColumnsToContents();
+
+        //Set Up Phone ListView
+        //Temporary data
+        vector<Phone> tempPhoneList = vector<Phone>();
+        phoneListModel = new PhoneNumberListView(tempPhoneList);
+        ui->phoneList->setModel(phoneListModel);
+
 
     } catch (exception& e) {
         cout << "Failed to Create GUI Or Model, exiting..." << e.what() << endl;
