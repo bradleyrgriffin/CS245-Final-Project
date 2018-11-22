@@ -15,7 +15,13 @@ INPUT(
 ./debug\category.o
 ./debug\contacttablemodel.o
 ./debug\phonenumberlistview.o
+./debug\addreslistview.o
+./debug\emaillistview.o
+./debug\grouplistview.o
 ./debug\moc_mainwindow.o
 ./debug\moc_contacttablemodel.o
 ./debug\moc_phonenumberlistview.o
+./debug\moc_addreslistview.o
+./debug\moc_emaillistview.o
+./debug\moc_grouplistview.o
 );

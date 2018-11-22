@@ -54,8 +54,12 @@ bool PhoneNumberListView::setData(QModelIndex const& idx, QVariant const& value,
   return false;
 }
 
-void PhoneNumberListView::loadPhoneNumbers(std::vector<Phone> phns){
+void PhoneNumberListView::loadPhoneNumbers(std::vector<Phone>& phns){
     this->phones.clear();
     this->phones = phns;
+    this->setData(this->index(0,0), 0);
+}
+void PhoneNumberListView::loadPhoneNumbers(){
+    this->phones.clear();
     this->setData(this->index(0,0), 0);
 }

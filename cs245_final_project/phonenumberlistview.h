@@ -20,7 +20,8 @@ public:
 
     QVariant data(const QModelIndex &index, int role = Qt::DisplayRole) const override;
 
-    void loadPhoneNumbers(std::vector<Phone> phns);
+    void loadPhoneNumbers(std::vector<Phone>& phns);
+    void loadPhoneNumbers();
 
 private:
     std::vector<Phone> phones;

@@ -18,13 +18,14 @@ public:
     int getCategoryId(){return this->categoryId; }
     int getAddressId(){return this->addressId; }
 
-private:
     std::string city;
     std::string state;
     std::string address;
     std::string zipcode;
     int addressId;
     int categoryId;
+
+    std::string displayName;
 };
 
 #endif // ADDRESS_H

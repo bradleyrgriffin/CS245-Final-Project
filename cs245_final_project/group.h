@@ -17,6 +17,7 @@ public:
     int getGroupId(){return this->groupId; }
     string getGroupName(){return this->groupName; }
 
+    string displayName;
 private:
     string groupName;
     int groupId;

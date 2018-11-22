@@ -7,6 +7,9 @@
 #include "contacttablemodel.h"
 #include "phonenumberlistview.h"
 #include "phone.h"
+#include "addreslistview.h"
+#include "emaillistview.h"
+#include "grouplistview.h"
 
 namespace Ui {
 class MainWindow;
@@ -60,6 +63,9 @@ public:
     DatabaseConnection data = DatabaseConnection();
 
     PhoneNumberListView* phoneListModel;
+    AddresListView* addressListModel;
+    EmailListView* emailListModel;
+    GroupListView* groupListModel;
 
 private slots:
     void on_searchContactTable_pressed(const QModelIndex &index);

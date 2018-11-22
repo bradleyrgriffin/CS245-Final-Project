@@ -15,7 +15,13 @@ INPUT(
 ./release\category.o
 ./release\contacttablemodel.o
 ./release\phonenumberlistview.o
+./release\addreslistview.o
+./release\emaillistview.o
+./release\grouplistview.o
 ./release\moc_mainwindow.o
 ./release\moc_contacttablemodel.o
 ./release\moc_phonenumberlistview.o
+./release\moc_addreslistview.o
+./release\moc_emaillistview.o
+./release\moc_grouplistview.o
 );

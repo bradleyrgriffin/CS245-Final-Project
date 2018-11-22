@@ -115,6 +115,23 @@ MainWindow::MainWindow(QWidget *parent) :
         phoneListModel = new PhoneNumberListView(tempPhoneList);
         ui->phoneList->setModel(phoneListModel);
 
+        //Set Up Address ListView
+        //Temporary data
+        vector<Address> tempAddressList = vector<Address>();
+        addressListModel = new AddresListView(tempAddressList);
+        ui->addressList->setModel(addressListModel);
+
+        //Set Up Email ListView
+        //Temporary data
+        vector<Email> tempEmailList = vector<Email>();
+        emailListModel = new EmailListView(tempEmailList);
+        ui->emailList->setModel(emailListModel);
+
+        //Set Up Email ListView
+        //Temporary data
+        vector<Group> tempGroupList = vector<Group>();
+        groupListModel = new GroupListView(tempGroupList);
+        ui->groupList->setModel(groupListModel);
 
     } catch (exception& e) {
         cout << "Failed to Create GUI Or Model, exiting..." << e.what() << endl;
@@ -161,7 +178,9 @@ void MainWindow::on_addContactButton_clicked()
 
 
         this->model->addContact(this->data.getContacts()[(this->data.getContacts().size() - 1)]);
+        this->ui->contactId->setText("");
     }
+    utils.toggleContactIdButtons(this);
 
 
 }
@@ -242,6 +261,7 @@ void MainWindow::on_deleteContactButton_clicked()
     this->data.executeQuery("DELETE_CONTACT", paramMap, "delete");
     this->data.deleteContact(contactId);
     this->model->deleteContact(contactId);
+    this->ui->contactId->setText("");
     utils.toggleContactIdButtons(this);
 
 
@@ -319,12 +339,13 @@ void MainWindow::on_addAddressButton_clicked()
         paramMap[4] = returnMap["Category"];
         this->data.executeQuery("GET_CONTACT_ADDRESS_ID_BY_ADDRESS", paramMap, "address");
     }
+    utils.toggleContactIdButtons(this);
 }
 
 void MainWindow::on_deleteAddressButton_clicked()
 {
     int contactId = stoi(ui->contactId->text().toStdString());
-
+    CommonUtils utils;
     map<int, string> paramMap;
     paramMap[0] = to_string(contactId);
     this->data.executeQuery("DELETE_ALL_CONTACT_ADDRESS", paramMap, "delete");
@@ -334,11 +355,14 @@ void MainWindow::on_deleteAddressButton_clicked()
             break;
         }
     }
+    utils.toggleContactIdButtons(this);
 }
 
 void MainWindow::on_deletePhoneButton_clicked()
 {
     int contactId = stoi(ui->contactId->text().toStdString());
+
+    CommonUtils utils;
 
     map<int, string> paramMap;
     paramMap[0] = to_string(contactId);
@@ -349,36 +373,43 @@ void MainWindow::on_deletePhoneButton_clicked()
             break;
         }
     }
+    utils.toggleContactIdButtons(this);
 }
 
 void MainWindow::on_deleteEmailButton_clicked()
 {
     int contactId = stoi(ui->contactId->text().toStdString());
 
+    CommonUtils utils;
     map<int, string> paramMap;
     paramMap[0] = to_string(contactId);
     this->data.executeQuery("DELETE_ALL_CONTACT_EMAILS", paramMap, "delete");
     for(auto& i : this->data.getContacts()){
         if(i.getContactId() == contactId){
             i.clearEmails();
+            utils.toggleContactIdButtons(this);
             break;
         }
     }
+    utils.toggleContactIdButtons(this);
 }
 
 void MainWindow::on_deleteGroupButton_clicked()
 {
     int contactId = stoi(ui->contactId->text().toStdString());
 
+    CommonUtils utils;
     map<int, string> paramMap;
     paramMap[0] = to_string(contactId);
     this->data.executeQuery("DELETE_ALL_CONTACT_GROUPS", paramMap, "delete");
     for(auto& i : this->data.getContacts()){
         if(i.getContactId() == contactId){
             i.clearGroups();
+            utils.toggleContactIdButtons(this);
             break;
         }
     }
+    utils.toggleContactIdButtons(this);
 }
 
 void MainWindow::on_addPhoneButton_clicked()
@@ -405,6 +436,7 @@ void MainWindow::on_addPhoneButton_clicked()
         paramMap[1] = returnMap["Phone"];
         this->data.executeQuery("GET_CONTACT_PHONE_ID_BY_PHONE", paramMap, "phone");
     }
+    utils.toggleContactIdButtons(this);
 }
 
 void MainWindow::on_addEmailButton_clicked()
@@ -429,6 +461,7 @@ void MainWindow::on_addEmailButton_clicked()
         this->data.executeQuery("INSERT_CONTACT_EMAIL", paramMap, "insert");
         this->data.executeQuery("GET_CONTACT_EMAIL_ID_BY_EMAIL", paramMap, "email");
     }
+    utils.toggleContactIdButtons(this);
 }
 
 void MainWindow::on_addGroupButton_2_clicked()
@@ -451,6 +484,7 @@ void MainWindow::on_addGroupButton_2_clicked()
         this->data.executeQuery("INSERT_CONTACT_GROUP", paramMap, "insert");
         this->data.executeQuery("GET_GROUP_BY_ID", paramMap, "contactGroups");
     }
+    utils.toggleContactIdButtons(this);
 }
 
 void MainWindow::on_searchContactTable_pressed(const QModelIndex &index)

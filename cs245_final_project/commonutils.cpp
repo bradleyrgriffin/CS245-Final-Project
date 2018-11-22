@@ -1,4 +1,5 @@
 #include "commonutils.h"
+#include "group.h"
 
 CommonUtils::CommonUtils()
 {
@@ -25,11 +26,26 @@ void CommonUtils::displayData(MainWindow* thing){
                 int catId = j.getCategoryID();
                 j.displayName = j.getPhoneNumber() + "/ " + thing->data.getCategoryById(catId).getCategoryName();
             }
+            for(auto& j : i.getAddresses()){
+                int catId = j.getCategoryId();
+                j.displayName = j.getAddress() + "/ " + j.getCity() + "/ " +thing->data.getCategoryById(catId).getCategoryName();
+            }
+            for(auto& j : i.getEmails()){
+                int catId = j.getCategoryId();
+                j.displayName = j.getEmailName() + "/ " + thing->data.getCategoryById(catId).getCategoryName();
+            }
+
+            vector<Group> fakeGroups;
+            for(auto& j : i.getGroupIds()){
+                Group g = thing->data.getGroupById(j);
+                g.displayName = g.getGroupName();
+                fakeGroups.push_back(g);
+            }
 
             thing->phoneListModel->loadPhoneNumbers(i.getPhoneNumbers());
-
-            //Should figure out how to update the QTListView objects with this user's(i) data
-            //TODO:
+            thing->addressListModel->loadPhoneNumbers(i.getAddresses());
+            thing->emailListModel->loadPhoneNumbers(i.getEmails());
+            thing->groupListModel->loadPhoneNumbers(fakeGroups);
 
         }
     }
@@ -67,6 +83,10 @@ void CommonUtils::toggleContactIdButtons(MainWindow* thing){
         thing->ui->contactId->setText("");
         thing->ui->firstName->setText("");
         thing->ui->lastName->setText("");
+        thing->phoneListModel->loadPhoneNumbers();
+        thing->addressListModel->loadPhoneNumbers();
+        thing->emailListModel->loadPhoneNumbers();
+        thing->groupListModel->loadPhoneNumbers();
         QPixmap pix(QString::fromStdString("clear"));
         thing->ui->profilePicture->setPixmap(pix);
 

@@ -13,6 +13,7 @@ public:
     int getEmailId(){return this->emailId; }
     std::string getEmailName(){ return this->emailName; }
     int getCategoryId(){ return this->categoryId; }
+    std::string displayName;
 private:
     std::string emailName;
     int emailId;

@@ -38,7 +38,10 @@ SOURCES += \
     group.cpp \
     category.cpp \
     contacttablemodel.cpp \
-    phonenumberlistview.cpp
+    phonenumberlistview.cpp \
+    addreslistview.cpp \
+    emaillistview.cpp \
+    grouplistview.cpp
 
 HEADERS += \
         mainwindow.h \
@@ -56,7 +59,10 @@ HEADERS += \
     group.h \
     category.h \
     contacttablemodel.h \
-    phonenumberlistview.h
+    phonenumberlistview.h \
+    addreslistview.h \
+    emaillistview.h \
+    grouplistview.h
 
 FORMS += \
         mainwindow.ui
