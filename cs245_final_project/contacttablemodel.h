@@ -24,6 +24,9 @@ public:
     virtual bool setData(const QModelIndex & index, const QVariant & value, int role = Qt::EditRole);
 
     void createContacts();
+    bool deleteContact(int& id);
+    void addContact(Contact cntct);
+    void updateContact(const Contact& cntct);
 
     void updateContacts(const vector<Contact>& ctnct);
 

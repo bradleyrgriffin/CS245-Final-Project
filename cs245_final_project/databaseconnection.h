@@ -45,10 +45,13 @@ public:
 
     void refreshData(const string& dataToRefresh);
 
+
+
 private:
     string connectionString;
     void fillConnectionDetails();
     QSqlDatabase db;
+    bool ok;
     QString getQueryStringByName(const string & queryName);
 
     //catch all, to try and save some data

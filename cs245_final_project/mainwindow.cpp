@@ -67,7 +67,13 @@ MainWindow::MainWindow(QWidget *parent) :
     //It uses a QtDialog box and get the username/password and compares the password
     //hashes to confirm login, exits if incorrect login.
     try{
-        while(loginAuthentication(this));
+        int i = 0;
+        while(loginAuthentication(this)){
+            if(i == 3){
+                exit(1);
+            }
+            i++;
+        }
     }catch (exception& e){
         cout << "Error Logging In " << e.what() << endl;
         exit(1);
@@ -84,22 +90,37 @@ MainWindow::MainWindow(QWidget *parent) :
     } catch (exception& e) {
          cout << "Error populating contact data " << e.what() << endl;
     }
+
+    if(this->data.getContacts().size() == 0 || this->data.getCategories().size() == 0 || this->data.getGroups().size() == 0 || this->data.getPhotos().size() == 0){
+        cout << "Failed to Load all the data, probably due to a network issue, timeout requests, or server speed. Will exit program, please reboot and try again" << endl;
+        exit(1);
+    }
+
     //Loads User Interface
-    ui->setupUi(this);
+    try {
 
-    // Create new user model & apply it to the table view
-    model = new ContactTableModel(this);
-    model->updateContacts(this->data.getContacts());
-    ui->searchContactTable->setModel(model);
+        ui->setupUi(this);
+        // Create new user model & apply it to the table view
+        model = new ContactTableModel(this);
+        model->updateContacts(this->data.getContacts());
+        ui->searchContactTable->setModel(model);
 
-    // Set the table view to allow the columns to expand
-    ui->searchContactTable->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
+        // Set the table view to allow the columns to expand
+        ui->searchContactTable->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
 
-    // Stretch the columns headers to fit the width of the table view
-    ui->searchContactTable->horizontalHeader()->setSectionResizeMode(QHeaderView::Stretch);
+        // Stretch the columns headers to fit the width of the table view
+        ui->searchContactTable->horizontalHeader()->setSectionResizeMode(QHeaderView::Stretch);
 
-    // Resize the columns
-    ui->searchContactTable->resizeColumnsToContents();
+        // Resize the columns
+        ui->searchContactTable->resizeColumnsToContents();
+
+    } catch (exception& e) {
+        cout << "Failed to Create GUI Or Model, exiting..." << e.what() << endl;
+        exit(1);
+    }
+
+
+
 }
 
 
@@ -135,7 +156,11 @@ void MainWindow::on_addContactButton_clicked()
 
         this->data.executeQuery("INSERT_CONTACT", paramMap, "insert");
         this->data.addContact(paramMap);
+
+
+        this->model->addContact(this->data.getContacts()[(this->data.getContacts().size() - 1)]);
     }
+
 
 }
 void MainWindow::on_addCategoryButton_clicked()
@@ -216,17 +241,20 @@ void MainWindow::on_deleteContactButton_clicked()
     int contactId = stoi(ui->contactId->text().toStdString());
     map<int, string> paramMap;
     paramMap[0] = to_string(contactId);
-    map<string, string> returnMap;
+
     CommonUtils utils = CommonUtils();
-    returnMap = utils.dialogPrompt(this, {"Are you Sure? Enter \"Yes\" To Confirm"});
+
+
+
+    this->data.executeQuery("DELETE_ALL_CONTACT_EMAILS", paramMap, "delete");
+    this->data.executeQuery("DELETE_ALL_CONTACT_PHONE", paramMap, "delete");
+    this->data.executeQuery("DELETE_ALL_CONTACT_ADDRESS", paramMap, "delete");
+    this->data.executeQuery("DELETE_ALL_CONTACT_GROUPS", paramMap, "delete");
+    this->data.executeQuery("DELETE_CONTACT", paramMap, "delete");
+    this->data.deleteContact(contactId);
+    this->model->deleteContact(contactId);
     utils.toggleContactIdButtons(this);
 
-    if(utils.validateFields(returnMap, this)){
-        if(returnMap["Are you Sure? Enter \"Yes\" To Confirm"] == "Yes"){
-            this->data.executeQuery("DELETE_CONTACT", paramMap, "delete");
-            this->data.deleteContact(contactId);
-        }
-    }
 
 }
 
@@ -256,11 +284,14 @@ void MainWindow::on_updateContactButton_clicked()
             if(i.getContactId() == contactId){
                 i.setFName(fName);
                 i.setLName(lName);
+                utils.toggleContactIdButtons(this);
+                this->model->updateContact(i);
                 break;
             }
         }
     }
     utils.toggleContactIdButtons(this);
+
 }
 
 void MainWindow::on_addAddressButton_clicked()

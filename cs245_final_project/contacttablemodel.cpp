@@ -4,6 +4,7 @@
     #include <QFont>
     #include "contacttablemodel.h"
     #include "contact.h"
+#include <string>
 
   using std::vector;
 
@@ -19,6 +20,7 @@ void ContactTableModel::updateContacts(const vector<Contact>& data){
     for(auto& i : data){
         this->contacts.push_back(i);
     }
+    this->setData(this->index(0,0), 0);
 }
 
 /*
@@ -172,4 +174,35 @@ int ContactTableModel::getContactIdByIndex(const QModelIndex & index){
     }
 }
 
+bool ContactTableModel::deleteContact(int& id){
 
+    for(std::vector<Contact>::iterator it = this->contacts.begin(); it != this->contacts.end(); ++it) {
+        if((*it).getContactId() == id){
+            this->contacts.erase(it);
+            this->setData(this->index(0,0), 0);
+            return true;
+        }
+    }
+
+    return false;
+}
+
+void ContactTableModel::addContact(Contact cntct){
+    if((this->contacts.capacity() - this->contacts.size()) < 5){
+        this->contacts.reserve(2 * this->contacts.capacity());
+    }
+
+    this->contacts.push_back(cntct);
+
+    this->setData(this->index(0,0), 0);
+}
+
+void ContactTableModel::updateContact(const Contact& cntct){
+    for(std::vector<Contact>::iterator it = this->contacts.begin(); it != this->contacts.end(); ++it) {
+        if((*it).getContactId() == cntct.contactId){
+            (*it).setFName(cntct.firstName);
+            (*it).setLName(cntct.lastName);
+            this->setData(this->index(0,0), 0);
+        }
+    }
+}

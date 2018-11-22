@@ -59,6 +59,10 @@ void CommonUtils::toggleContactIdButtons(MainWindow* thing){
         displayData(thing);
     }else{
         thing->ui->contactId->setText("");
+        thing->ui->firstName->setText("");
+        thing->ui->lastName->setText("");
+        QPixmap pix(QString::fromStdString("clear"));
+        thing->ui->profilePicture->setPixmap(pix);
 
         cout << "Disabling Contact Buttons" << endl;
         disableBtn(thing->ui->updateContactButton);

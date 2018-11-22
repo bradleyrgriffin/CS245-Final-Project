@@ -164,7 +164,15 @@ QString DatabaseConnection::getQueryStringByName(const string& queryName){
 //This Executes a query, binding the parameters.
 bool DatabaseConnection::executeQuery(const string& queryName, map<int, string>& params, const string& objectToMap){
     // open the connection
-    bool ok = this->db.open();
+
+    if(!(this->db.isOpen())){
+        cout << "Opening DB Connection" <<endl;
+         this->ok = this->db.open();
+    }else if(!ok){
+        cout << "Bad DB connection, reopening" << endl;
+        this->db.close();
+        this->ok = this->db.open();
+    }
 
         // if we connect successfully...
         if(ok)
@@ -178,6 +186,7 @@ bool DatabaseConnection::executeQuery(const string& queryName, map<int, string>&
                 cout << "Query not found" << endl;
                 return false;
             }
+
 
             // prepare the query
             QSqlQuery query;
@@ -312,17 +321,16 @@ bool DatabaseConnection::executeQuery(const string& queryName, map<int, string>&
                         cout << "Failed the mapping " << e.what() << endl;
                     }
                 }
-
-                this->db.close();
-                return true;
+                    return true;
             }
 
         } catch(exception& e){
-            cout << "Failed To Execute Query " << e.what() << endl;
+            cout << "Failed To Execute Query, closing DB: " << e.what() << endl;
             this->db.close();
             return false;
         }
         }
+        cout << "Closing DB, Probably bad connection." <<endl;
         this->db.close();
         return false;
 }
