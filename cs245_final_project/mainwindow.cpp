@@ -14,6 +14,9 @@
 #include <string>
 #include <map>
 #include "commonutils.h"
+#include <QTableWidgetItem>
+#include <QModelIndex>
+#include <QSortFilterProxyModel>
 using namespace std;
 
 /*------------------------LOGIN WINDOW-------------------------*/
@@ -69,7 +72,7 @@ MainWindow::MainWindow(QWidget *parent) :
     try{
         int i = 0;
         while(loginAuthentication(this)){
-            if(i == 3){
+            if(i == 2){
                 exit(1);
             }
             i++;
@@ -232,7 +235,10 @@ void MainWindow::on_addGroupButton_clicked()
 }
 void MainWindow::on_searchButton_clicked()
 {
-    //This should search through the table view
+    auto detailsProxyModel = new QSortFilterProxyModel();
+       detailsProxyModel->setFilterRole(0);
+       detailsProxyModel->setFilterRegExp( "^\\S+$" );
+       detailsProxyModel->setSourceModel( model );
 
     CommonUtils utils;
     utils.toggleContactIdButtons(this);

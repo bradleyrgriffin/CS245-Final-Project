@@ -206,3 +206,5 @@ void ContactTableModel::updateContact(const Contact& cntct){
         }
     }
 }
+
+

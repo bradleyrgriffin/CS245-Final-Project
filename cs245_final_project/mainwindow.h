@@ -69,14 +69,6 @@ public:
     EmailListView* emailListModel;
     GroupListView* groupListModel;
 
-//    QListView* groupView;
-//    QListView* categoryView;
-//    QListView* photoView;
-
-//    QComboBox* groupCombo;
-//    QComboBox* categoryCombo;
-//    QComboBox* photoCombo;
-
 private slots:
     void on_searchContactTable_pressed(const QModelIndex &index);
 };
