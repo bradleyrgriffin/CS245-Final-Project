@@ -31,6 +31,8 @@ public:
     void enableBtn(QPushButton* btn);
 
 
+    string substringStr(const string& s);
+
     //Disable/Enable buttons related to ContactID Field
     //Pass in the window so we can alter the buttons
     void toggleContactIdButtons(MainWindow * thing);

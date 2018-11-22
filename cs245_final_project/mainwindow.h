@@ -10,6 +10,8 @@
 #include "addreslistview.h"
 #include "emaillistview.h"
 #include "grouplistview.h"
+#include <QListView>
+#include <QComboBox>
 
 namespace Ui {
 class MainWindow;
@@ -66,6 +68,14 @@ public:
     AddresListView* addressListModel;
     EmailListView* emailListModel;
     GroupListView* groupListModel;
+
+//    QListView* groupView;
+//    QListView* categoryView;
+//    QListView* photoView;
+
+//    QComboBox* groupCombo;
+//    QComboBox* categoryCombo;
+//    QComboBox* photoCombo;
 
 private slots:
     void on_searchContactTable_pressed(const QModelIndex &index);

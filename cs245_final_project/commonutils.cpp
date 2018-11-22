@@ -161,15 +161,79 @@ map<string, string> CommonUtils::dialogPrompt(MainWindow * thisPtr, vector<strin
 
     // Add the lineEdits with their respective labels
     QList<QLineEdit *> fields;
+    QList<QComboBox *> dd;
     QLineEdit *lineEdit;
     int argCntr = 0;
 
 
     for(auto i : fieldNames){
-        lineEdit = new QLineEdit(&dialog);
-        QString label =  QString(QString::fromStdString(i + ":")).arg(argCntr);
-        form.addRow(label, lineEdit);
-        fields << lineEdit;
+        if(i == "Category" || i == "Group" || i == "Photo"){
+            //To Maintain Index positions... Removed adding it to the box though
+
+            fields << new QLineEdit();
+
+            QString label =  QString(QString::fromStdString(i + ":")).arg(argCntr);
+
+
+            if(i == "Group"){
+                QComboBox* groupCombo = new QComboBox(thisPtr);
+                QListView* groupView = new QListView(groupCombo);
+                for(auto& i : thisPtr->data.getGroups()){
+                    groupCombo->addItem(QString::fromStdString(to_string(i.getGroupId()) + "/" + i.getGroupName()));
+                }
+                groupView->setStyleSheet("QListView::item {                              \
+                                             border-bottom: 5px solid white; margin:3px; }  \
+                                             QListView::item:selected {                     \
+                                             border-bottom: 5px solid black; margin:3px;    \
+                                             color: black;                                  \
+                                            }                                               \
+                                            ");
+                groupCombo->setView(groupView);
+
+                form.addRow(label, groupCombo);
+                dd << groupCombo;
+            }else if(i == "Category"){
+                QComboBox* categoryCombo = new QComboBox(thisPtr);
+                QListView* groupView = new QListView(categoryCombo);
+                for(auto& i : thisPtr->data.getCategories()){
+                    categoryCombo->addItem(QString::fromStdString(to_string(i.getCategoryId()) + "/" + i.getCategoryName()));
+                }
+                groupView->setStyleSheet("QListView::item {                              \
+                                             border-bottom: 5px solid white; margin:3px; }  \
+                                             QListView::item:selected {                     \
+                                             border-bottom: 5px solid black; margin:3px;    \
+                                             color: black;                                  \
+                                            }                                               \
+                                            ");
+                categoryCombo->setView(groupView);
+
+                form.addRow(label, categoryCombo);
+                dd << categoryCombo;
+            }else if(i == "Photo"){
+                    QComboBox* photoCombo = new QComboBox(thisPtr);
+                    QListView* groupView = new QListView(photoCombo);
+                    for(auto& i : thisPtr->data.getPhotos()){
+                        photoCombo->addItem(QString::fromStdString(to_string(i.getPhotoId()) + "/" + i.getPhotoPath()));
+                    }
+                    groupView->setStyleSheet("QListView::item {                              \
+                                                 border-bottom: 5px solid white; margin:3px; }  \
+                                                 QListView::item:selected {                     \
+                                                 border-bottom: 5px solid black; margin:3px;    \
+                                                 color: black;                                  \
+                                                }                                               \
+                                                ");
+                    photoCombo->setView(groupView);
+
+                    form.addRow(label, photoCombo);
+                    dd << photoCombo;
+            }
+        }else{
+            lineEdit = new QLineEdit(&dialog);
+            QString label =  QString(QString::fromStdString(i + ":")).arg(argCntr);
+            form.addRow(label, lineEdit);
+            fields << lineEdit;
+        }
+
 
         argCntr++;
     }
@@ -182,15 +246,34 @@ map<string, string> CommonUtils::dialogPrompt(MainWindow * thisPtr, vector<strin
     QObject::connect(&buttonBox, SIGNAL(rejected()), &dialog, SLOT(reject()));
 
 
+    int cmbnum = 0;
+    int lndt = 0;
     // Show the dialog as modal
     if (dialog.exec() == QDialog::Accepted) {
         // If the user didn't dismiss the dialog, do something with the fields
-        size_t j = 0;
-        for(auto i : fields){
-            returnMap[fieldNames[j]] = i->text().toStdString();
-            j++;
-        }
+        for(int j = 0; j < argCntr; j++){
+            if(fieldNames[j] == "Group" || fieldNames[j] == "Category" || fieldNames[j] == "Photo"){
+                returnMap[fieldNames[j]] = dd[cmbnum]->currentText().toStdString();
+                cmbnum++;
+            }else{
+                returnMap[fieldNames[j]] = fields[lndt]->text().toStdString();
+                lndt++;
+            }
+    }
+
     }
 
     return returnMap;
+}
+
+string CommonUtils::substringStr(const string& s){
+    std::string::size_type pos = s.find('/');
+        if (pos != std::string::npos)
+        {
+            return s.substr(0, pos);
+        }
+        else
+        {
+            return s;
+        }
 }

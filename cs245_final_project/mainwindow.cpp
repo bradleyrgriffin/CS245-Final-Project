@@ -133,6 +133,7 @@ MainWindow::MainWindow(QWidget *parent) :
         groupListModel = new GroupListView(tempGroupList);
         ui->groupList->setModel(groupListModel);
 
+
     } catch (exception& e) {
         cout << "Failed to Create GUI Or Model, exiting..." << e.what() << endl;
         exit(1);
@@ -326,7 +327,7 @@ void MainWindow::on_addAddressButton_clicked()
         paramMap[2] = returnMap["State"];
         paramMap[3] = returnMap["ZIP"];
         paramMap[4] = to_string(contactId);
-        paramMap[5] = returnMap["Category"];
+        paramMap[5] = utils.substringStr(returnMap["Category"]);
 
         this->data.executeQuery("INSERT_CONTACT_ADDRESS", paramMap, "insert");
 
@@ -336,7 +337,7 @@ void MainWindow::on_addAddressButton_clicked()
         paramMap[1] = returnMap["Street"];
         paramMap[2] = returnMap["City"];
         paramMap[3] = returnMap["State"];
-        paramMap[4] = returnMap["Category"];
+        paramMap[4] = utils.substringStr(returnMap["Category"]);
         this->data.executeQuery("GET_CONTACT_ADDRESS_ID_BY_ADDRESS", paramMap, "address");
     }
     utils.toggleContactIdButtons(this);
@@ -429,7 +430,7 @@ void MainWindow::on_addPhoneButton_clicked()
         map<int, string> paramMap;
         paramMap[0] = returnMap["Phone"];
         paramMap[1] = to_string(contactId);
-        paramMap[2] = returnMap["Category"];
+        paramMap[2] = utils.substringStr(returnMap["Category"]);
 
         this->data.executeQuery("INSERT_CONTACT_PHONE", paramMap, "insert");
         paramMap[0] = paramMap[1];
@@ -456,7 +457,7 @@ void MainWindow::on_addEmailButton_clicked()
         map<int, string> paramMap;
         paramMap[0] = to_string(contactId);
         paramMap[1] = returnMap["Email"];
-        paramMap[2] = returnMap["Category"];
+        paramMap[2] = utils.substringStr(returnMap["Category"]);
 
         this->data.executeQuery("INSERT_CONTACT_EMAIL", paramMap, "insert");
         this->data.executeQuery("GET_CONTACT_EMAIL_ID_BY_EMAIL", paramMap, "email");
@@ -479,7 +480,7 @@ void MainWindow::on_addGroupButton_2_clicked()
     if(utils.validateFields(returnMap, this)){
         map<int, string> paramMap;
         paramMap[0] = to_string(contactId); //Contact Id
-        paramMap[1] = returnMap["Group"]; //Group Id
+        paramMap[1] = utils.substringStr(returnMap["Group"]); //Group Id
 
         this->data.executeQuery("INSERT_CONTACT_GROUP", paramMap, "insert");
         this->data.executeQuery("GET_GROUP_BY_ID", paramMap, "contactGroups");
