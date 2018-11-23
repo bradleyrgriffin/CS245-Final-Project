@@ -115,7 +115,7 @@ void CommonUtils::enableBtn(QPushButton* btn){
 bool CommonUtils::validateFields(map<string, string>& data, MainWindow* thing){
     for(auto& i : data){
         if(i.first != "Group" && i.first != "Category" && i.first != "Photo"){
-            if(i.first == "Phone" || i.first == "Address" || i.first == "City" || i.first == "State" || i.first == "Category Name" || i.first == "Group Name" || i.first == "First Name" || i.first == "Last Name" || i.first == "Email"){
+            if(i.first == "First Name" || i.first == "Last Name" || i.first == "Phone" || i.first == "Address" || i.first == "City" || i.first == "State" || i.first == "Category Name" || i.first == "Group Name" || i.first == "First Name" || i.first == "Last Name" || i.first == "Email"){
                 if(i.second == ""){
                     cout << "Invalid Data in Fields" << endl;
                     return false;

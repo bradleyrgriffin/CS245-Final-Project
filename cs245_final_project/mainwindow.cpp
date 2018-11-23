@@ -159,7 +159,7 @@ void MainWindow::on_addContactButton_clicked()
     vector<string> addcontactinformation;
     addcontactinformation.push_back("First Name");
     addcontactinformation.push_back("Last Name");
-    addcontactinformation.push_back("Photo ID");
+    addcontactinformation.push_back("Photo");
 
 
     map<string, string> returnMap;
