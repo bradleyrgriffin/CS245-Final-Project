@@ -235,10 +235,8 @@ void MainWindow::on_addGroupButton_clicked()
 }
 void MainWindow::on_searchButton_clicked()
 {
-    auto detailsProxyModel = new QSortFilterProxyModel();
-       detailsProxyModel->setFilterRole(0);
-       detailsProxyModel->setFilterRegExp( "^\\S+$" );
-       detailsProxyModel->setSourceModel( model );
+    this->model->resetTable();
+    this->model->customSearch(this->ui->searchBar->text().toStdString());
 
     CommonUtils utils;
     utils.toggleContactIdButtons(this);

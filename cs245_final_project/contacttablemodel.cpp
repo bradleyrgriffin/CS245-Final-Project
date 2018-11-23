@@ -5,6 +5,7 @@
     #include "contacttablemodel.h"
     #include "contact.h"
 #include <string>
+#include <algorithm>
 
   using std::vector;
 
@@ -42,6 +43,50 @@ void ContactTableModel::createContacts(){
 int ContactTableModel::columnCount(const QModelIndex &parent) const
 {
         return 3;
+}
+
+
+void ContactTableModel::customSearch(string searchTerm){
+    int lngth = this->contacts.size();
+    for(int i = 0; i < lngth; i++){//For every row
+        bool ok = false;
+
+        std::transform(searchTerm.begin(), searchTerm.end(),searchTerm.begin(), ::toupper);
+        string fName = contacts[i].firstName;
+        std::transform(fName.begin(), fName.end(),fName.begin(), ::toupper);
+        string lName = contacts[i].lastName;
+        std::transform(lName.begin(), lName.end(),lName.begin(), ::toupper);
+
+
+        if(QString::fromStdString(fName).contains(QString::fromStdString(searchTerm)) || QString::fromStdString(lName).contains(QString::fromStdString(searchTerm))){
+            ok = true;
+        }
+
+        if(!ok){
+            for(std::vector<Contact>::iterator it = this->contacts.begin(); it != this->contacts.end(); ++it) {
+                if((*it).getContactId() == contacts[i].getContactId()){
+                    this->removedCntcts.push_back(contacts[i]);
+                    this->contacts.erase(it);
+                    i = (i == 0 ? -1: 0);
+                    lngth = this->contacts.size();
+                    break;
+                }
+            }
+        }
+    }
+
+    if(contacts.size() == 0){
+        resetTable();
+    }
+
+    this->setData(this->index(0,0), 0);
+}
+
+void ContactTableModel::resetTable(){
+    for(int i = (this->removedCntcts.size()-1); i > -1; i--){
+        this->contacts.push_back(this->removedCntcts[i]);
+        removedCntcts.pop_back();
+    }
 }
 
 

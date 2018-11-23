@@ -28,9 +28,13 @@ public:
     void addContact(Contact cntct);
     void updateContact(const Contact& cntct);
 
+    void customSearch(string searchTerm);
+
     void updateContacts(const vector<Contact>& ctnct);
 
     int getContactIdByIndex(const QModelIndex& index);
+
+    void resetTable();
 
 public slots:
 
@@ -40,6 +44,7 @@ signals:
 
 private:
     vector<Contact> contacts;
+    vector<Contact> removedCntcts;
 };
 
 #endif // CONTACTTABLEMODEL_H

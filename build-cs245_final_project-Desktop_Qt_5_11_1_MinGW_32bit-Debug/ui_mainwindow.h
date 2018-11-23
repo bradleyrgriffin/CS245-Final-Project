@@ -91,10 +91,10 @@ public:
         searchContactTable->setGeometry(QRect(10, 80, 661, 461));
         searchBar = new QLineEdit(centralWidget);
         searchBar->setObjectName(QStringLiteral("searchBar"));
-        searchBar->setGeometry(QRect(20, 20, 431, 22));
+        searchBar->setGeometry(QRect(10, 20, 431, 31));
         searchButton = new QPushButton(centralWidget);
         searchButton->setObjectName(QStringLiteral("searchButton"));
-        searchButton->setGeometry(QRect(560, 20, 93, 28));
+        searchButton->setGeometry(QRect(460, 20, 93, 31));
         firstNameLabel = new QLabel(centralWidget);
         firstNameLabel->setObjectName(QStringLiteral("firstNameLabel"));
         firstNameLabel->setGeometry(QRect(720, 10, 71, 16));
@@ -228,6 +228,9 @@ public:
 #endif // QT_NO_WHATSTHIS
         searchBar->setText(QString());
         searchButton->setText(QApplication::translate("MainWindow", "Search", nullptr));
+#ifndef QT_NO_SHORTCUT
+        searchButton->setShortcut(QApplication::translate("MainWindow", "Return", nullptr));
+#endif // QT_NO_SHORTCUT
         firstNameLabel->setText(QApplication::translate("MainWindow", "First Name:", nullptr));
         lastNameLabel->setText(QApplication::translate("MainWindow", "Last Name:", nullptr));
         contactIdLabel->setText(QApplication::translate("MainWindow", "ID:", nullptr));

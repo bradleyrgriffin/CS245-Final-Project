@@ -114,30 +114,19 @@ void CommonUtils::enableBtn(QPushButton* btn){
 
 bool CommonUtils::validateFields(map<string, string>& data, MainWindow* thing){
     for(auto& i : data){
-        if(i.second == ""){
-            cout << "Invalid Data in Fields" << endl;
-            return false;
-        }else if(i.first == "Group"){
-            try {
-                int id = stoi(i.second);
-
-            } catch (exception& e) {
-                cout << "Invalid Data in Fields" << endl;
-                return false;
-            }
-        }else if(i.first == "Category"){
-            try {
-                int id = stoi(i.second);
-            } catch (exception& e) {
-                cout << "Invalid Data in Fields" << endl;
-                return false;
-            }
-        }else if (i.first == "Photo"){
-            try {
-                int id = stoi(i.second);
-            } catch (exception& e) {
-                cout << "Invalid Data in Fields" << endl;
-                return false;
+        if(i.first != "Group" && i.first != "Category" && i.first != "Photo"){
+            if(i.first == "Phone" || i.first == "Address" || i.first == "City" || i.first == "State" || i.first == "Category Name" || i.first == "Group Name" || i.first == "First Name" || i.first == "Last Name"){
+                if(i.second == ""){
+                    cout << "Invalid Data in Fields" << endl;
+                    return false;
+                }
+            }else{
+                try {
+                    int tst = stoi(i.second);
+                } catch (exception& e) {
+                    cout << "Invalid Data in Fields" << endl;
+                    return false;
+                }
             }
         }
     }
