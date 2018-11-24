@@ -115,7 +115,7 @@ void CommonUtils::enableBtn(QPushButton* btn){
 bool CommonUtils::validateFields(map<string, string>& data, MainWindow* thing){
     for(auto& i : data){
         if(i.first != "Group" && i.first != "Category" && i.first != "Photo"){
-            if(i.first == "First Name" || i.first == "Last Name" || i.first == "Phone" || i.first == "Address" || i.first == "City" || i.first == "State" || i.first == "Category Name" || i.first == "Group Name" || i.first == "First Name" || i.first == "Last Name" || i.first == "Email"){
+            if(i.first == "ZIP" || i.first == "first" || i.first == "last" || i.first == "First Name" || i.first == "Last Name" || i.first == "Phone" || i.first == "Address" || i.first == "City" || i.first == "State" || i.first == "Category Name" || i.first == "Group Name" || i.first == "First Name" || i.first == "Last Name" || i.first == "Email"){
                 if(i.second == ""){
                     cout << "Invalid Data in Fields" << endl;
                     return false;
@@ -242,7 +242,7 @@ map<string, string> CommonUtils::dialogPrompt(MainWindow * thisPtr, vector<strin
         // If the user didn't dismiss the dialog, do something with the fields
         for(int j = 0; j < argCntr; j++){
             if(fieldNames[j] == "Group" || fieldNames[j] == "Category" || fieldNames[j] == "Photo"){
-                returnMap[fieldNames[j]] = dd[cmbnum]->currentText().toStdString();
+                returnMap[fieldNames[j]] = substringStr(dd[cmbnum]->currentText().toStdString());
                 cmbnum++;
             }else{
                 returnMap[fieldNames[j]] = fields[lndt]->text().toStdString();

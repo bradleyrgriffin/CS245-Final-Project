@@ -81,6 +81,7 @@ QString DatabaseConnection::getQueryStringByName(const string& queryName){
     string GET_CONTACT_ID_BY_FIRST_LAST_NAME = "SELECT TOP(1) FIRST_NAME, LAST_NAME, CONTACT_ID, PHOTO_LIBRARY_ID FROM CONTACT WHERE FIRST_NAME = ? AND LAST_NAME = ? ORDER BY CONTACT_ID DESC";
 
     string GET_GROUP_BY_NAME = "SELECT TOP(1) GROUP_NAME, GROUP_ID FROM GROUPS WHERE GROUP_NAME = ? ORDER BY GROUP_ID DESC";
+    string GET_CATEGORY_BY_NAME = "SELECT TOP(1) CATEGORY_NAME, CATEGORY_ID FROM CATEGORY WHERE CATEGORY_NAME = ? ORDER BY CATEGORY_ID DESC";
     //Update
     string UPDATE_CONTACT = "UPDATE CONTACT SET FIRST_NAME = ?, LAST_NAME  = ? WHERE CONTACT_ID = ?";
 
@@ -100,6 +101,8 @@ QString DatabaseConnection::getQueryStringByName(const string& queryName){
 
     if(queryName == "GET_CONTACTS"){
         return QString::fromStdString(GET_CONTACTS);
+    }else if(queryName == "GET_CATEGORY_BY_NAME"){
+        return QString::fromStdString(GET_CATEGORY_BY_NAME);
     }else if(queryName == "GET_GROUP_BY_NAME"){
         return QString::fromStdString(GET_GROUP_BY_NAME);
     }else if(queryName == "GET_GROUPS_BY_CONTACT_ID"){
