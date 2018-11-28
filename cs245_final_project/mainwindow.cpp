@@ -33,6 +33,7 @@ bool loginAuthentication(MainWindow * thisPtr){
     form.addRow(label, lineEdit);
     fields << lineEdit;
     lineEdit = new QLineEdit(&dialog);
+    lineEdit->setEchoMode(QLineEdit::Password);
     label = QString("Password:").arg(2);
     form.addRow(label, lineEdit);
     fields << lineEdit;
