@@ -131,6 +131,10 @@ bool CommonUtils::validateFields(map<string, string>& data, MainWindow* thing){
         }
     }
 
+    if(data.size() == 0){
+        return false;
+    }
+
     return true;
 }
 
@@ -248,8 +252,10 @@ map<string, string> CommonUtils::dialogPrompt(MainWindow * thisPtr, vector<strin
                 returnMap[fieldNames[j]] = fields[lndt]->text().toStdString();
                 lndt++;
             }
-    }
+        }
 
+    }else{
+        return map<string, string>();
     }
 
     return returnMap;
