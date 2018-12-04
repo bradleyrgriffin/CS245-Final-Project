@@ -8,7 +8,7 @@ CommonUtils::CommonUtils()
 {
 
 }
-bool CommonUtils::checkDuplicateNames(MainWindow* thing, const string& nme, const string& type){
+bool CommonUtils::checkDuplicateNames(MainWindow* thing, const string& nme, const string& type, int id, int gr_id){
     if(type == "groups"){
         for(auto i : thing->data.getGroups()){
             string dta_string = i.getGroupName();
@@ -31,6 +31,17 @@ bool CommonUtils::checkDuplicateNames(MainWindow* thing, const string& nme, cons
             if(!dta_string.compare(name)){
                 cout << "Duplicate Category Found, not adding it" << endl;
                 return false;
+            }
+        }
+    }else if(type == "contact_group"){
+        for (auto& i :thing->data.getContacts()){
+            if(i.getContactId() == id){
+                for(auto& j : i.getGroupIds()){
+                    if(gr_id == j){
+                        cout << "Cannot add the same group to a contact twice" << endl;
+                        return false;
+                    }
+                }
             }
         }
     }

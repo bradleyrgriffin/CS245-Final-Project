@@ -200,7 +200,7 @@ void MainWindow::on_addCategoryButton_clicked()
     returnMap = utils.dialogPrompt(this, addcategoryinformation);
     utils.toggleContactIdButtons(this);
 
-    if(utils.validateFields(returnMap, this) && utils.checkDuplicateNames(this, returnMap["Category Name"],"category")){
+    if(utils.validateFields(returnMap, this) && utils.checkDuplicateNames(this, returnMap["Category Name"],"category", 0, 0)){
         map<int, string> paramMap;
         for(auto i : returnMap){
             cout << i.first << " is: " << i.second << endl;
@@ -223,7 +223,7 @@ void MainWindow::on_addGroupButton_clicked()
     returnMap = utils.dialogPrompt(this, addgroupinformation);
     utils.toggleContactIdButtons(this);
 
-    if(utils.validateFields(returnMap, this) && utils.checkDuplicateNames(this, returnMap["Group Name"],"groups")){
+    if(utils.validateFields(returnMap, this) && utils.checkDuplicateNames(this, returnMap["Group Name"],"groups",0,0)){
         map<int, string> paramMap;
 
         for(auto i : returnMap){
@@ -482,7 +482,7 @@ void MainWindow::on_addGroupButton_2_clicked()
     returnMap = utils.dialogPrompt(this, addContactAddress);
     utils.toggleContactIdButtons(this);
 
-    if(utils.validateFields(returnMap, this)){
+    if(utils.validateFields(returnMap, this) && utils.checkDuplicateNames(this, "", "contact_group", contactId, stoi(utils.substringStr(returnMap["Group"])))){
         map<int, string> paramMap;
         paramMap[0] = to_string(contactId); //Contact Id
         paramMap[1] = utils.substringStr(returnMap["Group"]); //Group Id

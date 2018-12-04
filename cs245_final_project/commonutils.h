@@ -43,8 +43,8 @@ public:
     //Displays the User's profile picture
     void displayProfilePicture(MainWindow* thing, const string& path);
 
-    //Check dublicate category/group names
-    bool checkDuplicateNames(MainWindow* thing, const string& nme, const string& type);
+    //Check duplicate category/group names
+    bool checkDuplicateNames(MainWindow* thing, const string& nme, const string& type, int id, int gr_id);
 
 private:
 
