@@ -1,9 +1,41 @@
 #include "commonutils.h"
 #include "group.h"
+#include <iterator>
+#include <sstream>
+#include <iostream>
 
 CommonUtils::CommonUtils()
 {
 
+}
+bool CommonUtils::checkDuplicateNames(MainWindow* thing, const string& nme, const string& type){
+    if(type == "groups"){
+        for(auto i : thing->data.getGroups()){
+            string dta_string = i.getGroupName();
+            std::transform(dta_string.begin(), dta_string.end(), dta_string.begin(), ::toupper);
+            string name = nme;
+            std::transform(name.begin(), name.end(), name.begin(), ::toupper);
+
+            if(!dta_string.compare(name)){
+                cout << "Duplicate Groups Found, not adding it" << endl;
+                return false;
+            }
+        }
+    }else if(type == "category"){
+        for(auto i : thing->data.getCategories()){
+            string dta_string = i.getCategoryName();
+            std::transform(dta_string.begin(), dta_string.end(), dta_string.begin(), ::toupper);
+            string name = nme;
+            std::transform(name.begin(), name.end(), name.begin(), ::toupper);
+
+            if(!dta_string.compare(name)){
+                cout << "Duplicate Category Found, not adding it" << endl;
+                return false;
+            }
+        }
+    }
+
+    return true;
 }
 
 void CommonUtils::displayProfilePicture(MainWindow* thing, const string& photo){

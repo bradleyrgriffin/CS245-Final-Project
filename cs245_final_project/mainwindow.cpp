@@ -200,7 +200,7 @@ void MainWindow::on_addCategoryButton_clicked()
     returnMap = utils.dialogPrompt(this, addcategoryinformation);
     utils.toggleContactIdButtons(this);
 
-    if(utils.validateFields(returnMap, this)){
+    if(utils.validateFields(returnMap, this) && utils.checkDuplicateNames(this, returnMap["Category Name"],"category")){
         map<int, string> paramMap;
         for(auto i : returnMap){
             cout << i.first << " is: " << i.second << endl;
@@ -223,7 +223,7 @@ void MainWindow::on_addGroupButton_clicked()
     returnMap = utils.dialogPrompt(this, addgroupinformation);
     utils.toggleContactIdButtons(this);
 
-    if(utils.validateFields(returnMap, this)){
+    if(utils.validateFields(returnMap, this) && utils.checkDuplicateNames(this, returnMap["Group Name"],"groups")){
         map<int, string> paramMap;
 
         for(auto i : returnMap){
