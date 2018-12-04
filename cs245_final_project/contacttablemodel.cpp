@@ -203,20 +203,8 @@ bool ContactTableModel::setData(QModelIndex const& idx, QVariant const& value, i
 
 
 int ContactTableModel::getContactIdByIndex(const QModelIndex & index){
-    int col = index.column();
     int row = index.row();
-    switch (col)
-    {
-    case 0: // ID column
-        return contacts[row].contactId;
-        break;
-    case 1: // FNAME column
-        return -1;
-        break;
-    case 2: // LNAME column
-        return -1;
-        break;
-    }
+    return contacts[row].contactId;
 }
 
 bool ContactTableModel::deleteContact(int& id){

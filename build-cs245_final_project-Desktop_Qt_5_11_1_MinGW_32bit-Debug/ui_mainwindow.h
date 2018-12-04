@@ -89,6 +89,8 @@ public:
         searchContactTable = new QTableView(centralWidget);
         searchContactTable->setObjectName(QStringLiteral("searchContactTable"));
         searchContactTable->setGeometry(QRect(10, 80, 661, 461));
+        searchContactTable->setSelectionMode(QAbstractItemView::SingleSelection);
+        searchContactTable->setSelectionBehavior(QAbstractItemView::SelectRows);
         searchBar = new QLineEdit(centralWidget);
         searchBar->setObjectName(QStringLiteral("searchBar"));
         searchBar->setGeometry(QRect(10, 20, 431, 31));
